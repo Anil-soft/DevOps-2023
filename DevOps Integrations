@@ -11,4 +11,10 @@ How to integrate maven with jenkins?
   * install the maven integration plugin
   - manage jenkins -> global tool configuration -> specify the java and maven home paths
   
+How to integrate tomcat with jenkins?
+ - install the deploy to container plugin
+ - need to configure tomact credentials on jenkins
+ - manage jenkins -> manage credentials -> jenkins -> global credentials -> add credentials
+ * while configuring the maven job at the post build actions have to choose deploy to container
+  
   
