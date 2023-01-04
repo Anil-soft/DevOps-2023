@@ -1,0 +1,14 @@
+How to integrate git with jenkins?
+  * manage jenkins -> manage plugins -> install github
+  
+How to integrate maven with jenkins?
+  - install maven packages on jenkins server
+  - edit the bashrc file with home path variables
+  - M2_HOME=/opt/maven
+  - M2=/opt/maven/bin
+  - JAVA_HOME=/usr/lib/jvm/<jdk>
+  
+  * install the maven integration plugin
+  - manage jenkins -> global tool configuration -> specify the java and maven home paths
+  
+  
