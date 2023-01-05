@@ -16,4 +16,6 @@ How to integrate tomcat with jenkins?
  - need to configure tomact credentials on jenkins
  - manage jenkins -> manage credentials -> jenkins -> global credentials -> add credentials
  * while configuring the maven job at the post build actions have to choose deploy to container
+ 
+ 
     
