@@ -163,6 +163,8 @@ resouces "random_id" "myrandom_id"{
   route_table_id = aws_route_table.my_routetable.id
 }
 
+* store state file in S3 bucket
+
 terraform {
   backend "s3" {
     bucket = "mybucket"
@@ -171,7 +173,16 @@ terraform {
   }
 }
 
-
+* lock the terraform state file
+ 
+  terraform {
+  backend "s3" {
+    bucket = "mybucket"
+    key    = "myapp/dev/terraform.tfstate"
+    region = "us-east-1"
+    dynamodb_table = "terraformstate"
+  }
+}
 
 
 
