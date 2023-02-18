@@ -1,3 +1,5 @@
+ /*  TERRAFORM */
+
  - Infrastructure as code (IaC) tools allow you to manage infrastructure with configuration files rather than through a graphical user interface. 
  - IaC allows you to build, change, and manage your infrastructure in a safe, consistent, and repeatable way by defining resource configurations 
    that you can version, reuse, and share.
@@ -184,69 +186,34 @@ terraform {
   }
 }
 
+* what is terraform data source ?
+  - we can get back the information from cloud resources like image id's, ip addresses, instance name.
+  
+  provider "aws" {
+   region     = "eu-central-1"
+   access_key = "AKIATQ37NXB2JMXVGYPG"
+   secret_key = "ockvEN1DzYynDuKIh56BVQv/tMqmzvKnYB8FttSp"
+}
 
+resource "aws_instance" "ec2_example" {
 
+   ami           = "ami-0767046d1677be5a0"
+   instance_type =  "t2.micro"
 
+   tags = {
+           Name = "Terraform EC2"
+   }
+}
 
+data "aws_instance" "myawsinstance" {
+    filter {
+      name = "tag:Name"
+      values = ["Terraform EC2"]
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
+    depends_on = [
+      "aws_instance.ec2_example"
+    ]
+} 
  
  
