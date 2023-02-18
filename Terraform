@@ -248,7 +248,8 @@ dev.tfvars
 instance_name="dev_instance"
 environment_name="dev"
 
-terraform plan -var-file="dev.tfvars" ==> when we define variables for different environments
+- terraform plan -var-file="dev.tfvars" ==> when we define variables for different environments
+- terraform plan -var mykey_name = "anil_key" -> to pass the var from command line
 
 
 
