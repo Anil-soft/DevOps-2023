@@ -24,6 +24,10 @@
  
  - AWS CLI has to be configured to tarraform to be able to communicate with AWS
  
+ - terraform workspace list => to list out the terrafom workspaces
+ - terrraform workspace new dev => to create the new workspace
+ - terraform workspace select prod => to switch the workspace
+ 
  * provider 
  
     provider "aws" {
@@ -103,6 +107,82 @@ resource "aws_security_group" "allow_tls" {
     Name = "allow_tls"
   }
 }
+
+* key pair creation
+
+resource "aws_key_pair" "deployer" {
+  key_name   = "deployer-key"
+  public_key = "<pub-key>"
+  }
+  
+* s3 bucket creation 
+
+  resource "aws_s3_bucket" "b" {
+  bucket = "my-tf-test-bucket"
+
+  tags = {
+    Name        = "My bucket"
+    Environment = "Dev"
+  }
+}
+
+resource "aws_s3_bucket_acl" "example" {
+  bucket = aws_s3_bucket.b.id
+  acl    = "private"
+}
+
+resouces "random_id" "myrandom_id"{
+        byte_length = 2
+     }
+  resource "aws_s3_bucket" "mys3_bucket" {
+  bucket = "anils3bucket-${random_id.myrandom_id.hex}"
+
+  tags = {
+    Name        = "anils3bucket-${random_id.myrandom_id.hex}"
+  }
+}
+
+* route table
+  resource "aws_route_table" "example" {
+  vpc_id = aws_vpc.example.id
+
+  route {
+    cidr_block = "10.0.1.0/24"
+    gateway_id = aws_internet_gateway.example.id
+  }
+
+  tags = {
+    Name = "example"
+  }
+}
+
+* route table subnet association
+  
+  resource "aws_route_table_association" "a" {
+  subnet_id      = aws_subnet.subnet1.id
+  route_table_id = aws_route_table.my_routetable.id
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
