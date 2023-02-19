@@ -1,0 +1,36 @@
+What does git clone do?
+  The command creates a copy (or clone) of an existing git repository. Generally, it is
+  used to get a copy of the remote repository to the local repository.
+  
+What does the command git config do?
+  To set up your name and email address before using git commands
+  git config --global user.name “<<your_name>>”
+  git config --global user.email “<<your_email>>”
+
+Can you explain head in terms of git ?
+  - A head is nothing but a reference to the last commit object of a branch.
+  - To go or checkout to 1 commit before the latest commit, we use git checkout HEAD~1
+  - To uncommit the last 3 commits without losing the changes, we first run git
+    reset HEAD~3 . Then we can see the changes made in the last 3 commits and then
+    update it manually and commit it finally.
+  - To uncommit the last 3 commits without losing the changes, we first run git
+    reset HEAD~3 . Then we can see the changes made in the last 3 commits and then
+    update it manually and commit it finally.
+  - To look into the changes made in the last 3 commits, we can run git diff
+    HEAD~3
+  - HEAD:- refer to the latest commit
+  - HEAD~1:- refer to the first commit
+  - HEAD~2:- refer to the second commit
+  - git difftool HEAD~1 HEAD~2 => to see the difference between 1st and 2nd commit
+  
+  
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
