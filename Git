@@ -49,8 +49,12 @@ What does git add command do?
   $ git add .
   $ git add <file_name>
   
+what does git commit do ?
+  The "commit" command is used to save your changes to the local repository.
+  $ git commit -m " commit message "
+  
 explain about git stash ?
-  - 
+  - git stash will save the untracked files on the temporary env
   $ git stash
   $ git stash list
   $ git pop { The stash pop command in git will take the content from the stash file and then apply those changes to our current working file }
@@ -79,7 +83,20 @@ what is the difference between git merge vs git rebase ?
   $ git merge main
   $ git rebase main
   
-
+what is git tag ?
+  - Git has the ability to tag specific points in a repository’s history as being important.
+  - Typically, people use this functionality to mark release points (v1.0, v2.0 and so on).
+  - Annotated tags, however, are stored as full objects in the Git database. They’re checksummed; contain the tagger name, email, and date; have a tagging message;
+  - It’s generally recommended that you create annotated tags so you can have all this information;
+  - if you want a temporary tag or for some reason don’t want to keep the other information, lightweight tags are available too.
+  
+  $ git tag v1.0
+  $ git tag { to list out the tags }
+  $ git tag -a v1.4 -m "my version 1.4"
+  $ git push origin v1.5
+  $ git push origin --tags
+  $ git tag -d v1.4-lw
+  
 
   
    
@@ -97,3 +114,6 @@ what is the difference between git merge vs git rebase ?
     
     
     
+
+
+
