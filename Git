@@ -4,8 +4,8 @@ What does git clone do?
   
 What does the command git config do?
   To set up your name and email address before using git commands
-  git config --global user.name “<<your_name>>”
-  git config --global user.email “<<your_email>>”
+  $ git config --global user.name “<<your_name>>”
+  $ git config --global user.email “<<your_email>>”
 
 Can you explain head in terms of git ?
   - A head is nothing but a reference to the last commit object of a branch.
@@ -13,15 +13,78 @@ Can you explain head in terms of git ?
   - To uncommit the last 3 commits without losing the changes, we first run git
     reset HEAD~3 . Then we can see the changes made in the last 3 commits and then
     update it manually and commit it finally.
-  - To uncommit the last 3 commits without losing the changes, we first run git
-    reset HEAD~3 . Then we can see the changes made in the last 3 commits and then
-    update it manually and commit it finally.
+  - In order to uncommit the last 3 commits and also remove the changes, we can
+    run the command: git reset --hard HEAD~3 . This command will completely
+    remove all the changes
   - To look into the changes made in the last 3 commits, we can run git diff
     HEAD~3
   - HEAD:- refer to the latest commit
   - HEAD~1:- refer to the first commit
   - HEAD~2:- refer to the second commit
-  - git difftool HEAD~1 HEAD~2 => to see the difference between 1st and 2nd commit
+  $ git difftool HEAD~1 HEAD~2 => to see the difference between 1st and 2nd commit
+  $ git log { to list all the commits }
+  $ git checkout HEAD~1
+  $ git reset HEAD~3
+  $ git reset --hard HEAD~3
+  $ git diff HEAD~3
+  
+what is git conflict and how to resolve ?
+  - When two branches are trying to merge, and both are edited at the same time and in the same file, 
+    Git won't be able to identify which version is to take for changes. Such a situation is called merge conflict. 
+  - git can not resolve conflicts automatically, we need to discuss with the fellow developer and find out the which
+    changes are required and delete the which are not required.
+  $ git mergetool
+  
+What does git status command do?
+ - The git status command displays the state of the working directory and the staging area.
+ - It lets you see which changes have been staged, which haven’t, and which files aren’t being tracked by Git.
+ $ git status
+ 
+what is git index ?
+  - The Git index is a staging area between the working directory and repository. It is used to build up a set of changes that you want to commit together. 
+    untracked => staged => committed => modified
+    
+What does git add command do?
+  - This command adds files and changes to the index of the existing directory
+  $ git add .
+  $ git add <file_name>
+  
+explain about git stash ?
+  - 
+  $ git stash
+  $ git stash list
+  $ git pop { The stash pop command in git will take the content from the stash file and then apply those changes to our current working file }
+  $ git stash apply
+  
+what is the difference between git pull and git fetch ?
+  git fetch - only downloads latest changes into the local repo. it downloads fresh changes that other developers have pushed to the remote repo.
+              it does not merge latest changes to your working dir.
+  git pull - git fetch + git merge
+  
+how to squash multiple commits into one commit ?
+  $ git rebase -i HEAD~3 { three commits will be merged into one }
+  
+what is the difference between git merge vs git rebase ?
+  - The first thing to understand about git rebase is that it solves the same problem as git merge. 
+    Both of these commands are designed to integrate changes from one branch into another branch
+    
+  git merge - Git merge safeguards the histories of both the repositories.
+    Consider a condition where you have to work regularly on the main branch and have a very active main branch, 
+    in such conditions the commit history will become messy, thus resulting in a painful experience for the developers to understand the log or the commit history.
+    
+  git rebase - The major benefit of using git rebase is it provides a cleaner merge history. It works linearly, 
+               removing the unnecessary merge commits, unlike git merge. 
+    
+  $ git checkout feature
+  $ git merge main
+  $ git rebase main
+  
+
+
+  
+   
+
+
   
   
   
