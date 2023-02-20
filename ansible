@@ -1,0 +1,239 @@
+<== Ansible installation ==>
+  - sudo amazon-linux-extras install ansible2
+  - add the private key (vi ec2-key.pem) assign chmod 400 ec2-key.pem permission
+  - ssh-agent bash
+  - cp ec2-key.pem ~/.ssh/
+    - ssh-add ~/.ssh/ec2-key.pem 
+  - create the inventory file and add the private ips
+  - default location /etc/ansible/hosts
+  
+ :- Ansible works on client only model which means no need to have master server
+ 
+ :- if we want define variables for the particulary server we have create the dir called hosts_vars and variable file should be same as server name
+ 
+ :- to define variables for the set of group of servers have to create the dir called group_Vars
+ 
+ :- ansible -m setup -a "filter=ansible_distribution" server1 => to print the server information
+ 
+ :- ansible-playbook dev.yaml -e my_name=anil => to pass the variable from command line
+ 
+ Note:- ansible.cfg file the important file in ansible which is having all the information like inventory, interpreter, private key file, privilege escalation
+ 
+ Idempotency:- if the configuration is already existed then it will skip or else it will execute the configation
+  ---
+- hosts: webservers
+  become: True
+  tasks:
+    - name: install packages
+      yum:
+        name: httpd
+        state: present
+    - name: start apache server
+      service:
+         name: httpd
+         state: started
+         enable: True
+    - name: deploy static website
+      copy:
+        src: index.html
+        dest: /var/www/html/
+     notify:
+     - restart httpd
+    handlers:
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted
+  
+  * Ansible Roles
+  
+  - defaults :- default variables for the role
+  - Files:- Contains files to copy to destination
+  - Handlers:- Based on notify do something specified
+  - Meta:- meta data about current role ( like what is the ansible version, who is the author )
+  - Tasks:- List of task that to be executed
+  - Templates:- Template files to deploy
+  - test:- if you want additional verification of your build
+  - vars:- other variables for the role
+  
+   - ansible-galaxy init webserver --offline  => to create the roles called webserver through ansible-galaxy
+ 
+ * File Module
+    
+- name: create a file
+  file:
+    path: /etc/file1.txt
+    state: touch
+    owner: ec2-user
+    group: ec2-user
+    mode: '0644'
+    
+- name: creating multiple files
+  file:
+    path: "{{ item }}"
+    state: touch
+  with_items:
+  - file1.txt
+  - file2.txt
+  
+- name: Change file ownership, group and permissions
+  file:
+    path: /etc/file1.txt
+    owner: ec2-user
+    group: ec2-user
+    mode: '0644'
+    
+- name: create a dir
+  file:
+  path: /etc/anil_dir
+  state: directory
+  mode: '0755
+  
+* copy module
+  
+- copy:
+    src: /etc/myfiles/file1.txt
+    dest: /etc/file1.txt
+    owner: root
+    group: root
+    mode: 0644
+    
+* Script module
+  
+- name: working with ansible
+  hosts: server1
+  tasks:
+    - name: executing script
+      script: ./script.sh
+      register: myoutput
+      
+    - debug: msg="{{myoutput}}"
+    
+ * vars 
+    
+- name: working with ansible
+  hosts: server1
+  vars:
+    myvar: 100
+  tasks:
+    - name: printing the varaible value
+      command: echo "my varaible value is {{myvar}}"
+      
+- name: working with ansible
+  hosts: server1
+  vars_files:
+    - myvarfile.yaml
+  tasks:
+    - name: printing the varaible value
+      command: echo "my current batch name is {{ batchname }}"
+
+* with_items
+
+- name: printing the data
+  command: echo "hi i am {{item}}"
+  with_items: [10,20,30,40]
+  
+- name: printing the file
+  command: echo "{{item}}"
+  with_fileglob:
+    - "/tmp/*"
+    
+- name: printing the file content
+  command: echo "{{item}}"
+  with_lines:
+    - "cat /etc/hosts"
+    
+- name: printing the sequence
+  command: echo "{{item}}"
+  with_sequence: start=1 end=5
+    
+- name: printing the dictionary values
+  command: echo "{{item.key}} ==> {{item.value}}"
+  with_dict:
+    "{{ansible_default_ipv4}}"
+  
+ * user creation
+    
+- name: Add the user 'anil' with a specific uid and a primary group of 'admin'
+  user:
+    name: anil
+    shell: /bin/bash
+    comment: John Doe
+    uid: 1040
+    group: admin
+    
+ * ignore errors
+ 
+- name: working with special cases
+  hosts: server1
+  tasks:
+    - name: executing script
+      script: ./script.py
+      ignore_errors: true
+      
+    - name: running the command
+      command: echo "Hi, this is task two"
+      
+  * delegate to
+     
+     - name: printing hostname
+       command: hostname
+       delegate_to: server2
+       
+  * serial module
+  
+    - name: working with serial module
+      hosts: all
+      serial: 1
+      tasks:
+        - name: printing the hostname
+          command: hostname
+          
+  * Ansible vault
+  
+  - ansible-vault create mydbpass.yaml  => to create the new file with ansible vault
+  - ansible-vault encrypt mydbpass.yaml  => to encrypt the existing file
+  - ansible-vault edit mydbpass.yaml  => to edit the information
+  - ansible-vault rekey mydbpass.yaml  => to change ansible-vault password
+  - ansible-vault view mydbpass.yaml 
+  - ansible-playbook --ask-vault-pass myvault.yaml  => it asks us to give the password to decrypt the secret
+  - ansible-playbook --vault-password-file=mypassword myvault.yaml
+  - --syntax-check (to check the syntax)
+  - --list-tasks (to list out the tasks)
+  - ansible-playbook -t "t1,t3" main.yaml  => to execute only t1,t3 tasks
+  
+  * import playbook
+    - import_playbook: conditions.yaml  (you can import one playbook in another playbook and run both playbooks at a time)
+    
+ Note:- curl http://<ip-addr>/latest/meta-data/public-ipv4 (we can get the server information)
+ 
+ * install mysql
+ 
+ ---
+- name: installing mysql and dependencies 
+  package:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - mysql-server
+    - mysql-client
+    - python3-mysqldb
+    - ibmysqlclient-dev
+    
+- name: start and enable mysql service
+  systemd:
+    name: mysql
+    enabled: yes
+    
+- name: creating the user admin
+  mysql_user:
+    name: "admin"
+    password: "admin123"
+    priv: '*.*:ALL'
+    host: '%'
+    state: present
+    
+- name: creating database
+  mysql_db:
+    name: "mydatabase"
+    state: "present"
