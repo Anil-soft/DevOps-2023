@@ -18,3 +18,12 @@ How to integrate tomcat with jenkins?
  * while configuring the maven job at the post build actions have to choose deploy to container
  
 poll SCM - it will check whether there are any changes occur, if any changes will occur then it will get triggered
+
+How to integrate docker with jenkins?
+ - manager jenkins -> configure system -> at publish over SSH add the server details { hostname, priver ip, username password or private key }
+   * while configuring the jenkins job at post-build actions select the send build artifacts over SSH
+   
+How to integrate ansible with jenkins?
+ - manager jenkins -> configure system -> at publish over SSH add the server details { hostname, priver ip, username password or private key }
+   * while configuring the jenkins job at post-build actions select the send build artifacts over SSH
+
