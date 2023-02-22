@@ -17,5 +17,4 @@ How to integrate tomcat with jenkins?
  - manage jenkins -> manage credentials -> jenkins -> global credentials -> add credentials
  * while configuring the maven job at the post build actions have to choose deploy to container
  
- 
-    
+poll SCM - it will check whether there are any changes occur, if any changes will occur then it will get triggered
