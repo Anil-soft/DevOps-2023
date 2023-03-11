@@ -53,3 +53,67 @@ How to integrate ansible with jenkins?
        }
   }
 }
+
+
+* war files would be placed under { "/var/lib/jenkins/workspace/pipeline_job/webapp/target" }
+* war file should be copied under on tomact server { "/opt/apache-maven-8.5.55/webapp
+
+tomcat pipeline to deploy war file on to the tomcat 
+
+pipeline {
+	agent any
+	environment {
+		PATH = "/opt/apache-maven-3.6.3/bin:$PATH"
+	}
+	stages {
+		stage ("clone code") {
+			steps{
+				git credentialsId: 'git_credentials', url: '<github_url>'
+			{
+		}
+		stage ("build code"){
+			steps{
+				sh "mvn clean install"
+			}
+		}
+		stage ("deploy"){
+			steps{
+			  sshagent(['deploy_user']){
+			sh "scp -o StrickHostkeyChecking=no <src_file> username@IP:<dest_path>"
+			
+				}
+			}
+		}
+		
+	}
+ }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
