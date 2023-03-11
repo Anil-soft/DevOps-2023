@@ -89,7 +89,51 @@ pipeline {
  }
 
 
+How to build and deploy image on to the DockerHub through jenkins pipeline??
+step:-1
+	log in to the dockerhub -> settings -> security -> assign the permissions -> generate access token 
+step:- 2
+	manage jenkins -> manage credentails -> give the username and password as access token, give the credentailsID (ex:- anil-hub-devops)
+step:- 3
+	create the pipeline job
+	
+	pipeline {
+    agent any 
+    environment {
+    DOCKERHUB_CREDENTIALS = credentials('anil-hub-devops')
+    }
+    stages { 
+        stage('SCM Checkout') {
+            steps{
+            git 'https://github.com/ravdy/nodejs-demo.git'
+            }
+        }
 
+        stage('Build docker image') {
+            steps {  
+                sh 'docker build -t anil/nodeapp:$BUILD_NUMBER .'
+            }
+        }
+        stage('login to dockerhub') {
+            steps{
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage('push image') {
+            steps{
+                sh 'docker push anil/nodeapp:$BUILD_NUMBER'
+            }
+        }
+}
+post {
+        always {
+            sh 'docker logout'
+        }
+    }
+}
+
+* $DOCKERHUB_CREDENTIALS_PSW { "retreiving only password" }
+* --password-stdin { "whatever we are echoing that we are passing it as a password" }
 
 
 
