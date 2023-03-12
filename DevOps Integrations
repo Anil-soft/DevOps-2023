@@ -135,11 +135,22 @@ post {
 * $DOCKERHUB_CREDENTIALS_PSW { "retreiving only password" }
 * --password-stdin { "whatever we are echoing that we are passing it as a password" }
 
+Master and slave node configuration:
+Manage Jenkins --> Manage nodes and clouds --> New node
 
+Name: uniquely identifies an agent within this Jenkins installation
+Description:
+Number of executors: 2
+Remote root directory: /home/ec2-user/maven-agent
+Labels: Labels (or tags) are used to group multiple agents into one logical group.
 
+launch the agent.jar on the slave node to connect with the Master jenkins
 
-
-
+  echo "secret_key" > secret-file
+  java -jar agent.jar -jnlpUrl http://<Jenkins_URL>/computer/abc/jenkins-agent.jnlp -secret @secret-file -workDir "/home/ec2-user" --> hit this command to connect
+  master jenkiins
+  
+  while creating the job select the option like { Restrict where this project can be run } and give the label.
 
 
 
