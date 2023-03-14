@@ -152,10 +152,11 @@ launch the agent.jar on the slave node to connect with the Master jenkins
   
   while creating the job select the option like { Restrict where this project can be run } and give the label.
 
-
-
-
-
+* Env variables
+  BUILD_NUMBER, BUILD_ID, JOB_NAME, NODE_NAME, NODE_LABELS, WORKSPACE, BUILD_URL, JOB_URL.
+  
+* How to define the env variables in jenkins?
+   manage jenkins -> configure system -> at global properties define the environment variables
 
 
 
