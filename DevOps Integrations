@@ -156,11 +156,39 @@ launch the agent.jar on the slave node to connect with the Master jenkins
   BUILD_NUMBER, BUILD_ID, JOB_NAME, NODE_NAME, NODE_LABELS, WORKSPACE, BUILD_URL, JOB_URL.
   
 * How to define the env variables in jenkins?
-   manage jenkins -> configure system -> at global properties define the environment variables
+   manage jenkins -> configure system -> at global properties check the environment variables and add the variables
 
+* How to define the env variables in jenkins pipeline ? 
+  pipeline {
+    environment {
+        FNAME = "Naive"
+        LNAME= "Skill"
+    }
+    agent any
+    stages {
+        stage('Hello') {
+            steps {
+                sh "echo Hello ${FNAME} ${LNAME}"
+            }
+        }
+    }
+}
 
+* How to define the variables in jenkins pipeline ? 
+  // Define variable
+def myVariable = "anil"
 
-
+// Print variable
+pipeline {
+  agent any
+  stages {
+    stage ("Print variable") {
+      steps {
+        echo "My variable is ${myVariable}"
+      }
+    }
+  }
+}
 
 
 
