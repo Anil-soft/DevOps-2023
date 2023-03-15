@@ -1,0 +1,547 @@
+<== IAM ==>
+  :- IAM = Identity and Access Management, Global service
+  :- Users are people within your organization, and can be grouped
+  :- Groups only contain users, not other groups
+  :- Users don’t have to belong to a group, and user can belong to multiple groups
+  :- Users or Groups can be assigned JSON documents called policies
+  :- These policies are the permissions of the users
+  what's the AWS CLI?
+    A tool that enables you to interact with AWS services using commands in your command-line shell
+    IAM Roles for Services
+  :- Some AWS service will need to perform actions on your behalf
+  :- To do so, we will assign permissions to AWS services with IAM Roles
+  :- Common roles: • EC2 Instance Roles • Lambda Function Roles • Roles for CloudFormation
+  
+<== EC2 ==>
+  Compute Optimized
+  :- Batch processing Workloads
+  :- High performance web servers
+  :- High performance computing
+  Memory Optimized
+  :- Applications performing real-time processing of big unstructured data
+  :- High performance, relational/non-relational databases
+  Storage Optimized
+  :- High frequency online transaction processing (OLTP) systems
+  :- Data warehousing applications
+  
+<== Classic Ports to know ==>
+:- 22 = SSH (Secure Shell) - log into a Linux instance
+:- 21 = FTP (File Transfer Protocol) – upload files into a file share 
+:- 22 = SFTP (Secure File Transfer Protocol) – upload files using SSH
+:- 80 = HTTP – access unsecured websites
+:- 443 = HTTPS – access secured websites
+:- 3389 = RDP (Remote Desktop Protocol) – log into a Windows instance
+:- PostgreSQL: 5432
+:- MySQL: 3306
+:- Oracle RDS: 1521
+:- MSSQL Server: 1433
+:- MariaDB: 3306 (same as MySQL)
+:- Aurora: 5432 (if PostgreSQL compatible) or 3306 (if MySQL compatible)
+
+EC2 Instances purchase options
+On Demand 
+  :- Recommended for short-term and un-interrupted workloads, where you can't predict how the application will behave
+  :- Has the highest cost but no upfront payment
+  :- No long-term commitment
+EC2 Reserved Instances
+  :- Up to 72% discount compared to On-demand
+  :- long workloads with flexible instances
+  :- Recommended for steady-state usage applications
+EC2 Spot Instances
+  :- Can get a discount of up to 90% compared to On-demand
+  :- Instances that you can “lose” at any point of time if your max price is less than the current spot price
+  :- Image processing
+  :- Workloads with a flexible start and end time
+EC2 Dedicated Hosts
+  :- Workloads with a flexible start and end time
+  :- Instances run on hardware that’s dedicated to you
+  :- May share hardware with other instances in same account
+  :- No control over instance placement (can move hardware after Stop / Start)
+
+Which purchasing option is right for me?
+  • On demand: coming and staying in resort whenever we like, we pay the full price
+  • Reserved: like planning ahead and if we plan to stay for a long time, we may get a good discount.
+  • Savings Plans: pay a certain amount per hour for certain period and stay in any room type (e.g., 
+    King, Suite, Sea View, …)
+  • Spot instances: the hotel allows people to bid for the empty rooms and the highest bidder keeps the 
+    rooms. You can get kicked out at any time
+  • Dedicated Hosts: We book an entire building of the resort
+  • Capacity Reservations: you book a room for a period with full price even you don’t stay in it
+
+<== Elastic IPs ==>
+:- When you stop and then start an EC2 instance, it can change its public IP
+:- If you need to have a fixed public IP for your instance, you need an Elastic IP
+:- An Elastic IP is a public IPv4 IP you own as long as you don’t delete it
+:- You can attach it to one instance at a time
+:- You can only have 5 Elastic IP in your account (you can ask AWS to increase that)
+
+<== EC2 – Understanding vCPU ==>
+:- Multiple threads can run on one CPU (multithreading)
+:- Each thread is represented as a virtual CPU (vCPU)
+   • Example: m5.2xlarge
+   • 4 CPU
+   • 2 threads per CPU
+   • 8 vCPU in total
+   
+<== EBS ==>
+:- An EBS (Elastic Block Store) Volume is a network drive you can attach to your instances while they run
+:- It allows your instances to persist data, even after their termination
+:- They can only be mounted to one instance at a time (at the CCP level)
+:- They are bound to a specific availability zone
+:- An EBS Volume in us-east-1a cannot be attached to us-east-1b
+:- To move a volume across, you first need to snapshot it
+
+<== EBS Snapshots ==>
+:- Make a backup (snapshot) of your EBS volume at a point in time
+:- Not necessary to detach volume to do snapshot, but recommended
+:- Can copy snapshots across AZ or Region
+
+<== AMI Overview ==>
+:- Amazon Machine Image are a customization of an EC2 instance
+:- You add your own software, configuration, operating system, monitoring…
+:- Faster boot / configuration time because all your software is pre-packaged
+:- AMI are built for a specific region (and can be copied across regions)
+:- Start an EC2 instance and customize it
+:- Build an AMI – this will also create EBS snapshots
+
+<== EBS Volume Types ==>
+  • EBS Volumes come in 6 types
+  • gp2 / gp3 (SSD): General purpose SSD volume that balances price and performance for 
+    a wide variety of workloads
+  • io1 / io2 (SSD): Highest-performance SSD volume for mission-critical low-latency or 
+    high-throughput workloads
+  • st1 (HDD): Low cost HDD volume designed for frequently accessed, throughput- intensive workloads
+  • sc1 (HDD): Lowest cost HDD volume designed for less frequently accessed workloads
+
+<== EBS Encryption ==>
+  • Data at rest is encrypted inside the volume
+  • All the data in flight moving between the instance and the volume is encrypted
+  • All snapshots are encrypted
+  • All volumes created from the snapshot
+  • EBS Encryption leverages keys from KMS (AES-256)
+  • Copying an unencrypted snapshot allows encryption
+  • Snapshots of encrypted volumes are encrypted
+Encryption: encrypt an unencrypted EBS volume
+  • Create an EBS snapshot of the volume
+  • Encrypt the EBS snapshot ( using copy )
+  • Create new ebs volume from the snapshot ( the volume will also be 
+    encrypted ) 
+  • Now you can attach the encrypted volume to the original instance
+
+<== Amazon EFS – Elastic File System ==>
+:- Managed NFS (network file system) that can be mounted on many EC2
+:- EFS works with EC2 instances in multi-AZ
+:- content management, web serving, data sharing, Wordpress
+:- Uses NFSv4.1 protocol
+
+<== Vertical Scalability ==>
+:- Vertically scalability means increasing the size of the instance
+:- For example, your application runs on a t2.micro, Scaling that application vertically means 
+   running it on a t2.large
+:- RDS, ElastiCache are services that can scale vertically
+
+<== Horizontal Scalability ==>
+:- Horizontal Scalability means increasing the number of instances / systems for your application
+:- This is very common for web applications / modern applications
+
+<== Load Balancer ==>
+:- Spread load across multiple downstream instances
+:- Expose a single point of access (DNS) to your application
+:- Do regular health checks to your instances
+:- Provide SSL termination (HTTPS) for your websites
+:- AWS takes care of upgrades, maintenance, high availability
+
+<== Healthchecks ==>
+   • Health Checks are crucial for Load Balancers
+   • They enable the load balancer to know if instances it forwards traffic to 
+      are available to reply to requests
+   • The health check is done on a port and a route (/health is common)
+   • If the response is not 200 (OK), then the instance is unhealthy
+
+<== Application Load Balancer ==>
+    • Application load balancers is Layer 7 (HTTP)
+    • Load balancing to multiple HTTP applications across machines 
+      (target groups)
+    • Routing based on path in URL (example.com/users & example.com/posts)
+    • Routing based on hostname in URL (one.example.com & other.example.com)
+    • ALB are a great fit for micro services & container-based application 
+      (example: Docker & Amazon ECS)
+    • ALB can route to multiple target groups
+    • Health checks are at the target group level
+    
+ <= Network Load Balancer ==>
+    • Network load balancers (Layer 4)
+    • Forward TCP & UDP traffic to your instances
+    • Handle millions of request per seconds
+    • NLB are used for extreme performance, TCP or UDP traffic
+    
+<= Gateway Load Balancer ==>
+   • Operates at Layer 3 (Network Layer) – IP Packets
+   • Uses the GENEVE protocol on port 6081
+   
+<== SSL/TLS - Basics ==>
+:- An SSL Certificate allows traffic between your clients and your load balancer to be encrypted in transit (in-flight encryption)
+:- SSL refers to Secure Sockets Layer, used to encrypt connections
+:- TLS refers to Transport Layer Security, which is a newer version
+
+<== Load Balancer - SSL Certificates ==>
+:- The load balancer uses an X.509 certificate (SSL/TLS server certificate)
+:- You can manage certificates using ACM (AWS Certificate Manager)
+:- Server Name Indication solves the problem of loading multiple SSL certificates onto one web server (to serve multiple websites)
+
+• Application Load Balancer (v2)
+  • Supports multiple listeners with multiple SSL certificates
+  • Uses Server Name Indication (SNI) to make it work
+  
+• Network Load Balancer (v2)
+  • Supports multiple listeners with multiple SSL certificates
+  • Uses Server Name Indication (SNI) to make it work
+
+<== Auto Scaling ==>
+:- Scale out (add EC2 instances) to match an increased load
+:- Scale in (remove EC2 instances) to match a decreased load
+:- Ensure we have a minimum and a maximum number of machines running
+:- Automatically Register new instances to a load balancer
+
+• A launch configuration 
+  • AMI + Instance Type 
+  • EC2 User Data 
+  • EBS Volumes 
+  • Security Groups 
+  • SSH Key Pair 
+  • Min Size / Max Size / Initial Capacity 
+  • Network + Subnets Information 
+  • Load Balancer Information 
+  • Scaling Policies
+  
+• Difference between launch configuration and launch templates
+ - launch configurations are immutable, limited configurations and not recommended by AWS
+ - launch templates supports multi versions, recommended by aws
+  
+<== Auto Scaling Alarms ==>
+:- It is possible to scale an ASG based on CloudWatch alarms
+:- An Alarm monitors a metric (such as Average CPU)
+• Based on the alarm:
+  • We can create scale-out policies (increase the number of instances)
+  • We can create scale-in policies (decrease the number of instances)
+:- After a scaling activity happens, you are in the cooldown period (default 300 seconds)
+:- During the cooldown period, the ASG will not launch or terminate additional instances (to allow for metrics to stabilize)
+
+<== RDS ==>
+• AWS RDS Overview
+  :- RDS stands for Relational Database Service
+  :- It’s a managed DB service for DB use SQL as a query language
+  :- Automated provisioning, OS patching
+  :- Continuous backups and restore to specific timestamp (Point in Time Restore)!
+  :- Read replicas for improved read performance
+  :- Multi AZ setup for DR (Disaster Recovery)
+  :- Scaling capability (vertical and horizontal)
+  :- Backups are automatically enabled in RDS
+  :- Helps you increase storage on your RDS DB instance dynamically
+  :- When RDS detects you are running out of free database storage, it scales automatically
+  :- Read replicas are used for SELECT (=read) only kind of statements (not INSERT, UPDATE, DELETE)
+  :- Possibility to encrypt the master & read replicas with AWS KMS - AES-256 encryption
+  :- Encryption has to be defined at launch time 
+  :- Aurora can have 15 replicas while MySQL has 5, and the replication process is faster (sub 10 ms replica lag)
+  
+  <== Route53 ==>
+  :- Why Route 53? 53 is a reference to the traditional DNS port
+  :- Route 53 is also a Domain Registrar
+  :- Domain Name System which translates the human friendly hostnames into the machine IP addresses (www.google.com => 172.217.18.36)
+  • Route 53 – Record Types
+    • A – maps a hostname to IPv4
+    • AAAA – maps a hostname to IPv6
+    • CNAME – maps a hostname to another hostname
+    • NS – Name Servers for the Hosted Zone
+    • Control how traffic is routed for a domain
+• CNAME
+  • Points a hostname to any other hostname. (app.mydomain.com => blabla.anything.com)
+• Alias 
+  • Points a hostname to an AWS Resource (app.mydomain.com => blabla.amazonaws.com)
+  
+• Routing Policies – Geolocation
+  • Different from Latency-based!
+  • This routing is based on user location
+  
+• Routing Policies – Geoproximity
+  • Route traffic to your resources based on the geographic location of users and resources
+  • Ability to shift more traffic to resources based on the defined bias
+  
+• Routing Policies – Simple
+  • Typically, route traffic to a single resource
+  • Can specify multiple values in the same record
+  • If multiple values are returned, a random one is chosen by the client
+  
+• Routing Policies – Weighted
+  • Assign a weight of 0 to a record to stop sending traffic to a resource
+  • If all records have weight of 0, then all records will be returned equally
+  
+Routing Policies – Latency-based
+  • Redirect to the resource that has the least latency close to us
+  • Super helpful when latency for users is a priority 
+  • Latency is based on traffic between users and AWS Regions  
+  
+<== Amazon S3 Overview - Buckets ==>
+:- Amazon S3 allows people to store objects (files) in “buckets” (directories)
+:- Buckets are defined at the region level
+:- Max Object Size is 5TB (5000GB)
+:- If uploading more than 5GB, must use “multi-part upload”
+• Amazon S3 -Versioning
+  • It is enabled at the bucket leve
+  • Any file that is not versioned prior to enabling versioning will have version “null”
+  • Suspending versioning does not delete the previous versions
+• S3 Encryption for Objects
+  • SSE-S3: encrypts S3 objects using keys handled & managed by AWS
+  • SSE-KMS: leverage AWS Key Management Service to manage encryption keys
+  • SSE-C: when you want to manage your own encryption keys
+  • Client Side Encryption
+• S3 Replication
+  • Must enable versioning in source and destination
+  • Cross Region Replication (CRR)
+  • Same Region Replication (SRR)
+  • Buckets can be in different accounts
+  • After activating, only new objects are replicated
+  • If bucket 1 has replication into bucket 2, which has replication into bucket 3
+  • Then objects created in bucket 1 are not replicated to bucket 3
+• S3 Storage Classes
+  • Amazon S3 Standard - General Purpose
+  • Amazon S3 Standard-Infrequent Access (IA)
+  • Amazon S3 One Zone-Infrequent Access
+  • Amazon S3 Glacier Instant Retrieval
+  • Amazon S3 Glacier Flexible Retrieval
+  • Amazon S3 Glacier Deep Archive
+  • Amazon S3 Intelligent Tiering
+  
+• S3 Versioning
+  :- click on the bucket -> properties -> bucket versioning enable -> enable versioning
+• Encrypton
+  :- click on the object -> server-side encryption settings -> select the encryption type
+• S3 Access Logs
+  :- Click on the bucket -> server access logging -> edit -> enable and select the bucket that logs to be stored
+• S3 Replication
+  :- Click on bukcet -> management -> Create replication -> Enable -> choose destination -> 
+
+• AWS CloudFront
+  :- Improves read performance, content is cached at the edge.
+  :- DDos protection, integration with Shield, AWS Web application Firewall
+  :- Can expose external HTTPS and can talk to internal HTTPS backends
+
+• AWS Lambda
+  • Virtual functions – no servers to manage!
+  • Limited by time - short executions
+  • Run on-demand
+  • Scaling is automated! 
+• Integrated with the whole AWS suite of services
+• Integrated with many programming languages
+• Easy monitoring through AWS CloudWatch
+what to monitor on cloudwatch for lambda function?
+ how many times it invoked, how long it lasted, error and success rate.
+Invoke Lambda function by S3 event
+  open the Lambda function -> add trigger -> select S3 and select the bucket -> choose the Event type
+How to schedule Lambda function using cloudwatch
+  go to cloudwatch -> rules -> click on schedule and schedule the time -> click on target and select lambda function
+
+• AWS DynamoDB
+` • Fully managed, highly available with replication across multiple AZs
+  • NoSQL database - not a relational database
+  • Scales to massive workloads, distributed database
+  • Millions of requests per seconds, trillions of row, 100s of TB of storage
+  • Fast and consistent in performance (low latency on retrieval)
+  • DynamoDB is made of Tables
+  • Each table has a Primary Key (must be decided at creation time)
+  • Each table can have an infinite number of items (= rows)
+  • Each item has attributes (can be added over time – can be null)
+  • Maximum size of an item is 400KB
+  
+• DynamoDB Accelerator (DAX)
+  • Fully-managed, highly available, seamless inmemory cache for DynamoDB
+  • Microseconds latency for cached data
+  • 5 minutes TTL for cache (default)
+  
+• AWS CloudWatch
+  • CloudWatch provides metrics for every services in AWS
+  • Metric is a variable to monitor (CPUUtilization, NetworkIn…)
+  • Note: EC2 Memory usage is by default not pushed (must be pushed from inside the instance as a custom metric)
+  • Possibility to define and send your own custom metrics to CloudWatch
+  • Example: memory (RAM) usage, disk space, number of logged in users …
+  • Use API call PutMetricData
+  • By default, no logs from your EC2 machine will go to CloudWatch
+  • You need to run a CloudWatch agent on EC2 to push the log files you want
+  • Make sure IAM permissions are correct
+  • The CloudWatch log agent can be setup on-premises too
+  
+• Networking - VPC
+  • VPC = Virtual Private Cloud
+  • You can have multiple VPCs in an AWS region (max. 5 per region – soft limit)
+  •  Amazon Virtual Private Cloud (Amazon VPC) enables you to launch AWS resources into a virtual network that you've defined
+     
+• Subnets
+  :- A subnet is a range of IP addresses in your VPC. You can launch AWS resources into a specified subnet. 
+  :- Use a public subnet for resources that must be connected to the internet, and a private subnet for resources that won't be connected to the internet.
+• Route Table
+  :- Your VPC has an implicit router, and you use route tables to control where network traffic is directed.
+  :- Each subnet in your VPC must be associated with a route table, which controls the routing for the subnet (subnet route table). 
+  :- You can explicitly associate a subnet with a particular route table. 
+  :- A subnet can only be associated with one route table at a time, but you can associate multiple subnets with the same subnet route table.
+ 
+* Note:- public EC2 -> Router -> Internet Gateway -> Internet.
+• Internet Gateway (IGW)
+  :- Allows resources (e.g., EC2 instances) in a VPC connect to the Internet
+  :- Must be created separately from a VPC
+  :- One VPC can only be attached to one IGW and vice versa
+  :- Internet Gateways on their own do not allow Internet access…
+  :- Internet Gateways on their own do not allow Internet access… (Routing table -> routes -> add IGW)
+  
+* AWS NAT Gateways
+  :- A NAT gateway is a Network Address Translation (NAT) service.
+  :- You can use a NAT gateway so that instances in a private subnet can connect to services outside your VPC 
+      but external services cannot initiate a connection with those instances.
+  :- Instances in private subnets can connect to the internet through a public NAT gateway, 
+     but cannot receive unsolicited inbound connections from the internet. 
+  :- You create a public NAT gateway in a public subnet and must associate an elastic IP address with the NAT gateway at creation.
+  :- You route traffic from the NAT gateway to the internet gateway for the VPC.
+  :- You cannot associate a security group with a NAT gateway. You can associate security groups with your instances to control inbound and outbound traffic.
+  :- Each NAT gateway is created in a specific Availability Zone and implemented with redundancy in that zone.
+  
+<== Security Groups ==>
+  :- Security Groups are the fundamental of network security in AWS
+  :- Security works on instance levels
+  :- They control how traffic is allowed into or out of our EC2 Instances
+  :- Security Groups are statuful 
+  :- It simply means if you allow say outbound rule on particular port protocol ip address it will allow to get back. So whatever comes in comes out.
+  :- Security groups only contain rules
+  :- Can be attached to multiple instances
+  :- All inbound traffic is blocked by default
+  :- All outbound traffic is authorised by default
+  
+<== NACL (network access control lists) ==>
+  :- Operates at the subnet level
+  :- You can create a custom network ACL and associate it with a subnet. 
+     By default, each custom network ACL denies all inbound and outbound traffic until you add rules.
+  :- Each subnet in your VPC must be associated with a network ACL.
+     If you don't explicitly associate a subnet with a network ACL, the subnet is automatically associated with the default network ACL.
+  :- If you create a VPC with an IPv6 CIDR block or if you associate an IPv6 CIDR block with your existing VPC,
+      we automatically add rules that allow all IPv6 traffic to flow in and out of your subnet.
+  :- We also add rules whose rule numbers are an asterisk that ensures that a packet is denied if it doesn't match any of the other numbered rules. 
+  :- Network ACLs are stateless, which means that responses to allowed inbound traffic are subject to the rules for outbound traffic.
+  :- One subnet can be associated with only one NACL.
+
+<== AWS Interview Questions ==>
+
+How to create the automated backups for instance or volumes
+go to lifecycle manager -> select the instance or volume -> select the tag -> schedule the time 
+
+how to take rds backups
+while creating rds database, we can enable to automatic backup and give the retention period
+
+How to protect APIs using WAF
+AWS firewall manager -> ipsets -> create ip set -> give the ips that to be blocked
+web ACL -> create the web acl -> select the resource which is to be protected -> add a rule and give the ipsets
+
+• Role to collect metrics and logs from EC2 instance with Cloudwatch agent
+  :- roles -> create a role -> select EC2 -> search for the policies to attach the role (AmazonEC2roleforSSM, cloudwatchagentadminpolicy, coudwatchagentserverpolicy)
+     -> attach role to ec2 instance and install the cloudwatch agent -> and check the logs groups
+• AWS cloudwatch events to schedule Lambda function
+  :- Roles -> select Lambda service -> assign LambdaBasicExecutionRole -> while creating a lambda function attach an existing policy at the existing role section -> 
+    go to cloudwatch -> rules -> click on schedule and schedule the time -> click on target and select lambda function
+•  How to automatically stop/start EC2 instances using AWS Lambda function|cloudwathc events?
+   :- create a policy that allows stop and start the EC2 instance -> create the role -> select the AWS service Lambda -> attach the created policy -> while creating
+      go to cloudwatch -> rules -> click on schedule and schedule the time -> click on target and select lambda function (have to mention action parameter whether
+      start or stop)
+•   How to attach AWS SSL certificate to ALB ?
+    :- AWS certificate manager -> request a certificate -> go to ALB -> chosse listener -> click on add listener -> choose protol HTTPS -> default action forward to 
+       add application -target group -> at default SSL certificate choose From ACM and select certificate.
+       
+AWS Interview questions:- 
+  
+  can we attach S3 to EC2 instance if not why?
+    aws s3 sync s3://remote_S3_bucket local_directoryaws
+    
+  how can we attach EFS to EC2 instance?
+    create an EFS,  Configure file system settings page, for Throughput mode, choose Bursting. For Performance mode, choose General Purpose
+    while creating an instance at the configuration instance settings, add the filesystem that we created. once log in to the instance, hit the command
+      df -T -h to check whether it is mounted or not.
+      
+  How to clear the disk space in Linux?
+    df -Th -> to check the filesystems 
+    yum autoremove -> to remove the unwanted packages on linux
+    yum clean all  -> to cean the chache data
+  removed the unused installed packages
+    rpm -qa -> to list the packages
+    yum remove <package name> -y
+    
+ if CPU goes above of set thresold, what could be the reason and what should be the troubleshoot action?
+    cat /proc/loadavg -> to check the cpu utilization
+    cloudwatch - create alaram - all metrics - ec2 metrics - per instance metrics - define the thresold value
+    under notifications - chose in alaram - select an SNS topic to notify when alaram is in alaram state
+    
+how to check disk read and write commands what is the command?
+  iostat
+  
+How to connect to VPC on different region?
+  VPC peering
+  
+How to distribute application load in different region?
+   Route53 >> global load balancer 
+   
+ cron job format
+ minute, Hour, day of the month, month, day of the week.
+ 
+ How to host static website on S3?
+  create bucket with the same name as static website
+  properties - enable static website hosting - give the index.html file
+  permissions - enable the public access
+
+what is the difference between vertical and horizonal scaling?
+  RDS and EC2
+Vertical Scaling :- 
+  - Vertical scaling is the most straightforward approach to adding more capacity in your database.
+  - Vertical scaling is suitable if you can’t change your application and database connectivity configuration.
+  
+Horizontal Scaling:
+  - Horizontal scaling increases performance by extending the database operations to additional nodes. 
+  - You can choose this option if you need to scale beyond the capacity of a single DB instance.
+  - To scale your read operations, you horizontally scale your database through read replicas.
+  - When you create a read replica, Amazon RDS creates read-only copies of your database and manages the asynchronous replication from the primary database. 
+  
+what are the advantages of cloud computing?
+  - Instead of having to invest heavily in data centers and servers before you know how you’re going to use them, 
+    you can pay only when you consume computing resources, and pay only for how much you consume.
+  - Increase speed and agility – In a cloud computing environment, new IT resources are only a click away, 
+    which means that you reduce the time to make those resources available to your developers from weeks to just minutes.
+  - Easily deploy your application in multiple regions around the world with just a few clicks. 
+    This means you can provide lower latency and a better experience for your customers at minimal cost.
+
+what are the advantages of DevOps?
+technical benefits
+  faster software delivery
+  faster problem remediation
+  more time to innovate rather than fix or maintain
+  
+Cultural benefits
+  improved communication and collaboration
+  greater professional opportunities
+  
+what is edge computing, can you give me one example?
+  
+Cloud computing deployment models?
+Cloud:- 
+  A cloud based application is fully deployed in the cloud and all parts of the application run in the cloud.
+Hybrid:- 
+  A hybrid deployment is way to connect infrastructure and application between cloud based resources and existing resources
+  that are not located in the cloud.
+On-premises:- 
+  Deploying resources on-premises, using virtualization and resource management tool, is sometimes called "private cloud"
+  
+what is shared responsibility model ?
+AWS responsibility Security of the Cloud:-
+  AWS is responsible for protecting the infrastructure that runs all of the services offered in the AWS Cloud. 
+  This infrastructure is composed of the hardware, software, networking, and facilities that run AWS Cloud services.
+Customer responsibility Security in the Cloud:-
+  Customer responsibility will be determined by the AWS Cloud services that a customer selects.
+  This determines the amount of configuration work the customer must perform as part of their security responsibilities.
+  For example, a service such as Amazon Elastic Compute Cloud (Amazon EC2) is categorized as Infrastructure as a Service (IaaS) and, 
+  as such, requires the customer to perform all of the necessary security configuration and management tasks.
+  
+cloud computing models?
+IaaS:-
