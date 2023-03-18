@@ -245,9 +245,22 @@ Encryption: encrypt an unencrypted EBS volume
   :- Helps you increase storage on your RDS DB instance dynamically
   :- When RDS detects you are running out of free database storage, it scales automatically
   :- Read replicas are used for SELECT (=read) only kind of statements (not INSERT, UPDATE, DELETE)
+  :- Read replica be set up for multi AZ for disaster recovery
   :- Possibility to encrypt the master & read replicas with AWS KMS - AES-256 encryption
   :- Encryption has to be defined at launch time 
   :- Aurora can have 15 replicas while MySQL has 5, and the replication process is faster (sub 10 ms replica lag)
+  
+* what is the difference between read replica and multi AZ
+  Multi AZ:
+   :- Replication to a standby replica is synchronous which is highly durable.
+   :- It reduces the impact of maintenance. RDS performs maintenance on the standby first, promotes the standby to primary master, 
+      and then performs maintenance on the old master which is now a standby replica.
+ Read replica:
+   :- enable you to create one or more read-only copies of your database instance within the same AWS Region or in a different AWS Region to increase the scalability.
+   :- Read Replicas helps in decreasing load on the primary DB by serving read-only traffic.
+   :- Read Replica can be manually promoted as a standalone database instance.
+   :- You can have up to five Read Replicas per master, each with own DNS endpoint.  Unlike a Multi-AZ standby replica, you can connect to each Read Replica
+      and use them for read scaling.
   
   <== Route53 ==>
   :- Why Route 53? 53 is a reference to the traditional DNS port
