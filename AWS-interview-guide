@@ -248,6 +248,7 @@ Encryption: encrypt an unencrypted EBS volume
   :- Read replica be set up for multi AZ for disaster recovery
   :- Possibility to encrypt the master & read replicas with AWS KMS - AES-256 encryption
   :- Encryption has to be defined at launch time 
+  :- To encrypt an un-encrypted database go through a DB snapshot restore as encrypted.
   :- Aurora can have 15 replicas while MySQL has 5, and the replication process is faster (sub 10 ms replica lag)
   
 * what is the difference between read replica and multi AZ
