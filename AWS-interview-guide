@@ -172,6 +172,7 @@ Encryption: encrypt an unencrypted EBS volume
       (example: Docker & Amazon ECS)
     • ALB can route to multiple target groups
     • Health checks are at the target group level
+    > listeners -> rules -> manager rules -> insert rule - to route traffic to path based routing
     
  <= Network Load Balancer ==>
     • Network load balancers (Layer 4)
