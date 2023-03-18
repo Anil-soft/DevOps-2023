@@ -96,6 +96,9 @@ Which purchasing option is right for me?
 :- Make a backup (snapshot) of your EBS volume at a point in time
 :- Not necessary to detach volume to do snapshot, but recommended
 :- Can copy snapshots across AZ or Region
+:- Recycle Bin-  where we protect EBS snapshots and AMI from accidental deletion.
+:- EBS snapshots can be created by AMI
+:- We can launch an instance through EBS snapshot by creatig image out of EBS snapshot.
 
 <== AMI Overview ==>
 :- Amazon Machine Image are a customization of an EC2 instance
