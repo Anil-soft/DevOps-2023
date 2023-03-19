@@ -273,6 +273,8 @@ Encryption: encrypt an unencrypted EBS volume
     • CNAME – maps a hostname to another hostname
     • NS – Name Servers for the Hosted Zone
     • Control how traffic is routed for a domain
+    > will cache the result for the TTL of the record ( time to live )
+    
 • CNAME
   • Points a hostname to any other hostname. (app.mydomain.com => blabla.anything.com)
 • Alias 
