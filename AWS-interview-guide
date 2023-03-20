@@ -307,8 +307,15 @@ Routing Policies – Latency-based
 :- Buckets are defined at the region level
 :- Max Object Size is 5TB (5000GB)
 :- If uploading more than 5GB, must use “multi-part upload”
+
+Buckuet policies:-
+  - click on the bucket -> permissons -> generate the policy in json format and give that policy in bucket policy
+  
+static website hosting:- 
+  - click on the bucket -> properties -> go to the static website hosting and enable the static website and upload the index.html file.
+  
 • Amazon S3 -Versioning
-  • It is enabled at the bucket leve
+  • It is enabled at the bucket level
   • Any file that is not versioned prior to enabling versioning will have version “null”
   • Suspending versioning does not delete the previous versions
 • S3 Encryption for Objects
@@ -340,7 +347,7 @@ Routing Policies – Latency-based
 • S3 Access Logs
   :- Click on the bucket -> server access logging -> edit -> enable and select the bucket that logs to be stored
 • S3 Replication
-  :- Click on bukcet -> management -> Create replication -> Enable -> choose destination -> 
+  :- Click on bukcet -> management -> Create replication rule -> Enable -> choose destination -> 
 
 • AWS CloudFront
   :- Improves read performance, content is cached at the edge.
