@@ -347,6 +347,8 @@ static website hosting:-
   :- Click on the bucket -> server access logging -> edit -> enable and select the bucket that logs to be stored
 • S3 Replication
   :- Click on bukcet -> management -> Create replication rule -> Enable -> choose destination -> 
+  S3 lifecycle management
+  :- click on the bucket -> management -> create lifecycle rule
 
 • AWS CloudFront
   :- Improves read performance, content is cached at the edge.
