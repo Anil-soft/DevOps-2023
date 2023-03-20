@@ -24,6 +24,7 @@
   :- High frequency online transaction processing (OLTP) systems
   :- Data warehousing applications
   
+  
 <== Classic Ports to know ==>
 :- 22 = SSH (Secure Shell) - log into a Linux instance
 :- 21 = FTP (File Transfer Protocol) – upload files into a file share 
