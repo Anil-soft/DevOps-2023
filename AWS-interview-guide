@@ -331,14 +331,13 @@ static website hosting:-
   • After activating, only new objects are replicated
   • If bucket 1 has replication into bucket 2, which has replication into bucket 3
   • Then objects created in bucket 1 are not replicated to bucket 3
+  
 • S3 Storage Classes
-  • Amazon S3 Standard - General Purpose
-  • Amazon S3 Standard-Infrequent Access (IA)
-  • Amazon S3 One Zone-Infrequent Access
-  • Amazon S3 Glacier Instant Retrieval
-  • Amazon S3 Glacier Flexible Retrieval
-  • Amazon S3 Glacier Deep Archive
-  • Amazon S3 Intelligent Tiering
+  - standard
+  - intelligent tiering 
+  -  standard - IA
+  - One zone - IA
+  - Glacier
   
 • S3 Versioning
   :- click on the bucket -> properties -> bucket versioning enable -> enable versioning
