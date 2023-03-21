@@ -350,6 +350,8 @@ static website hosting:-
   :- Click on bukcet -> management -> Create replication rule -> Enable -> choose destination -> 
   S3 lifecycle management
   :- click on the bucket -> management -> create lifecycle rule
+  S3 pre signed url
+  :- click on the S3 bucket ->  object actions -> share with a presigned url -> define the time interval
 
 • AWS CloudFront
   :- Improves read performance, content is cached at the edge.
