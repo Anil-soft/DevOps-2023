@@ -511,6 +511,7 @@ AWS Interview questions:-
     rpm -qa -> to list the packages
     yum remove <package name> -y
     
+    
  if CPU goes above of set thresold, what could be the reason and what should be the troubleshoot action?
     cat /proc/loadavg -> to check the cpu utilization
     cloudwatch - create alaram - all metrics - ec2 metrics - per instance metrics - define the thresold value
