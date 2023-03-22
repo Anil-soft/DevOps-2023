@@ -352,6 +352,8 @@ static website hosting:-
   :- click on the bucket -> management -> create lifecycle rule
   S3 pre signed url
   :- click on the S3 bucket ->  object actions -> share with a presigned url -> define the time interval
+  How to get notified when an event occurs to the bucket ?
+  :- click on the S3 bucket -> properties -> events -> select the events and choose send to SNS topic
 
 • AWS CloudFront
   :- Improves read performance, content is cached at the edge.
@@ -489,6 +491,10 @@ web ACL -> create the web acl -> select the resource which is to be protected ->
    :- create a policy that allows stop and start the EC2 instance -> create the role -> select the AWS service Lambda -> attach the created policy -> while creating
       go to cloudwatch -> rules -> click on schedule and schedule the time -> click on target and select lambda function (have to mention action parameter whether
       start or stop)
+   How to get notified when EC2 instance state gets changed?
+   :- Create SNS topic -> add the subscription -> go to cloudwatch -> events -> event pattern -> define the service name and event type and select ec2 instance
+      state notification -> at the specific states select the states -> at the target select the SNS topic
+   
 •   How to attach AWS SSL certificate to ALB ?
     :- AWS certificate manager -> request a certificate -> go to ALB -> chosse listener -> click on add listener -> choose protol HTTPS -> default action forward to 
        add application -target group -> at default SSL certificate choose From ACM and select certificate.
