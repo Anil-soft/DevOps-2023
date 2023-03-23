@@ -471,6 +471,29 @@ cloudwatch logs
 
 <== AWS Interview Questions ==>
 
+who do you scale your application automatically?
+ - create the elastic load balancer and configure with the auto scaling.
+ 
+How do you disaster recovery for your cloud application?
+ - Have the two load balancers on two different regions and configure the endpoint with Route53 and schedule the automatic backups.
+ 
+How to secure your application on AWS cloud?
+  - use KMS, firewall and WAF, ACM.
+  
+what is cloud computing?
+ - cloud computing is the on demanding delivery of IT resources over the internet with pay-as-you-go pricing. instead of buying, owning, and maintaining 
+   physical data centers and servers, you can access technology services such as computing power storage and databases services on an as-needed basis from 
+   a cloud provider like AWS.
+  
+what are the advantages of cloud computing?
+  - Instead of having to invest heavily in data centers and servers before you know how you’re going to use them, 
+    you can pay only when you consume computing resources, and pay only for how much you consume.
+  - Increase speed and agility – In a cloud computing environment, new IT resources are only a click away, 
+    which means that you reduce the time to make those resources available to your developers from weeks to just minutes.
+  - Easily deploy your application in multiple regions around the world with just a few clicks. 
+    This means you can provide lower latency and a better experience for your customers at minimal cost
+
+
 How to create the automated backups for instance or volumes
 go to lifecycle manager -> select the instance or volume -> select the tag -> schedule the time 
 
@@ -498,8 +521,6 @@ web ACL -> create the web acl -> select the resource which is to be protected ->
 •   How to attach AWS SSL certificate to ALB ?
     :- AWS certificate manager -> request a certificate -> go to ALB -> chosse listener -> click on add listener -> choose protol HTTPS -> default action forward to 
        add application -target group -> at default SSL certificate choose From ACM and select certificate.
-       
-AWS Interview questions:- 
   
   can we attach S3 to EC2 instance if not why?
     aws s3 sync s3://remote_S3_bucket local_directoryaws
@@ -552,14 +573,6 @@ Horizontal Scaling:
   - To scale your read operations, you horizontally scale your database through read replicas.
   - When you create a read replica, Amazon RDS creates read-only copies of your database and manages the asynchronous replication from the primary database. 
   
-what are the advantages of cloud computing?
-  - Instead of having to invest heavily in data centers and servers before you know how you’re going to use them, 
-    you can pay only when you consume computing resources, and pay only for how much you consume.
-  - Increase speed and agility – In a cloud computing environment, new IT resources are only a click away, 
-    which means that you reduce the time to make those resources available to your developers from weeks to just minutes.
-  - Easily deploy your application in multiple regions around the world with just a few clicks. 
-    This means you can provide lower latency and a better experience for your customers at minimal cost.
-
 what are the advantages of DevOps?
 technical benefits
   faster software delivery
