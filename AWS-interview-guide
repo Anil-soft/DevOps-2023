@@ -471,6 +471,18 @@ cloudwatch logs
 
 <== AWS Interview Questions ==>
 
+what is the difference between serverless and containers?
+Containers:-
+ - Containers allow applications to be packaged, separated from the underlying infrastructure, and deployed consistently in any environment.
+ - Containers can be deployed on bare metal servers, in cloud VMs or specialized container instances, or via managed services.
+ - Container engines run containers based on images
+ 
+Serverless:-
+ - This code is packaged as a serverless function, and invoked by the serverless runtime as many times as necessary to serve incoming requests.
+ - in a serverless architecture, the customer is only responsible for providing the serverless function, and is not aware of the underlying compute resources. 
+ - The serverless runtime provisions server resources automatically, and customers are billed according to the number of times and the 
+   duration their function actually ran.
+
 who do you scale your application automatically?
  - create the elastic load balancer and configure with the auto scaling.
  
