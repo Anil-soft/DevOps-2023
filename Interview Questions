@@ -7,6 +7,12 @@ what are the uses of parameters and how to do build parameterized ?
   - A build parameter allows us to pass data into our Jenkins jobs.
   - Using build parameters, we can pass any data we want: git branch name, secret credentials, hostnames and ports, and so on.
   - Any Jenkins job or pipeline can be parameterized. All we need to do is check the box on the General settings tab, “This project is parameterized”.
+  Types of parameters:- Boolean parameter, choice parameter, credentials parameter, file parameter, Git parameter.
+  
+ what are the environment variables in jenkins?
+  - Environment variables are global key-value pairs Jenkins can access and inject into a project. 
+  - Use Jenkins environment variables to avoid having to code the same values for each project
+
   
   
    
