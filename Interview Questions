@@ -10,7 +10,7 @@ what are the uses of parameters and how to do build parameterized ?
   Types of parameters:- Boolean parameter, choice parameter, credentials parameter, file parameter, Git parameter.
   
  what are the environment variables in jenkins?
-  - Environment variables are global key-value pairs Jenkins can access and inject into a project. 
+  - Environment variables are predetermined values, Environment variables are global key-value pairs Jenkins can access and inject into a project. 
   - Use Jenkins environment variables to avoid having to code the same values for each project
 
   
