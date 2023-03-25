@@ -1,0 +1,12 @@
+What is jenkins remote access API?
+  - install the plugin called "Build authorization token trigger"
+  - on jenkins at the build triggers enable the option "build this job remotely"
+  - demo url "http://localhost:8080/view/CodeBook/job/Job1/build?token=12345"
+  
+what are the uses of parameters and how to do build parameterized ?
+  - A build parameter allows us to pass data into our Jenkins jobs.
+  - Using build parameters, we can pass any data we want: git branch name, secret credentials, hostnames and ports, and so on.
+  - Any Jenkins job or pipeline can be parameterized. All we need to do is check the box on the General settings tab, “This project is parameterized”.
+  
+  
+   
