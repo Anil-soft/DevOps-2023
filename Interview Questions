@@ -44,6 +44,16 @@ what is the difference between docker and virtual machine ?
      - The OS is abstracted via containers rather than the hardware. 
      - With the use of containers, a developer can package up a program with all of its constituent elements, 
        including libraries and other dependencies, and deliver it as a single package. 
+       
+ what is git runner ?
+   - GitHub offers hosted virtual machines to run workflows.
+   - The virtual machine contains an environment of tools, packages, and settings available for GitHub Actions to use.
+   - For example, a runner can clone your repository locally, install testing software, and then run commands that evaluate your code.
+   - GitHub provides runners that you can use to run your jobs, or you can host your own runners.
+   - Each GitHub-hosted runner is a new virtual machine (VM) hosted by GitHub with the runner application,
+     and other tools preinstalled, and is available with Ubuntu Linux, Windows, or macOS operating systems.
+   - When the job begins, GitHub automatically provisions a new VM for that job. All steps in the job execute on the VM, 
+     allowing the steps in that job to share information using the runner's filesystem.
 
   
   
