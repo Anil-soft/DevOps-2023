@@ -267,9 +267,38 @@ handlers:
         name: httpd
         state: restarted
         
+How to executes ansible tasks in paralell ?
+  - 
+  
+Explain about ansible tags ?
+ - If you have a large playbook, it becomes useful to be able to run only a specific part of it rather than running everything in the playbook. 
  
-
-
+- hosts: webservers
+  become: True
+  tasks:
+    - name: install packages
+      yum:
+        name: httpd
+        state: present
+      tags:
+        - install
+    - name: start apache server
+      service:
+         name: httpd
+         state: started
+         enable: True
+      tags:
+        - start
+    - name: deploy static website
+      copy:
+        src: index.html
+        dest: /var/www/html/
+      tags:
+        - deploy
+        
+    ansible-playbook apache.yaml --tags=install,start
+    ansible-playbook apache.yaml --skip-tags=install
+     
 
 
 
