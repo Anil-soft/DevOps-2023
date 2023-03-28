@@ -237,3 +237,57 @@
   mysql_db:
     name: "mydatabase"
     state: "present"
+  
+do you think ansible is better than other configuration management tool ? if yes, why?
+ - Ansible is agent lesst, if we configure hundreds of virtual machines, to configure all of the these servers no need to install
+   any agent on the servers. you can make communication between the servers through SSH.
+ - Ansible uses yaml scripting which very easy to use.
+
+What is dyamic inventory?
+ - 
+ 
+what is ansible galaxy and how to use it?
+ - ansible galaxy is used to create the roles 
+  $ ansible-galaxy install namespace.role_name
+  
+what are handlers in ansible and  why are they used ?
+ - Sometimes you want a task to run only when a change is made on a machine.
+ -  For example, you may want to restart a service if a task updates the configuration of that service, but not if the configuration is unchanged. 
+ -  Ansible uses handlers to address this use case. Handlers are tasks that only run when notified.
+Example:- 
+ - name: Write the apache config file
+      ansible.builtin.template:
+        src: /srv/httpd.j2
+        dest: /etc/httpd.conf
+      notify:
+      - Restart apache
+handlers:
+    - name: Restart apache
+      ansible.builtin.service:
+        name: httpd
+        state: restarted
+        
+ 
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
