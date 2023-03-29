@@ -89,9 +89,19 @@ what is the difference between docker and virtual machine ?
   30. what is container orchestration ?
   31. how the two containers will communicate each other and how can you ping them from one container to another container?
   32. i have one web server container and another one is postgress container, how can i communicate from web server contaier to postgress?
-  33. 
-  . how can you do autoscaling in kubernetes?
-  32. 
+  33. what are the networks are available on docker and how can you differentiate them?
+  34. How can you upgrade latest image to the container?
+  35. what is the difference between kubernetes and docker?
+  36. how can you do autoscaling in kubernetes?
+  37. what are the kubernetes serices?
+  38. how the communication happen from one pod to another pod in kubernetes
+  39. How can you differentiate the containers in pod and how the containers communicate through one contain to another container
+  40. How can you secure your kubernetes application ?
+  41. what is kube proxy and kubelet?
+  42. How the traffic will go to the pod, tell me the flow and explain?
+  43. what is container resource monitoring?
+  44. How can you optimize the kubernetes?
+  45.
   
   
   
