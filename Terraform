@@ -286,6 +286,42 @@ How do you handle secrets in terraform ?
 What is terraform state rollback?
  - 
  
+How to import existing infrastructure under terraform control
+ - use the terraform import concept, i will take the existing infrastructure into terraform control.
+ - first we need to create the config file with the values of existing infra
+ $ terraform import aws_instance.myvm <Instance ID>
+    
+    terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.0"
+    }
+  }
+}
+
+resource "aws_instance" "myvm" {
+ ami           = "ami-00f22f6155d6d92c5"
+ instance_type = "t2.micro"
+ 
+ tags = {
+     "Name": "MyVM"
+ }
+}
+
+How to print terraform output values
+ $ terraform output
+output "instance_ip_addr" {
+  value       = aws_instance.server.private_ip
+  description = "The private IP address of the main server instance."
+}
+
+output "lb_address" {
+  value = aws_alb.web.public_dns
+}
+
+
+
  
  
  
