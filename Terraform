@@ -30,6 +30,11 @@
  - terrraform workspace new dev => to create the new workspace
  - terraform workspace select prod => to switch the workspace
  
+ resource "aws_instance" "example" {
+  instance_type = "t2.micro"
+  ami           = var.image_id
+}
+ 
  * provider 
  
     provider "aws" {
@@ -320,6 +325,19 @@ output "lb_address" {
   value = aws_alb.web.public_dns
 }
 
+terraform variables 
+
+variable.tf
+variable "access_key" {}
+variable "secret_key" {}
+variable "region" {
+ default="us-east-1"
+  }
+  
+terraform.tfvars
+access_key=""
+secret_key=""
+region="us-east-1"
 
 
  
