@@ -97,12 +97,26 @@ what is the difference between docker and virtual machine ?
      Internet is used to comminate with the network for public servers.
      
   5. How the frontend web server can communicate with database server?
+  
   6. How the 2 VPCs can communicate each other from 2 different accounts?
+  
   7. Whenever any instance state gets changed we need get notified how can you configure that?
   8. How can you access RDS instance through EC2 instance and fetch the information which is stored in RDS?
+     first you need to install mysql client on linux machine
+     $ sudo yum install mysql 
+     allow the 3306 port number on RDS SG and Instance SG
+     $ mysql -h endpoint -P port -u masteruser -p 
+     
   9. Explain about API Gateway how did you use in your project?
-  10. what are the limitations of lambda and explain about lambda?
   
+  10. what are the limitations of lambda and explain about lambda?
+      The disk space (ephemeral) is limited to 512 MB.
+      The default deployment package size is 50 MB.
+      The memory range is from 128 to 3008 MB.
+      The maximum execution timeout for a function is 15 minutes*
+      Request and response (synchronous calls) body payload size can be up to to 6 MB.
+      Event request (asynchronous calls) body can be up to 128 KB.
+      
   11. what are the DNS records ?
        A – maps a hostname to IPv4
        AAAA – maps a hostname to IPv6
@@ -127,6 +141,7 @@ what is the difference between docker and virtual machine ?
     • NLB are used for extreme performance, TCP or UDP traffic
     
   13. what could be the reasons of not able to SSH into EC2 instance?
+ 
   
   14. I have one server on production env, i have lost the pem.key so how can i login to that instance?
       take the snapshot of the EBS volume, and create volume through snapshot and take snapshot of the AMI,
@@ -137,19 +152,66 @@ what is the difference between docker and virtual machine ?
        /etc/passwd ( usernames, encrypted passwords, user id, users group id, the /home directory of the user, users login shell )
        
   17. which file you need to check that how may users have access to the servers?
+      
   18. what proc dir will be containing?
+      - It contains useful information about the processes that are currently running, it is regarded as control and information center for kernel.
+      - ls -ltr /proc/7494
+      - Now check the highlighted process with PID=7494, you can check that there is entry for this process in /proc file system.
+      - /proc/PID/stat -> Process status
+      - /proc/PID/statm -> Process memory status information.
+      - /proc/PID/mem	 -> Memory held by this process.
+  
   19. am on the the root user and i need to do some tasks with the particular user, how can i do that?
+      sudo command -> Run command as root.
+      sudo -u root command -> Run command as root.
+      sudo -u user command -> Run command as user.
+      sudo su -> Switch to the superuser account.
+      sudo su -  -> Switch to the superuser account with root's environment.
+      sudo su - username -> Switch to the username's account with the username's environment.
+      sudo -s -> Start a shell as root
+      sudo -u root -s -> Same as above.
+      sudo -u user -s -> Start a shell as user.
+      
   20. explain about the terraform modules ?
+  
   21. you have written terraform script to provision s3 bucket and ec2 instance and subnets, i need to create only ec2 instance how can i do that?
+  
   22. explain about META arguements in terraform?
+  
   23. you have provision the 5 instance and only 1 instance i need to destroy how can i do that?
-  24. How can you attach role to the existin ec2 instance.
+  
+  24. How can you attach role to the existing ec2 instance.
+      From the Actions menu, choose Instance Settings → Attach/Replace IAM role.
+      
   25. you have written code for the ec2 instance in different file and how can you define that in main.tf file?
+  
   26. How can you store the secrets in terraform?
+  
   27. There is a file only you can modify that file linux, how can you do that?
+      change the ownership of the file
+      $ sudo chown someuser:selectgroup /the/file 
+      
   28. explain about git rebase?
+  
   29. i have made the changes on one branch later i got to know i have done the changes on wrong branch, how can i made changes on new branch?
+      if you have already commited then hit the command to reset 
+      undo and commit to new branch
+      $ git reset HEAD~1
+      Move Commits to the Other Branch
+      $ git log
+      $ git reset --hard HEAD~1
+      $ git checkout -b newbranch
+      $ git reset --hard < commit_id >
+      if you have not commited to and move the changes to other baranch
+      $ git stash
+      $ git checkout new_branch
+      $ git stash pop   
+      $ git rebase -i HEAD~5 -> sqush commits into one
+      $ git reset --hard HEAD~1 -> to delete the commit
+      
   30. what is container orchestration ?
+      Container orchestration automates the deployment, management, scaling, and networking of containers.
+      
   31. how the two containers will communicate each other and how can you ping them from one container to another container?
   32. i have one web server container and another one is postgress container, how can i communicate from web server contaier to postgress?
   33. what are the networks are available on docker and how can you differentiate them?
