@@ -173,17 +173,27 @@ what is the difference between docker and virtual machine ?
       sudo -u user -s -> Start a shell as user.
       
   20. explain about the terraform modules ?
-  
+      
   21. you have written terraform script to provision s3 bucket and ec2 instance and subnets, i need to create only ec2 instance how can i do that?
   
   22. explain about META arguements in terraform?
   
   23. you have provision the 5 instance and only 1 instance i need to destroy how can i do that?
-  
+        $ terraform state list
+        $ terraform destroy -target RESOURCE_TYPE.NAME
+        $ terraform destroy -target RESOURCE_TYPE.NAME -target RESOURCE_TYPE2.NAME
+      How to delete all resources except one?
+        terraform state rm <resource_to_be_deleted> 
+        
   24. How can you attach role to the existing ec2 instance.
       From the Actions menu, choose Instance Settings → Attach/Replace IAM role.
       
   25. you have written code for the ec2 instance in different file and how can you define that in main.tf file?
+  
+      module "ec2-instance_example_complete" {
+  source  = "terraform-aws-modules/ec2"
+  version = "4.3.0"
+}
   
   26. How can you store the secrets in terraform?
   
@@ -227,45 +237,4 @@ what is the difference between docker and virtual machine ?
   41. what is kube proxy and kubelet?
   42. How the traffic will go to the pod, tell me the flow and explain?
   43. what is container resource monitoring?
-  44. How can you optimize the kubernetes?
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-   
+  44. How can you optimize the kubernetes  
