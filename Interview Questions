@@ -54,7 +54,14 @@ what is the difference between docker and virtual machine ?
      and other tools preinstalled, and is available with Ubuntu Linux, Windows, or macOS operating systems.
    - When the job begins, GitHub automatically provisions a new VM for that job. All steps in the job execute on the VM, 
      allowing the steps in that job to share information using the runner's filesystem.
-
+     
+ What is S3 bucket versioning and how can you demonstrate this ?
+   :- click on the bucket -> properties -> bucket versioning enable -> enable versioning
+   :- Suppose you have hosted static website with the image, after that you have added new image then the old image is not going to replace
+      it is just going to create the new version of an object
+   :- once you hide versions and delete the image, i won't going to be deleted it's just going to mark as delete marker, and image will not be available.
+   :- once you show the versions, it will show delete marker and image versions will be available
+   :- if you want rollback to previous versions, you can click on show versions and delete the latest version.
  2nd interview
  
   1. Explain about S3 lifecycle and how can you move from one storage class to another?
@@ -66,7 +73,7 @@ what is the difference between docker and virtual machine ?
         Expire current versions of objects 
          - This configuration allows users to automatically expire the current version of the Amazon S3 objects stored 
            within the bucket after a specified number of days
-         - for version eabled buckets, amazon s3 adds a delete marker an current version of an object will be retained aa previous version.
+         - for version eabled buckets, amazon s3 adds a delete marker as current version of an object will be retained as previous version.
            for non current version S3 will premanently removes the object. 
        Permanently delete previous versions of objects
        Storage classes
@@ -78,20 +85,57 @@ what is the difference between docker and virtual machine ?
         Add transition to and select the storage class and Days after object creation, enter the number of days after creation to transition the object
         
   2. How can you access the S3 bucket within the VPC?
+  
   3. we have multiple users only one person can access to S3 bucket, how can you do that?
+  
   4. explin about what is the difference between NAT GW and Internet GW and how can you configure them?
+     If any private server wants to communicate with the internet, then we have to create NAT gateway have to communicate
+     with the internet through NAT gateway.
+     create NAT gateway on public subnet and allocate the elastic IP. in in routing table, click routers and add that NGW
+     
+     we can create an internet gateway and attach it to the VPC and in routing table, click routers and add that IGW.
+     Internet is used to comminate with the network for public servers.
+     
   5. How the frontend web server can communicate with database server?
   6. How the 2 VPCs can communicate each other from 2 different accounts?
   7. Whenever any instance state gets changed we need get notified how can you configure that?
   8. How can you access RDS instance through EC2 instance and fetch the information which is stored in RDS?
   9. Explain about API Gateway how did you use in your project?
   10. what are the limitations of lambda and explain about lambda?
+  
   11. what are the DNS records ?
+       A – maps a hostname to IPv4
+       AAAA – maps a hostname to IPv6
+       CNAME – maps a hostname to another hostname
+       
   12. what is the difference between ALB and NLB?
+      <== Application Load Balancer ==>
+    • Application load balancers is Layer 7 (HTTP)
+    • Load balancing to multiple HTTP applications across machines 
+      (target groups)
+    • Routing based on path in URL (example.com/users & example.com/posts)
+    • Routing based on hostname in URL (one.example.com & other.example.com)
+    • ALB are a great fit for micro services & container-based application 
+      (example: Docker & Amazon ECS)
+    • ALB can route to multiple target groups
+    • Health checks are at the target group level
+    
+ <= Network Load Balancer ==>
+    • Network load balancers (Layer 4)
+    • Forward TCP & UDP traffic to your instances
+    • Handle millions of request per seconds
+    • NLB are used for extreme performance, TCP or UDP traffic
+    
   13. what could be the reasons of not able to SSH into EC2 instance?
+  
   14. I have one server on production env, i have lost the pem.key so how can i login to that instance?
+      take the snapshot of the EBS volume, and create volume through snapshot and take snapshot of the AMI,
+      whille creating new instance, creat through AMI that we took snapshot from existing VM and attach volume the new instance.
+      
   15. what are the difference ways to login to instance apart from SSH?
   16. which file will be having all the user information ?
+       /etc/passwd ( usernames, encrypted passwords, user id, users group id, the /home directory of the user, users login shell )
+       
   17. which file you need to check that how may users have access to the servers?
   18. what proc dir will be containing?
   19. am on the the root user and i need to do some tasks with the particular user, how can i do that?
