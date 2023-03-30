@@ -192,6 +192,8 @@ what is the difference between docker and virtual machine ?
       $ sudo chown someuser:selectgroup /the/file 
       
   28. explain about git rebase?
+      - Rebasing is the process of moving or combining a sequence of commits to a new base commit.
+      - The primary reason for rebasing is to maintain a linear project history.  
   
   29. i have made the changes on one branch later i got to know i have done the changes on wrong branch, how can i made changes on new branch?
       if you have already commited then hit the command to reset 
@@ -226,7 +228,7 @@ what is the difference between docker and virtual machine ?
   42. How the traffic will go to the pod, tell me the flow and explain?
   43. what is container resource monitoring?
   44. How can you optimize the kubernetes?
-  45.
+  
   
   
   
