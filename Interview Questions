@@ -400,6 +400,7 @@ volumes:
 29. why do you use netstat command ?
     to check the ports
 30. what could be the reasons if container is not running up?
+
 31. how to share the information between two tightly coupled containers ?
    using bind mount
 
