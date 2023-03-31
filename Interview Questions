@@ -273,36 +273,135 @@ what is the difference between docker and virtual machine ?
   
 3rd interview ( KANINI )
 1. explain about docker architecture ?
+   - Docker uses a client-server architecture. The Docker client talks to the Docker daemon, 
+   - which does the heavy lifting of building, running, and distributing your Docker containers.
+   - The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon.
+   The Docker daemon
+   - The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. 
+   The Docker client
+   - The Docker client (docker) is the primary way that many Docker users interact with Docker. 
+   - When you use commands such as docker run, the client sends these commands to dockerd, which carries them out.
+   - The docker command uses the Docker API. The Docker client can communicate with more than one daemon.
+   
 2. explain about docker daemon
+   - The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes.
+   
 3. explain about S3 lifecycle policy?
+   - click on the bucket - management -> create lifecycle rule -> select the option ( This rule applies to all objects in the bucket )
+     - To filter a rule by object size, you can check Specify minimum object size, Specify maximum object size, or both options
+     - Under Lifecycle rule actions, choose the actions that you want your lifecycle rule to perform:
+        Transition current versions of objects between storage classes
+        Transition previous versions of objects between storage classes
+        Expire current versions of objects 
+         - This configuration allows users to automatically expire the current version of the Amazon S3 objects stored 
+           within the bucket after a specified number of days
+         - for version eabled buckets, amazon s3 adds a delete marker as current version of an object will be retained as previous version.
+           for non current version S3 will premanently removes the object. 
+       Permanently delete previous versions of objects
+       Storage classes
+        Standard-IA
+        Intelligent-Tiering
+        One Zone-IA
+        S3 Glacier Flexible Retrieval
+        Glacier Deep Archive
+        Add transition to and select the storage class and Days after object creation, enter the number of days after creation to transition the object
+        
 4. what is VPC peering and how can you configure that?
+    
 5. How many S3 buckets can be created per one account?
+   100 S3 buckets
+   
 6. what is blue green deployment strategy ?
+
 7. what is stateless and statefull pods in kubernetes?
+   which pod is having volume attached to it that is stateful container, which is not having volume attached to it that is stateless.
+   
 8. what is git fetch ?
+   - only downloads latest changes into the local repo. it downloads fresh changes that other developers have pushed to the remote repo.
+     it does not merge latest changes to your working dir.
+     
 9. if my origin origin 2 commits beyond the master how to do that?
-10. explain about the docker file structure ?
+
+10. explain about the Dockerfile structure ?
+    FROM centos
+    RUN yum install telnet -y && useradd anil  => to run the command inside the container
+    ENV MYCOURSE=DevOps  => to export the env variables
+    ADD mytarfile.tar /root/  => untar and copy the file
+    COPY mytarfile.tr /root/ => only copy the file
+    USER anil  => run an image with the user anil
+    EXPOSE 80  => to expose the container on port 80 
+    WORKDIR /root/mydir  => to specify the working dir in container
+    ENTRYPOINT ["/bin/bash", "/tmp/script1.sh"]  
+    CMD ["/bin/bash", "/tmp/script1.sh"]
+    
 11. what is the difference between CMD and ENTRYPOINT ?
 12. explain about the docker compose ?
+    Docker Compose is a tool that was developed to help define and share multi-container applications. 
+    docker compose up -d
+    
+    services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
+
+volumes:
+  todo-mysql-data:
+  
 13. what are the different types of jenkins jobs ?
+    Maven job, freestyle job, pipeline job.
+    
 14. what is blue ocean in jenkins ?
 15. what is poll SCM in Jenkins ?
 16. what is multibranch jenkins job?
 17. what is the lifecycle of multibranch jenkins job?
 18. how can you store the credentials in Jenkins?
+    Manage jenkins -> configure credentials -> jenkins -> global tool credentials
+    
 19. what is the default jenkins dir ?
 20. what is the difference between variables and env variables?
 21. how to check the syntax error in terraform?
+    $ terraform validate 
+    
 22. How the two containers will communicate each other ?
+    create the network and attach same network to two containers
+    
 23. what is bridge network and how many networks are there in docker ?
+    bridge network is the default network in the docker.
+    
 24. infrastructure as a service lifecycle.
 25. what is the use of main.tf ?
+    if we want to call any particular module then we can define in main.tf
+    
 26. how to view the more information about pod.
+    $ kubectl describe pod nginx
+    
 27. how can you do the kubernetes setup.
 28. what is telnet and why to use it ?
+    if we can want login to the instance then we should use telnet
+    
 29. why do you use netstat command ?
+    to check the ports
 30. what could be the reasons if container is not running up?
 31. how to share the information between two tightly coupled containers ?
+   using bind mount
 
 
 
