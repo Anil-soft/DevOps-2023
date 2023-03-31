@@ -144,13 +144,16 @@ what is the difference between docker and virtual machine ?
     • NLB are used for extreme performance, TCP or UDP traffic
     
   13. what could be the reasons of not able to SSH into EC2 instance?
- 
+       1. SSH 22 port might not be allowed in security groups
+       2. public ip not assigned to that instance
+       3. public subnets not been associated with the routing table.
   
   14. I have one server on production env, i have lost the pem.key so how can i login to that instance?
       take the snapshot of the EBS volume, and create volume through snapshot and take snapshot of the AMI,
       whille creating new instance, creat through AMI that we took snapshot from existing VM and attach volume the new instance.
       
   15. what are the difference ways to login to instance apart from SSH?
+      
   16. which file will be having all the user information ?
        /etc/passwd ( usernames, encrypted passwords, user id, users group id, the /home directory of the user, users login shell )
        
@@ -178,7 +181,8 @@ what is the difference between docker and virtual machine ?
   20. explain about the terraform modules ?
       
   21. you have written terraform script to provision s3 bucket and ec2 instance and subnets, i need to create only ec2 instance how can i do that?
-  
+      call the terraform ec2 modue in main.tf file.
+      
   22. explain about META arguements in terraform?
   
   23. you have provision the 5 instance and only 1 instance i need to destroy how can i do that?
@@ -252,12 +256,19 @@ what is the difference between docker and virtual machine ?
       $ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
       
   37. what are the kubernetes services?
+      ClusterIP. Exposes a service which is only accessible from within the cluster.
+      NodePort. Exposes a service via a static port on each node’s IP.
+      LoadBalancer. Exposes the service via the cloud provider’s load balancer.
+      
   38. how the communication happen from one pod to another pod in kubernetes
   39. How can you differentiate the containers in pod and how the containers communicate through one container to another container
   40. How can you secure your kubernetes application ?
+      RBAC and 
   41. what is kube proxy and kubelet?
   42. How the traffic will go to the pod, tell me the flow and explain?
   43. what is container resource monitoring?
+      Container monitoring is the activity of continuously collecting metrics and tracking the health of containerized applications and microservices environments, 
+      in order to improve their health and performance and ensure they are operating smoothly. 
   44. How can you optimize the kubernetes  
   
 3rd interview ( KANINI )
