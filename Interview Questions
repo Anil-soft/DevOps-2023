@@ -282,7 +282,16 @@ what is the difference between docker and virtual machine ?
 19. what is the default jenkins dir ?
 20. what is the difference between variables and env variables?
 21. how to check the syntax error in terraform?
-22. 
+22. How the two containers will communicate each other ?
+23. what is bridge network and how many networks are there in docker ?
+24. infrastructure as a service lifecycle.
+25. what is the use of main.tf ?
+26. how to view the more information about pod.
+27. how can you do the kubernetes setup.
+28. what is telnet and why to use it ?
+29. why do you use netstat command ?
+30. what could be the reasons if container is not running up?
+31. how to share the information between two tightly coupled containers ?
 
 
 
