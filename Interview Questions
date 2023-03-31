@@ -85,6 +85,9 @@ what is the difference between docker and virtual machine ?
         Add transition to and select the storage class and Days after object creation, enter the number of days after creation to transition the object
         
   2. How can you access the S3 bucket within the VPC?
+      Create one public server and private server attach S3 roles to both of the server, after that go to the VPC endpoints there you select
+      the S3 gateway an create it, after you creating that entrypoint will be attached to routing table, then you will be able to access to the
+      S3 bucket through private server.
   
   3. we have multiple users only one person can access to S3 bucket, how can you do that?
   
@@ -225,16 +228,89 @@ what is the difference between docker and virtual machine ?
       Container orchestration automates the deployment, management, scaling, and networking of containers.
       
   31. how the two containers will communicate each other and how can you ping them from one container to another container?
+      create the docker container in the same network.
+      $ docker run -d --name container1 -p 8001:80 nginx
+      $ docker run -d --name container2 -p 8002:80 nginx
+      $ docker network create mynetwork
+      $ docker network connect mynetwork contaier1
+      $ docker network connect mynetwork conntainer2
+      $ docker network inspect myNetwork
+      $ docker exec -ti web1 ping web2
+      
   32. i have one web server container and another one is postgress container, how can i communicate from web server contaier to postgress?
+  
   33. what are the networks are available on docker and how can you differentiate them?
+      
   34. How can you upgrade latest image to the container?
+      pull the latest image, create container out of it and remove the old pod
+      
   35. what is the difference between kubernetes and docker?
+      docker is the containarized platform, kubernetes is the container orchestration
+      
   36. how can you do autoscaling in kubernetes?
-  37. what are the kubernetes serices?
+      HorizontalPodAutoscaler controls the scale of a Deployment and its ReplicaSet
+      $ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
+      
+  37. what are the kubernetes services?
   38. how the communication happen from one pod to another pod in kubernetes
-  39. How can you differentiate the containers in pod and how the containers communicate through one contain to another container
+  39. How can you differentiate the containers in pod and how the containers communicate through one container to another container
   40. How can you secure your kubernetes application ?
   41. what is kube proxy and kubelet?
   42. How the traffic will go to the pod, tell me the flow and explain?
   43. what is container resource monitoring?
   44. How can you optimize the kubernetes  
+  
+3rd interview ( KANINI )
+1. explain about docker architecture ?
+2. explain about docker daemon
+3. explain about S3 lifecycle policy?
+4. what is VPC peering and how can you configure that?
+5. How many S3 buckets can be created per one account?
+6. what is blue green deployment strategy ?
+7. what is stateless and statefull pods in kubernetes?
+8. what is git fetch ?
+9. if my origin origin 2 commits beyond the master how to do that?
+10. explain about the docker file structure ?
+11. what is the difference between CMD and ENTRYPOINT ?
+12. explain about the docker compose ?
+13. what are the different types of jenkins jobs ?
+14. what is blue ocean in jenkins ?
+15. what is poll SCM in Jenkins ?
+16. what is multibranch jenkins job?
+17. what is the lifecycle of multibranch jenkins job?
+18. how can you store the credentials in Jenkins?
+19. what is the default jenkins dir ?
+20. what is the difference between variables and env variables?
+21. how to check the syntax error in terraform?
+22. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
