@@ -211,6 +211,13 @@ Jenkins interview questions and answers
    before you copy from one server to another server first you need to do SSH connection between the server.
    scp -r <job-name> root@<pub-ip> <dest-dir>
    go to the target jenkins and manage jenkins -> "reload configuration from disk"
+   
+ 4. How to change the default jenkins port ?
+    go to the default jenkins file /etc/default/jenkins
+    change the port in that file
+    $ sudo service jenkins restart
+    $ curl localhost:8090
+    go to security port and allow 8090 port
 	
 
 
