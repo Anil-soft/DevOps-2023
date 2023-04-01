@@ -404,8 +404,17 @@ volumes:
     Maven job, freestyle job, pipeline job.
     
 14. what is blue ocean in jenkins ?
+    - Blue Ocean is a new user experience for Jenkins based on a personalizable, modern design that allows users to graphically create, 
+      visualize and diagnose Continuous Delivery (CD) Pipelines 
+    - Alternative options for Pipeline visualization, such as the Pipeline: Stage View and Pipeline Graph View 
+    
 15. what is poll SCM in Jenkins ?
+    - "Poll SCM" polls the SCM periodically for checking if any changes/ new commits were made and shall build the project 
+       if any new commits were pushed since the last build.
+    - whereas the "build"  shall build the project periodically irrespective to whether or not any changes were made.
+    
 16. what is multibranch jenkins job?
+    
 17. what is the lifecycle of multibranch jenkins job?
 18. how can you store the credentials in Jenkins?
     Manage jenkins -> configure credentials -> jenkins -> global tool credentials
