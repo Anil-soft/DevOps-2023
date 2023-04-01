@@ -312,6 +312,14 @@ what is the difference between docker and virtual machine ?
    100 S3 buckets
    
 6. what is blue green deployment strategy ?
+   - Blue-green deployment is a technique that reduces downtime and risk by running two identical production environments called Blue and Green.
+   - At any time, only one of the environments is live, with the live environment serving all production traffic. 
+     For this example, Blue is currently live and Green is idle
+   - As you prepare a new version of your software, deployment and the final stage of testing takes place in the environment that is not live:
+   - in this example, Green. Once you have deployed and fully tested the software in Green, you switch the router so all incoming requests 
+     now go to Green instead of Blue. Green is now live, and Blue is idle.
+   - This technique can eliminate downtime due to app deployment. In addition, blue-green deployment reduces risk:
+   - if something unexpected happens with your new version on Green, you can immediately roll back to the last version by switching back to Blue.
 
 7. what is stateless and statefull pods in kubernetes?
    which pod is having volume attached to it that is stateful container, which is not having volume attached to it that is stateless.
@@ -335,7 +343,34 @@ what is the difference between docker and virtual machine ?
     CMD ["/bin/bash", "/tmp/script1.sh"]
     
 11. what is the difference between CMD and ENTRYPOINT ?
-12. explain about the docker compose ?
+    CMD
+      vi Dockerfile
+      FROM centos
+      CMD [ "yum", "-y", "install", "git"
+      $ docker build -t demobox .
+      $ docker run demobox yum -y install httpd
+      - CMD command can override git with httpd while executing container
+      CMD [ "yum", "-y", "install", "httpd" ]
+      CMD [ "echo", "Anil" ]
+      - only last command will get executed, it will print only Anil i wil not install httpd 
+    
+    ENTRYPOINT
+      vi Dockerfile
+      FROM centos
+      CMD [ "yum", "-y", "install", "git"
+      $ docker build -t demobox .
+      $ docker run demobox yum -y install httpd
+      - ENTRYPOINT command won't override i will append to the existing command
+        i will install both git and httpd.
+      ENTRYPOINT [ "yum", "-y", "install", "httpd" ]
+      ENTRYPOINT [ "echo", "Anil" ]
+      - only last instruction gets executed
+      ENTRYPOINT [ "yum", "-y", "install", "httpd" ]
+      ENTRYPOINT [ "echo", "Anil" ]
+      $ docker run --entrypoint useradd demobox anil
+      it will update the entrypoint whatever has been mentioned in the entrypoint that won't be executed.
+      
+    12. explain about the docker compose ?
     Docker Compose is a tool that was developed to help define and share multi-container applications. 
     docker compose up -d
     
