@@ -190,9 +190,28 @@ pipeline {
   }
 }
 
+Jenkins interview questions and answers
 
-
-
+1. How to add a user in Jenkins?
+   go to manage jenkins -> Click on Create User -> Enter all the details.
+   
+2. How to take back up and restore jenkins ?
+   install thinbackup plugin
+   create the directory as storage location for backups
+   $ mkdir /apps/jenkins_backup
+   $ chown jenkins:jenkins /apps/jenkins_backup
+   manage jenkins -> Thinbackup -> settings
+     under the settings define the dir for the storage location for backups
+     schedule the time and select the options like { backup usercontent folder, move older backup to zip file, backup plugins archives }
+     
+3. How to copy the jenkins job from one container to another one ?
+   when you install the jenkins it will create a default dir called .jenkins
+   under .jenkins there are some folder like, plugins, jobs, users, war.
+   go to jobs folder, there you will find all the jobs.
+   before you copy from one server to another server first you need to do SSH connection between the server.
+   scp -r <job-name> root@<pub-ip> <dest-dir>
+   go to the target jenkins and manage jenkins -> "reload configuration from disk"
+	
 
 
 
