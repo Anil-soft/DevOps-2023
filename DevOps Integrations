@@ -218,6 +218,10 @@ Jenkins interview questions and answers
     $ sudo service jenkins restart
     $ curl localhost:8090
     go to security port and allow 8090 port
+    
+ 5. what are the steps included in jenkins pipeline?
+    build, test, deploy
+    
 	
 
 
