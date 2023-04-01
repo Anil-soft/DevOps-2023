@@ -203,6 +203,7 @@ what is the difference between docker and virtual machine ?
 }
   
   26. How can you store the secrets in terraform?
+      
   
   27. There is a file only you can modify that file linux, how can you do that?
       change the ownership of the file
