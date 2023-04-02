@@ -153,6 +153,7 @@ what is the difference between docker and virtual machine ?
       whille creating new instance, creat through AMI that we took snapshot from existing VM and attach volume the new instance.
       
   15. what are the difference ways to login to instance apart from SSH?
+      SSH into the server and SSH key based authentication.
       
   16. which file will be having all the user information ?
        /etc/passwd ( usernames, encrypted passwords, user id, users group id, the /home directory of the user, users login shell )
@@ -433,6 +434,11 @@ volumes:
     
 23. what is bridge network and how many networks are there in docker ?
     bridge network is the default network in the docker.
+    - Dockerhost will be having different subnet and container will be having differenet subnet, whenever you create a container
+        a bridge network will automatically create it makes the communication between dockerhost and container, bridge network can be called as
+        docker0.
+     Host network:- when you create a container it will directly bind to the host network like, whatever dockerhost is having ip address same rang
+        of ip address range will get to container. whoever access to host can have access to container as well. this is having some security concerns.
     
 24. infrastructure as a service lifecycle.
 25. what is the use of main.tf ?
@@ -451,6 +457,50 @@ volumes:
 
 31. how to share the information between two tightly coupled containers ?
    using bind mount
+   
+   $ docker run -it --name container1 nginx /bin/bash
+     when you run the container it will creat the docker volume on the host machine under the /var/lib/docker with the name called random has name
+     when you delete the container docker volume also will be wiped off.
+     
+   ananymous volumes
+   $ docker run -it --name container1 -v /data01 nginx /bin/bash -> 
+     volume will not be having any name, you will get one alpha numeric docker volume name
+     /var/lib/docker/volumes/<apha-numeric>/_data/filename
+     when you do docker inspect <apha-numeric>, it will not show on which continer i has been mapped
+     
+  Named volumes
+  $ docker volume create volume1
+  $ docker run -it --name container1 -v volume1:/data01 nginx /bin/bash
+  volume will be mounte to the dir called /data01 
+  the data will be available Docker host under /var/lib/docker/volumes/volume1/_data/filename
+  
+  Bind volumes
+  $ docker run -it --name container1 -v /opt/data:/data01 nginx /bin/bash
+  docker volume will not be created on docker dir called /var/lib/docker/volumes
+  /opt/data dir will be created on docker host and it can be shared with multiple containers like NFS
+  
+ 
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+     
+   
 
 
 
