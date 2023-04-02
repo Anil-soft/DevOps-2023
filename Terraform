@@ -289,6 +289,26 @@ output "fetched_info_from_aws" {
   value = data.aws_instance.myawsinstance
 }
 
+Terraform import
+
+first you write the terraform resource block and hit the command
+
+ resource "aws_instance" "ec2_example" {
+ }
+ 
+$  terraform import aws_instance.ec2_example i-097f1ec37854d01c2
+
+ resource "aws_instance" "ec2_example" {
+   ami            = "ami-06ce824c157700cd2"
+   instance_type  = "t2.micro"
+   tags = {
+     "Name" = "my-test-ec2"
+   }
+ }
+
+ Now you can verify the terraform import by running the command terraform plan and it should not create any more resources 
+$ terraform apply
+
 
 << Terraform interview questions >>
  
