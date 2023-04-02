@@ -241,10 +241,13 @@ what is the difference between docker and virtual machine ?
       $ docker network connect mynetwork conntainer2
       $ docker network inspect myNetwork
       $ docker exec -ti web1 ping web2
-      
-  32. i have one web server container and another one is postgress container, how can i communicate from web server contaier to postgress?
   
   33. what are the networks are available on docker and how can you differentiate them?
+      - Dockerhost will be having different subnet and container will be having differenet subnet, whenever you create a container
+        a bridge network will automatically create it makes the communication between dockerhost and container, bridge network can be called as
+        docker0.
+      Host network:- when you create a container it will directly bind to the host network like, whatever dockerhost is having ip address same rang
+        of ip address range will get to container. whoever access to host can have access to container as well. this is having some security concerns.
       
   34. How can you upgrade latest image to the container?
       pull the latest image, create container out of it and remove the old pod
