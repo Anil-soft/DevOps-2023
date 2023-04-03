@@ -267,11 +267,19 @@ what is the difference between docker and virtual machine ?
       LoadBalancer. Exposes the service via the cloud provider’s load balancer.
       
   38. how the communication happen from one pod to another pod in kubernetes
+      every pod will be having clusterIP, through clusterIP pods communication will happend
   39. How can you differentiate the containers in pod and how the containers communicate through one container to another container
+      pod is a isolated network namespace, container can talk via localhost and port
   40. How can you secure your kubernetes application ?
       RBAC and 
   41. what is kube proxy and kubelet?
+      kubelet - An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.
+  
+  kube-proxy - kube-proxy is a network proxy that runs on each node in your cluster, kube-proxy maintains network rules on nodes. 
+    These network rules allow network communication to your Pods
+    
   42. How the traffic will go to the pod, tell me the flow and explain?
+      
   43. what is container resource monitoring?
       Container monitoring is the activity of continuously collecting metrics and tracking the health of containerized applications and microservices environments, 
       in order to improve their health and performance and ensure they are operating smoothly. 
