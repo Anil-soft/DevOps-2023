@@ -432,6 +432,95 @@ volumes:
 17. what is the lifecycle of multibranch jenkins job?
 18. how can you store the credentials in Jenkins?
     Manage jenkins -> configure credentials -> jenkins -> global tool credentials
+
+4th interview - OpenText
+1. write the Dockerfile and explain each innstruction ?
+2. Explain about the docker networks
+3. What is Docker compose, why do we use this ?
+4. what is multistage build and why do we use this?
+5. what are the security parameters have to take while creating docker imagge ?
+6. which instructions will not be creating layers on Dockerfile.
+7. how can you login to the docker container?
+8. write the declarative pipeline syntax?
+9. How to take the backup of the jenkins?
+10. what is the default jenkins directory ?
+    /var/lib/jenkins
+11. how can you do the continuoes integration with jenkins to github?
+12. Write the terraform script to create the instance
+13. what is difference between terraform and ansible ?
+14. if the state file has been delete, if am going to do terraform apply it is going to create resources ?
+15. what is terraform import and why to use that ?
+16. write an ansible playbook to install httpd server
+17. what are the ansile handlers
+18. if one task is not working how can you skip that and go to next task ?
+19. what are the ansible tags ?
+20. why do you use ansible galaxy and ansile tower?
+21. explain about kubernetes architecture and master and slave components ?
+22. what are kubernetes taints and tolerations ?
+23. what are the pod affinity and node affinity and what is the difference between selectors?
+24. whare are the services in kubernetes can you explain each of them ?
+25. what is ingress why do we need to use that?
+26. what are the security paramameters for creating pod ?
+27. what is service account in kubernetes ?
+28. how do you implement RBAC ?
+29. What is liveness and readiness probes and why do we use them ?
+30. what is default kubernetes network ?
+31. what is sidecar deployment ?
+32. what is the daemonset ?
+33. what is the difference betweeen SG and NACL
+34. what are the different types of instances ?
+35. what is null resources in terraform ?
+36. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
 19. what is the default jenkins dir ?
 20. what is the difference between variables and env variables?
