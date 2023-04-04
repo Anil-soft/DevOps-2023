@@ -579,8 +579,13 @@ volumes:
     - Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. 
     - Traffic routing is controlled by rules defined on the Ingress resource.
     Igress controlller
+    - evaluate all the rules
+    - manages redirections
+    - entrypoint to cluster
+    - k8s nginx ingress cotroller
     - Accept traffic from outside the Kubernetes platform, and load balance it to pods (containers) running inside the platform
-      - Monitor the pods running in Kubernetes and automatically update the load‑balancing rules when pods are added or removed from a service
+    - Monitor the pods running in Kubernetes and automatically update the load‑balancing rules when pods are added or removed from a service
+    - 
     
 26. what are the security paramameters for creating pod ?
 27. what is service account in kubernetes ?
@@ -599,4 +604,4 @@ volumes:
 32. what is the daemonset ?
 33. what is the difference betweeen SG and NACL
 34. what are the different types of instances ?
-35. what is null resources in terraform ?
+35. what is null resource in terraform ?
