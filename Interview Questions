@@ -545,6 +545,9 @@ volumes:
                  
     LoadBalancer:- whenever we create loadbalancer service nodeport and clusterip services are creatly automatically, which loadbalancer
                    route the traffic to.
+                   This provides an externally-accessible IP address that sends traffic to the correct port on your cluster nodes,
+                   provided your cluster runs in a supported environment and is configured with the correct cloud load balancer provider package.
+                   
                    $ kubectl expose deployment example --port=8765 --target-port=9376 \
         --name=example-service --type=LoadBalancer            
     $ kubectl get endpoints  => to check which pods are associated with the service
@@ -555,12 +558,20 @@ volumes:
     - Traffic routing is controlled by rules defined on the Ingress resource.
     Igress controlller
     - Accept traffic from outside the Kubernetes platform, and load balance it to pods (containers) running inside the platform
-    - Monitor the pods running in Kubernetes and automatically update the load‑balancing rules when pods are added or removed from a service
+      - Monitor the pods running in Kubernetes and automatically update the load‑balancing rules when pods are added or removed from a service
     
 26. what are the security paramameters for creating pod ?
 27. what is service account in kubernetes ?
 28. how do you implement RBAC ?
 29. What is liveness and readiness probes and why do we use them ?
+    Readiness Probe
+    - Readiness probes determine whether or not a container is ready to serve requests. 
+    - If the readiness probe returns a failed state, then Kubernetes removes the IP address for the container from the endpoints of all Services.
+  
+   Livenessprobe
+   - Liveness probes determine whether or not an application running in a container is in a healthy state. 
+   - If the liveness probe detects an unhealthy state, then Kubernetes kills the container and tries to redeploy it.
+   
 30. what is default kubernetes network ?
 31. what is sidecar deployment ?
 32. what is the daemonset ?
