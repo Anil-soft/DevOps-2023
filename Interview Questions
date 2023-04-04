@@ -279,6 +279,7 @@ what is the difference between docker and virtual machine ?
     These network rules allow network communication to your Pods
     
   42. How the traffic will go to the pod, tell me the flow and explain?
+      traffic will hit to the ingress, and service called load balancer, goes to the Pod.
       
   43. what is container resource monitoring?
       Container monitoring is the activity of continuously collecting metrics and tracking the health of containerized applications and microservices environments, 
@@ -489,6 +490,7 @@ volumes:
   
 4th interview - OpenText
 1. write the Dockerfile and explain each innstruction ?
+   
 2. Explain about the docker networks
 3. What is Docker compose, why do we use this ?
 4. what is multistage build and why do we use this?
