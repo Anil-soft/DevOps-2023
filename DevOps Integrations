@@ -1,3 +1,7 @@
+Jenkins stages:-
+
+build, deploy, test and release.
+
 How to integrate git with jenkins?
   * manage jenkins -> manage plugins -> install github
   
