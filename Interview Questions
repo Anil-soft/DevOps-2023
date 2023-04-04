@@ -513,8 +513,28 @@ volumes:
 20. why do you use ansible galaxy and ansile tower?
 21. explain about kubernetes architecture and master and slave components ?
 22. what are kubernetes taints and tolerations ?
-23. what are the pod affinity and node affinity and what is the difference between selectors?
 
+23. what are the pod affinity and node affinity and what is the difference between selectors?
+    NodeSelector:- nodeSelector is the simplest recommended form of node selection constraint
+    - You can add the nodeSelector field to your Pod specification and specify the node labels you want
+    - the target node to have. Kubernetes only schedules the Pod onto nodes that have each of the labels you specify.
+    
+    Node Affinity:-
+    - Node Affinity is conceptually similar to nodeselector. it will be having more expressive way and operators.
+      requiredDuringSchedulingIgnoredDuringExecution:- while scheduling the pod, pod should have same label otherwise it will sit on the pending state.
+      IgnoredDuringExecution means that if the node labels change after Kubernetes schedules the Pod, the Pod continues to run.
+      operators:- 
+        in - it contains
+        notin -  it does not contains
+        Lt -  less than
+        Gt -  greater than
+        exist - it is having label
+        doesNotExist - it does not having label
+        
+      preferredDuringSchedulingIgnoredDuringExecution: The scheduler tries to find a node that meets the rule. 
+      If a matching node is not available, the scheduler still schedules the Pod.
+    
+    
 24. whare are the services in kubernetes can you explain each of them ?
 
             apiVersion: v1
