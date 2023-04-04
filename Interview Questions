@@ -585,7 +585,9 @@ volumes:
     - k8s nginx ingress cotroller
     - Accept traffic from outside the Kubernetes platform, and load balance it to pods (containers) running inside the platform
     - Monitor the pods running in Kubernetes and automatically update the load‑balancing rules when pods are added or removed from a service
-    - 
+    How to configure the SSL certificate?
+    - in ingress file have to choose the tls attribute, have to store the certificate in secret that secret have to be mentioned in the 
+      ingress file.
     
 26. what are the security paramameters for creating pod ?
 27. what is service account in kubernetes ?
