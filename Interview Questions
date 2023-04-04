@@ -512,8 +512,51 @@ volumes:
 21. explain about kubernetes architecture and master and slave components ?
 22. what are kubernetes taints and tolerations ?
 23. what are the pod affinity and node affinity and what is the difference between selectors?
+
 24. whare are the services in kubernetes can you explain each of them ?
+
+            apiVersion: v1
+            kind: Service
+            metadata:
+            name: hello-world
+            spec:
+            type: NodePort
+            selector:
+            app: hello-world
+            ports:
+            - protocol: TCP
+            port: 8080
+            targetPort: 80
+            nodePort: 30036
+     Services allow your applications to receive traffic.
+     Although each Pod has a unique IP address, those IPs are not exposed outside the cluster without a Service.
+     The set of Pods targeted by a Service is usually determined by a label selector
+     (see below for why you might want a Service without including a selector in the spec).
+     Port:- exposes the Kubernetes service on the specified port within the cluster. 
+         Other pods within the cluster can communicate with this server on the specified port.
+         
+     TargetPort:- is the port on which the service will send requests to, that your pod will be listening on. 
+             Your application in the container will need to be listening on this port also.
+             
+     NodePort:- exposes a service externally to the cluster by means of the target nodes IP address and the NodePort. 
+                 external traffic has access to fixed port on each worker node (30000 - 32767).
+                 Nodeport services are not secure, you are basically opening the port to directly talk to service on each worker node
+                 exter clients basically have access to the worker nodes directly.
+                 
+    LoadBalancer:- whenever we create loadbalancer service nodeport and clusterip services are creatly automatically, which loadbalancer
+                   route the traffic to.
+                   $ kubectl expose deployment example --port=8765 --target-port=9376 \
+        --name=example-service --type=LoadBalancer            
+    $ kubectl get endpoints  => to check which pods are associated with the service
+    
 25. what is ingress why do we need to use that?
+    - Kubernetes ingress resource is responsible for storing DNS routing rules in the cluster.
+    - Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. 
+    - Traffic routing is controlled by rules defined on the Ingress resource.
+    Igress controlller
+    - Accept traffic from outside the Kubernetes platform, and load balance it to pods (containers) running inside the platform
+    - Monitor the pods running in Kubernetes and automatically update the load‑balancing rules when pods are added or removed from a service
+    
 26. what are the security paramameters for creating pod ?
 27. what is service account in kubernetes ?
 28. how do you implement RBAC ?
