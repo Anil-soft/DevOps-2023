@@ -513,6 +513,13 @@ volumes:
 20. why do you use ansible galaxy and ansile tower?
 21. explain about kubernetes architecture and master and slave components ?
 22. what are kubernetes taints and tolerations ?
+    in some cases we can't give guarantee that pods cant be scheduled on the nods wich are not having any specific label.
+    then we will use the taints and tolerations.
+  - Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
+  - Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. 
+  - kubectl taint nodes node1 key1=value1:NoSchedule
+  - kubectl taint nodes node1 key1=value1:NoExecute
+  - kubectl taint nodes node1 key2=value2:PreferNoSchedule
 
 23. what are the pod affinity and node affinity and what is the difference between selectors?
     NodeSelector:- nodeSelector is the simplest recommended form of node selection constraint
@@ -538,6 +545,15 @@ volumes:
         
       preferredDuringSchedulingIgnoredDuringExecution: The scheduler tries to find a node that meets the rule. 
       If a matching node is not available, the scheduler still schedules the Pod.
+      
+   Pod Affinity:- 
+   - Pod affinity is used to colocate the pods, imagine a case where we want to deploy two applications which communicates freqently in the
+     same region that way latency will be less.
+     lets consider we have UI application and API application, UI application is deployed on the node us-east-1 region, now we want to deploy
+     api application alos in the same region.
+     
+  podAntiAffinity:-
+  - to keep away pods with pod labels topologykey
       
 24. whare are the services in kubernetes can you explain each of them ?
 
@@ -597,6 +613,7 @@ volumes:
 26. what are the security paramameters for creating pod ?
 27. what is service account in kubernetes ?
 28. how do you implement RBAC ?
+    
 29. What is liveness and readiness probes and why do we use them ?
     Readiness Probe
     - Readiness probes determine whether or not a container is ready to serve requests. 
@@ -610,5 +627,6 @@ volumes:
 31. what is sidecar deployment ?
 32. what is the daemonset ?
 33. what is the difference betweeen SG and NACL
+
 34. what are the different types of instances ?
 35. what is null resource in terraform ?
