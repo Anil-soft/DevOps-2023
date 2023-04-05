@@ -518,6 +518,11 @@ volumes:
     NodeSelector:- nodeSelector is the simplest recommended form of node selection constraint
     - You can add the nodeSelector field to your Pod specification and specify the node labels you want
     - the target node to have. Kubernetes only schedules the Pod onto nodes that have each of the labels you specify.
+    $ Kubectl label node minicube team=analytics
+    $ kubectl label node minicube-03 team=analytics
+    - pods will be scheduled wich are having same label as node.
+    $ kubectl get nodes --show-labels
+    -In manifest file under spec you have to mention nodeSelector andd label.
     
     Node Affinity:-
     - Node Affinity is conceptually similar to nodeselector. it will be having more expressive way and operators.
@@ -533,8 +538,7 @@ volumes:
         
       preferredDuringSchedulingIgnoredDuringExecution: The scheduler tries to find a node that meets the rule. 
       If a matching node is not available, the scheduler still schedules the Pod.
-    
-    
+      
 24. whare are the services in kubernetes can you explain each of them ?
 
             apiVersion: v1
@@ -588,7 +592,8 @@ volumes:
     How to configure the SSL certificate?
     - in ingress file have to choose the tls attribute, have to store the certificate in secret that secret have to be mentioned in the 
       ingress file.
-    
+      $ minikube addons enable ingress => to create the ingress controller
+        
 26. what are the security paramameters for creating pod ?
 27. what is service account in kubernetes ?
 28. how do you implement RBAC ?
