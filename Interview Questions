@@ -628,5 +628,6 @@ volumes:
 32. what is the daemonset ?
 33. what is the difference betweeen SG and NACL
 
+
 34. what are the different types of instances ?
 35. what is null resource in terraform ?
