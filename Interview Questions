@@ -612,8 +612,26 @@ volumes:
         
 26. what are the security paramameters for creating pod ?
 27. what is service account in kubernetes ?
+    if any application like springboot or python application wants to access the same resourcess.
+    service acccounts are nothing but application users, when namespace gets created a default service account will gets created
+    in the pod definition file have to user the attribute called serviceaccount:test-sa 
+    in rolebinding manifest file have to choose the mention the service account. 
+
 28. how do you implement RBAC ?
-    
+    Role-based access control (RBAC) is a method of regulating access to computer or network resources 
+    based on the roles of individual users within your organization.
+    Context:- 
+    context contains kubernetes cluster, namespace, user
+    - first we have to create the private key for the user
+    - create the certificate sign in request for the user and private key
+    - this certificate sign in request must be signed with certificate authority.
+    - we can get the certificate authority from kube config file.
+    - we should add the user with cluster by providing certificate and user.
+    - after we have to create the manifest file to create the role
+    - after that we have to create th rolebinding, rolebinding is nothing connecting a user with role.
+    - role and rolebinding are namespaced, it means user will be having the permission for where rolebinding is defined.
+    - cluster rolebinding is at the cluster level, we can access the resources in any namespace   
+ 
 29. What is liveness and readiness probes and why do we use them ?
     Readiness Probe
     - Readiness probes determine whether or not a container is ready to serve requests. 
