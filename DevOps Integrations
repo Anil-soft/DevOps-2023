@@ -11,6 +11,16 @@ How to integrate maven with jenkins?
   - M2_HOME=/opt/maven
   - M2=/opt/maven/bin
   - JAVA_HOME=/usr/lib/jvm/<jdk>
+
+Maven Lifecycle:- 
+Validate: This step validates if the project structure is correct. For example – It checks if all the dependencies have been downloaded and are available in the local repository.
+Compile: It compiles the source code, converts the .java files to .class, and stores the classes in the target/classes folder.
+Test: It runs unit tests for the project.
+Package: This step packages the compiled code in a distributable format like JAR or WAR.
+Integration test: It runs the integration tests for the project.
+Verify: This step runs checks to verify that the project is valid and meets the quality standards.
+Install: This step installs the packaged code to the local Maven repository.
+Deploy: It copies the packaged code to the remote repository for sharing it with other developers.
   
   * install the maven integration plugin
   - manage jenkins -> global tool configuration -> specify the java and maven home paths
@@ -21,10 +31,10 @@ How to integrate tomcat with jenkins?
  - manage jenkins -> manage credentials -> jenkins -> global credentials -> add credentials
  * while configuring the maven job at the post build actions have to choose deploy to container
  
-poll SCM - it will check whether there are any changes occur, if any changes will occur then it will get triggered
+poll SCM - it will check changes periodically as per defined cronjob, if any changes will occur then it will get triggered
 
 How to integrate docker with jenkins?
- - manager jenkins -> configure system -> at publish over SSH add the server details { hostname, priver ip, username password or private key }
+ - manager jenkins -> configure system -> at publish over SSH add the server details { hostname, private ip, username password or private key }
    * while configuring the jenkins job at post-build actions select the send build artifacts over SSH
    
 How to integrate ansible with jenkins?
@@ -224,7 +234,7 @@ Jenkins interview questions and answers
     go to security port and allow 8090 port
     
  5. what are the steps included in jenkins pipeline?
-    build, test, deploy
+    build, test, deploy, release
     
 	
 
