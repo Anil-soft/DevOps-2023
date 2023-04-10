@@ -103,7 +103,8 @@ what is the difference between docker and virtual machine ?
   5. How the frontend web server can communicate with database server?
   
   6. How the 2 VPCs can communicate each other from 2 different accounts?
-  
+     Establish the connection between two VPCs through VPC peering.
+    
   7. Whenever any instance state gets changed we need get notified how can you configure that?
   8. How can you access RDS instance through EC2 instance and fetch the information which is stored in RDS?
      first you need to install mysql client on linux machine
