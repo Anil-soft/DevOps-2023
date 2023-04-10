@@ -187,7 +187,82 @@ what is the difference between docker and virtual machine ?
       call the terraform ec2 modue in main.tf file.
       
   22. explain about META arguements in terraform?
+      for_each
+      The for_each meta-argument accepts a map or a set of strings, and creates an instance for each item in that map or set. 
+      resource "google_compute_instance" "vm" {
+ 
+for_each = {
+"vm1" = { vm_size = "e2-small", zone = "us-central1-a" }
+"vm2" = { vm_size = "e2-medium", zone = "us-central1-b" }
+"vm3" = { vm_size = "f1-micro", zone = "us-central1-c" }
+}
+ 
+name = each.key
+machine_type = each.value.vm_size
+zone = each.value.zone 
+}
   
+  resource "aws_iam_user" "the-accounts" {
+  for_each = toset( ["Todd", "James", "Alice", "Dottie"] )
+  name     = each.key
+}
+
+depends_on
+ The "depends_on" meta argument in Terraform is used to specify dependencies between resources within a Terraform configuration.
+ 
+ The Amazon EC2 Instance depends on the Amazon S3 bucket, so it needs to be created the bucket before creating the EC2 instance. 
+ 
+ # main.tf 
+
+#Step 1 - Create S3 Bucket first
+resource "aws_s3_bucket" "example_bucket" {
+  bucket = "example-bucket"
+}
+
+#Step 2 - Create EC2 instance after S3 Bucket
+resource "aws_instance" "example_instance" {
+  ami           = "ami-0c94855ba95c71c99"
+  instance_type = "t2.micro"
+
+  # Define the dependency on S3 Bucket before creating EC2
+  depends_on = [aws_s3_bucket.example_bucket]
+}
+
+Example:- 2
+resource "aws_s3_bucket" "example_bucket" {
+  bucket = "example-bucket"
+}
+
+# Step 2 - Create an AWS DB Instance
+resource "aws_db_instance" "example_db" {
+  engine = "mysql"
+  instance_class = "db.t2.micro"
+}
+
+# Step 3 - Create an EC2 Instance with dependency on S3 Bucket, DB Instance
+resource "aws_instance" "example_instance" {
+  ami           = "ami-0c94855ba95c71c99"
+  instance_type = "t2.micro"
+
+  depends_on = [aws_s3_bucket.example_bucket, aws_db_instance.example_db]
+}
+
+Count :- 
+  resource "aws_instance" "server" {
+  count = 4 # create four similar EC2 instances
+
+  ami           = "ami-a1b2c3d4"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "Server ${count.index}"
+  }
+}
+
+Provider :-
+
+The provider meta-argument specifies which provider configuration to use for a resource.
+
   23. you have provision the 5 instance and only 1 instance i need to destroy how can i do that?
         $ terraform state list
         $ terraform destroy -target RESOURCE_TYPE.NAME
