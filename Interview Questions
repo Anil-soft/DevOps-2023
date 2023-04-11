@@ -463,7 +463,9 @@ The provider meta-argument specifies which provider configuration to use for a r
       
     12. explain about the docker compose ?
     Docker Compose is a tool that was developed to help define and share multi-container applications. 
-    docker compose up -d
+   $ docker compose build
+   $ docker compose up
+   $ docker compose up -d
     
     services:
   app:
@@ -505,6 +507,10 @@ volumes:
     - whereas the "build"  shall build the project periodically irrespective to whether or not any changes were made.
     
 16. what is multibranch jenkins job?
+    - A multi-branch pipeline is a concept of automatically creating Jenkins pipelines based on Git branches. 
+    - It can automatically discover new branches in the source control (Github) and automatically create a pipeline for that branch. 
+    - When the pipeline build starts, Jenkins uses the Jenkinsfile in that branch for build stages. 
+    - scan multibranch pipeline trigger 
     
 17. what is the lifecycle of multibranch jenkins job?
 18. how can you store the credentials in Jenkins?
@@ -570,9 +576,21 @@ volumes:
 2. Explain about the docker networks
 3. What is Docker compose, why do we use this ?
 4. what is multistage build and why do we use this?
-5. what are the security parameters have to take while creating docker imagge ?
+5. what are the security parameters have to take while creating docker image ?
+   - always use the docker official images, official images are already built with best practices
+   - instead of using all the base images like centos, ubuntu we can use lightweight images
+   - lightweight images are not having uneccessary tools and packages are installed which are security issues
+   - alpine images are lightweight and secured images
+   - optimize caching image layers
+   - once image has been built use $ docker scan myapp:1.0 to scan the image, it finds out the vulnarabilitis.
+   - when the container starts on the host, it potentially have root access on the docker host, running a application inside the container
+     with root user will make it easier for an attacker to escalate privileges on the host
 6. which instructions will not be creating layers on Dockerfile.
+   Every instruction will make the layer but some layers will not make the size.
+   
 7. how can you login to the docker container?
+    $ docker exec -it <container-name> /bin/bash
+    
 8. write the declarative pipeline syntax?
 9. How to take the backup of the jenkins?
 10. what is the default jenkins directory ?
