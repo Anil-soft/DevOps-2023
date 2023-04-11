@@ -1,0 +1,10 @@
+kernel version - 4.4.0
+redhat 7
+tomcat 9
+docker 4.12.0
+kubernetes 1.24
+java 11
+Apache httpd 2.4.56
+Jenkis version  2.361
+terraform version  v1.4.4
+ansible version 2.11
