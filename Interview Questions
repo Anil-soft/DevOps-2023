@@ -758,6 +758,9 @@ Now you can verify the terraform import by running the command terraform plan an
     - Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. 
     - Traffic routing is controlled by rules defined on the Ingress resource.
     Igress controlller
+    $ minikube addons enable ingress -p ingress-cluster
+    - ingress controller is a component that reads the ingress rules and process them.
+    - whenever we make a request ingress controller inspect http request and direct the request to the correct pods based on the ingress rules that we define.
     - evaluate all the rules
     - manages redirections
     - entrypoint to cluster
