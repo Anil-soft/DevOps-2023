@@ -7,7 +7,7 @@ what are the uses of parameters and how to do build parameterized ?
   - A build parameter allows us to pass data into our Jenkins jobs.
   - Using build parameters, we can pass any data we want: git branch name, secret credentials, hostnames and ports, and so on.
   - Any Jenkins job or pipeline can be parameterized. All we need to do is check the box on the General settings tab, “This project is parameterized”.
-  Types of parameters:- Boolean parameter, choice parameter, credentials parameter, file parameter, Git parameter.
+  Types of parameters:- Boolean parameter, string parameter, choice parameter, credentials parameter, file parameter, Git parameter.
   
  what are the environment variables in jenkins?
   - Environment variables are predetermined values, Environment variables are global key-value pairs Jenkins can access and inject into a project. 
@@ -60,7 +60,7 @@ what is the difference between docker and virtual machine ?
    :- click on the bucket -> properties -> bucket versioning enable -> enable versioning
    :- Suppose you have hosted static website with the image, after that you have added new image then the old image is not going to replace
       it is just going to create the new version of an object
-   :- once you hide versions and delete the image, i won't going to be deleted it's just going to mark as delete marker, and image will not be available.
+   :- once you hide versions and delete the image, it won't going to be deleted it's just going to mark as delete marker, and image will not be available.
    :- once you show the versions, it will show delete marker and image versions will be available
    :- if you want rollback to previous versions, you can click on show versions and delete the latest version.
  2nd interview
@@ -98,7 +98,7 @@ what is the difference between docker and virtual machine ?
      create NAT gateway on public subnet and allocate the elastic IP. in in routing table, click routers and add that NGW
      
      we can create an internet gateway and attach it to the VPC and in routing table, click routers and add that IGW.
-     Internet is used to comminate with the network for public servers.
+     Internet is used to commuinate with the network for public servers.
      
   5. How the frontend web server can communicate with database server?
   
