@@ -207,7 +207,12 @@ pipeline {
 Jenkins interview questions and answers
 
 1. How to add a user in Jenkins?
-   go to manage jenkins -> Click on Create User -> Enter all the details.
+   go to manage jenkins -> manage users -> Click on Create User -> Enter all the details.
+   
+2. How to give privileges to the users
+   install the plugin called Role based authorization strategy -> open configure global security -> select the option called Role-based strategy
+   Manage and assign roles -> Manage Roles -> global roles ( you can create the Role called employee and assign the permissions, Project Roles 
+   ( You can add the group of people like developers, testers and click on assign roles add the users to roles.
    
 2. How to take back up and restore jenkins ?
    install thinbackup plugin
