@@ -241,7 +241,29 @@ Jenkins interview questions and answers
  5. what are the steps included in jenkins pipeline?
     build, test, deploy, release
     
-	
+ 6. what are the post build actions?
+    A Jenkins post-build action is a task executed after the build has been completed. 
+    Post-build actions are typically used to perform additional processing or reporting on the build results 
+    . Sending an email notification with the build results.
+    . Archiving build artifacts for future reference.
+    . Build artifacts over SSH
+    
+ 7.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
