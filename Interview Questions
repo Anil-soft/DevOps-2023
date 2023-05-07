@@ -315,8 +315,8 @@ The provider meta-argument specifies which provider configuration to use for a r
       $ docker run -d --name container1 -p 8001:80 nginx
       $ docker run -d --name container2 -p 8002:80 nginx
       $ docker network create mynetwork
-      $ docker network connect mynetwork contaier1
-      $ docker network connect mynetwork conntainer2
+      $ docker network connect mynetwork container1
+      $ docker network connect mynetwork container2
       $ docker network inspect myNetwork
       $ docker exec -ti web1 ping web2
   
