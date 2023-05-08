@@ -319,6 +319,7 @@ The provider meta-argument specifies which provider configuration to use for a r
       $ docker network connect mynetwork container2
       $ docker network inspect myNetwork
       $ docker exec -ti web1 ping web2
+      
   
   33. what are the networks are available on docker and how can you differentiate them?
       - Dockerhost will be having different subnet and container will be having differenet subnet, whenever you create a container
