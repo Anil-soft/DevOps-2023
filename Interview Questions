@@ -63,7 +63,8 @@ what is the difference between docker and virtual machine ?
    :- once you hide versions and delete the image, it won't going to be deleted it's just going to mark as delete marker, and image will not be available.
    :- once you show the versions, it will show delete marker and image versions will be available
    :- if you want rollback to previous versions, you can click on show versions and delete the latest version.
- 2nd interview
+   
+ 2nd interview - (HITACHI)
  
   1. Explain about S3 lifecycle and how can you move from one storage class to another?
      - click on the bucket - management -> create lifecycle rule -> select the option ( This rule applies to all objects in the bucket )
@@ -896,6 +897,13 @@ resource "null_resource" "null_resource_with_remote_exec" {
 }
 
 
+( Avenue E-Commerce )
+1. I have a monolithic application running on on-premises, how can i deploy that into microservices?
+2. How to transfer the transactions from one container to another container without downtime?
+3. Explain about the jenkins parameterized build and why do we use that?
+4. Without giving access to the developers to pod, developer can see all the logs collectively, how to give access and how the developers can view the logs?
+5. How can you install the RPM on linx OS?
+6. Total i have 5 hours running, but i have realized i need to 7 servers so how can you spin up 2 more services through terraform?
 
 
 
