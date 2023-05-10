@@ -905,32 +905,41 @@ resource "null_resource" "null_resource_with_remote_exec" {
 5. How can you install the RPM on linx OS?
 6. Total i have 5 hours running, but i have realized i need to 7 servers so how can you spin up 2 more services through terraform?
 
+( analyttica )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   
-   
-   
-   
-
-
+1. what is the difference between NACL and SG and how they work?
+2. what is the difference between roles and policies ?
+3. what are the storage classes in S3?
+4. How can restrict the permissions for S3 bucket and objects ?
+5. How to copy file from one linux server to another linux server ?
+6. How to check ports in linux server ?
+7. how can you check the background running processors in linux server ?
+8. how to check the systerm performance in linux server ?
+9. How can you make use of the virtual memory in linux ?
+10. Can you explain the CI CD workflow in your project ?
+11. how to integrate docker with jenkins and build an image ?
+12. can you write the Dockerfile to build jenkins image ?
+13. what is the difference b/w CMD and ENTRYPOINT ?
+14. can you explain about the ansible roles ?
+15. can you explain basic syntax for the ansible playbook ?
+16. what is ansible inventory file ?
+17. how can you copy the file from dockerhost to docker container ?
+18. how can you build the docker image ?
+19. how can you check the docker logs ?
+20. suppose my container is keep on restarting how can i debug that what would be the reasons ?
+21. explain about the docker network ?
+22. how the two containers will be communicating each other ?
+23. how can you check the memory and cpu utilization of docker container ?
+24. can you explain about kubernetes architecture ?
+25. i want to take one server from the kubernetes cluster for the maintenance, how can i do that?
+25. after i done with the maitenance how can i make it available ?
+26. can you write the manifest file to deploy the nginx pod ?
+27. How you are doing logging for kubernetes logs?
+28. what are the different types of services in kubernetes?
+29. How can you deploy the pods to the particular nodes ?
+30. what are the kubernetes taints and tolerations ?
+31. how can you define the resource limits for the pods ?
+32. 
 
 
 
