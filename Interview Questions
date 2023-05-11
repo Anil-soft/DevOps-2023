@@ -942,4 +942,33 @@ resource "null_resource" "null_resource_with_remote_exec" {
 32. 
 
 
+Ansible version - 2.14
+Jenkins version - 2.346
+java - 11
+Redhat - 7
+Kernel version - 5.7
+tomcat version - 9
+nginx version - 7.4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
