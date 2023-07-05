@@ -118,6 +118,22 @@
   tasks:
     - name: printing the varaible value
       command: echo "my varaible value is {{myvar}}"
+
+- name: print greeting
+  hosts: "*"
+  tasks:
+    - include_vars: name_vars.yml
+
+    - debug: msg="Hello, {{ name }}!"
+
+Note:- ny variables you set with set_fact will not be overwritten with include_vars
+
+- name: print greeting
+  hosts: server1
+  tasks:
+    - set_fact: name=anwi
+    - include_vars: name_vars.yml
+    - debug: msg="hello, {{name}}"
       
 - name: working with ansible
   hosts: server1
@@ -299,10 +315,43 @@ Explain about ansible tags ?
     ansible-playbook apache.yaml --tags=install,start
     ansible-playbook apache.yaml --skip-tags=install
      
+Interview questions and answers?
+1. what is configuration management?
+   configuration management is nothing but managing servers like installation of packages, upgrades on softwares,
+
+2. what is ansible tower?
+   ansible tower is like enterprise level, it provides some graphical user interface and extends the ansible capabilities.
+
+3. can you explain me structure of ansible playbook using roles?
+
+  - defaults :- default variables for the role
+  - Files:- Contains files to copy to destination
+  - Handlers:- Based on notify do something specified
+  - Meta:- meta data about current role ( like what is the ansible version, who is the author )
+  - Tasks:- List of task that to be executed
+  - Templates:- Template files to deploy
+  - test:- if you want additional verification of your build
+  - vars:- other variables for the role
+
+  - name: example ansible playbook for roles
+    hosts: all
+    become: yes
+    roles:
+      - custom-role
+- import_tasks: packages.yml  { to import the tasks into main.yml }
+
+4. does ansible support parallel execution of tasks ?
 
 
+5. can you place the ansible vars precedence ?
+   extra vars we define in the command line (-e "user=my_user"), set_facts, include vars, task vars, role vars, group vars.
 
+6.what do you think ansible can improve ?
+  ansible can not provide verbosity in the task basis, so it can improve in that aspect.
 
+7. what are facts in ansible ?
+   facts are nothing but they have the details about hosts or VMs which we have mentioned in the inventory
+   it can be installed operating system, IP address, OS family.
 
 
 
