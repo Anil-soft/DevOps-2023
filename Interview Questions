@@ -518,6 +518,7 @@ volumes:
 18. how can you store the credentials in Jenkins?
     Manage jenkins -> configure credentials -> jenkins -> global tool credentials
 19. what is the default jenkins dir ?
+    /var/lib/jenkins
 20. what is the difference between variables and env variables?
 21. how to check the syntax error in terraform?
     $ terraform validate 
@@ -903,7 +904,7 @@ resource "null_resource" "null_resource_with_remote_exec" {
 3. Explain about the jenkins parameterized build and why do we use that?
 4. Without giving access to the developers to pod, developer can see all the logs collectively, how to give access and how the developers can view the logs?
 5. How can you install the RPM on linx OS?
-6. Total i have 5 hours running, but i have realized i need to 7 servers so how can you spin up 2 more services through terraform?
+6. Total i have 5 servers running, but i have realized i need to 7 servers so how can you spin up 2 more services through terraform?
 
 ( analyttica )
 
