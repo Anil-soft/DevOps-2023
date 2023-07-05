@@ -913,9 +913,12 @@ resource "null_resource" "null_resource_with_remote_exec" {
 3. what are the storage classes in S3?
 4. How can restrict the permissions for S3 bucket and objects ?
 5. How to copy file from one linux server to another linux server ?
+   scp SourceFile user@server:directory/TargetFile
 6. How to check ports in linux server ?
+   netstat -tulnp
 7. how can you check the background running processors in linux server ?
-8. how to check the systerm performance in linux server ?
+   ps aux
+8. how to check the system performance in linux server ?
 9. How can you make use of the virtual memory in linux ?
 10. Can you explain the CI CD workflow in your project ?
 11. how to integrate docker with jenkins and build an image ?
