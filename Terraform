@@ -398,7 +398,80 @@ terraform init --var-file="terraform.tfvars"
 terraform plan--var-file="terraform.tfvars"
 terraform apply--var-file="terraform.tfvars"
 
+terraform null resource
+what is null resource in terraform ?
+    - As in the name you see a prefix null which means this resource will not exist on your Cloud Infrastructure(AWS, Google Cloud, Azure). 
+    - The reason is there is no terraform state associated with it.
+    
+ Ex:-   
+ resource "null_resource" "null_resource_simple" {
+  provisioner "local-exec" {
+    command = "echo Hello World"
+  }
+}
+   
+   - The trigger is a block inside the null_resource which holds key-value pair. 
+   - As the name suggest trigger, it will execute local-exec, remote-exec or data block.
+   - trigger will only work when it detects the change in the key-value pair
+   - resource "null_resource" "null_resource_simple" {
+  
+  # This trigger will only execute once when it detects the instance id of EC2 instance 
+  triggers = {
+    id = aws_instance.ec2_example.id    # to execute it every time replace - id = time()
+  }
+  provisioner "local-exec" {
+    command = "echo Hello World"
+  }
+}
 
+1. Run multiple commands- The local-exec provisioner is not limited to running single command but instead, 
+   you can run multiple commands within local-exec provisioner using the null_resource.
+   
+   resource "null_resource" "null_resource_simple" {
+  
+  triggers = {
+    id = aws_instance.ec2_example.id  
+  }
+  provisioner "local-exec" {
+    command = <<-EOT
+      chmod +x install-istio.sh  
+      ./install-istio.sh
+    EOT
+  }
+}
+
+ -  The remote-exec provisioner will run a script on the remote machine through WinRM or SSH,
+ 
+ resource "aws_instance" "ec2_example" {
+  ami           = "ami-0767046d1677be5a0"
+  instance_type =  "t2.micro"
+  tags = {
+    Name = "Terraform EC2 "
+  }
+}
+
+resource "null_resource" "null_resource_with_remote_exec" {
+
+  triggers = {
+    id = aws_instance.ec2_example.id
+  }
+  
+  provisioner "remote-exec" {
+    inline = [
+      "touch hello.txt",
+      "echo helloworld remote provisioner >> hello.txt",
+    ]
+  }
+  
+  connection {
+    type        = "ssh"
+    host        = ec2_example.id
+    user        = "ubuntu"
+    private_key = file("/home/rahul/Jhooq/keys/aws/aws_key")
+    timeout     = "4m"
+  }
+
+}
 
 
 
