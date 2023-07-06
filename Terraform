@@ -9,7 +9,7 @@
    Initialize - Install the plugins Terraform needs to manage the infrastructure.
    Plan - Preview the changes Terraform will make to match your configuration.
    Apply - Make the planned changes.
-   
+
  - terraform & ansible are client only architecture model which means no need to have master server.
  - chef, puppet are client server model which means master should be there
  
@@ -392,3 +392,13 @@ terraform.tfvars
 access_key=""
 secret_key=""
 region="us-east-1"
+
+terraform init --var-file="terraform-dev.tfvars"
+terraform init --var-file="terraform.tfvars"
+terraform plan--var-file="terraform.tfvars"
+terraform apply--var-file="terraform.tfvars"
+
+
+
+
+
