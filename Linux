@@ -302,6 +302,7 @@ All the inactive processors will be dump into the swap space.
 ifcfg-eth0 --> to configure the network details
 
 
+
 What is zombie process?
 If we are killing the parent process, child processors, which are coming from the parent will be thinking that parent is alive. Childs will be continuously working and simply consuming the memory. The more zombie process we have the more performance issues we will get.
 
