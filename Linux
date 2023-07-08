@@ -260,6 +260,9 @@ Q- your site is throwing 500 error, how will you start troubleshooting?
 Q- how to check ip address of the host?
 ifconfig, hostname -I
 
+Q- how to find files created by a user?
+find /some/path -user username -ls
+
 Q- what is ulimit?
 ulimit is nothing but how many files users can open
 $lsof  -> to check open files in the OS
