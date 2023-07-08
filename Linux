@@ -1,83 +1,3 @@
-top -->  to see the memory resources
-cat /proc/cpuinfo --> to see the processor cpuinfo
-tcpdump -i any -s0 --> to check the network related errors
-
-Q- How will you change the default user id value in Linux?g
-     vi /etc/login.defs in this file we can configure range of id value
-Usermod -u 1006 username
-
-Q- /etc/hosts (Which RPM is responsible for creating this file).
-    rpm -qf  /etc/hosts
-
-Q- What is the difference between RPM and YUM?
-    RPM is redhat packet manager and YUM is yellowdog updater modified both command are used for manage software
-RPM --> RPM will not resolve the dependencies 
-YUM --> yum will resolve the dependencies
-
-Q- What is the difference between Hard and Soft Link?
-ln /tmp/test   /etc/anil -> to create the hard link  (since the i node value is same data will not be lost)
-ln -s  /tmp/test   /etc/kumar  --> once the main file is removed there is no value for soft link 
-
-Q- What is a sticky bit?
-only owner of the file or root can delete the file. Sticky bit is implemented on directories not on files
-
-Q- How will you check open ports on Linux Server?
-Netstat -tulpn
-
-Q- How will you check open ports on remote servers (without login)
-Install the package first yum install nmap -y
-
-Q- how to check kernel version?
-uname -a
-
-How to check gateway?
-route -vn
-
-What is the name to manage DNS entries on linux?
-/etc/resolv.conf
-
-All the performed events will be logged into --> /var/log/messages
-more /var/log/messages --> to see the logs one by one
-
-  top:- 
-How long it is running, users, load average, how many processors are running, sleeping, stopped, CPU utilization, memory consumption.
-PR represents priority number, NI represents nice value, VIRT virtual memory, RES reserved memory, SHR shared memory, S state of the process. 
-Shift p --> top CPU consuming processors
-Shift m --> to memory consuming processors 
-
-What is swap space?
-Swap space is like a 2nd memory and it will not be in memory chip card, it will be in disk.
-Use case of swap space?
-All the inactive processors will be dump into the swap space. 
-
-ifcfg-eth0 --> to configure the network details
-
-
-What is zombie process?
-If we are killing the parent process, child processors, which are coming from the parent will be thinking that parent is alive. Childs will be continuously working and simply consuming the memory. The more zombie process we have the more performance issues we will get.
-
-What is the difference between standard partition & logical volume?
-In standard partition we cannot create the file size dynamically, first we have to take backup of the file and delete the original file, and take required volume size and attach back up file.
-
-Logical volume we can increase the size dynamically. We can take the disks and all together we can create the volume group.
-
-telnet ipadd portnumber  --> in the server whether particular port is enabled or not
-
-vmstat --> to see the memory of swap space, free, cache, io, CPU ideal time, wait time.
-iostat --> to see the disk level performance issues
-
-  
-
-ps -ef --> list out all the processor which are running as part of my os
-
-mkfs.ext4 /dev/mapper/myvg-mylv
-mount -t ext4 /dev/mapper/myvg-mylv /app
-
-Ifup eth0 --> to bring up one particular interface
-Ifdown eth0 --> to bring down one particular interface
-rounte -n --> to check the network connectivity via which flow and gateway.
-ethtool eth0 --> more information about interface
-/etc/sysconfig/network --> network configuration file 
 Linux
 1. Linux is reliable, security and open source.
 2. Linux is hardware independent and there are several types of linux os.
@@ -298,3 +218,135 @@ Passwordless authentication:-
 5 cat /root/.ssh/id_rsa.pub --> pub key
 6 copy the pub key and add in the file vi ~/.ssh/authorized_keys in the server that wanted to log in
 7 ssh server1
+
+Linux interview questions and answers
+
+Q- How will you change the default user id value in Linux?
+     vi /etc/login.defs in this file we can configure range of id value
+Usermod -u 1006 username
+
+Q- /etc/hosts (Which RPM is responsible for creating this file).
+    rpm -qf  /etc/hosts
+
+Q- What is the difference between RPM and YUM?
+    RPM is redhat packet manager and YUM is yellowdog updater modified both command are used for manage software
+RPM --> RPM will not resolve the dependencies 
+YUM --> yum will resolve the dependencies
+
+Q- What is the difference between Hard and Soft Link?
+ln /tmp/test   /etc/anil -> to create the hard link  (since the i node value is same data will not be lost)
+ln -s  /tmp/test   /etc/kumar  --> once the main file is removed there is no value for soft link 
+
+inode:- (index node) Inodes stores metadata about the file it refers to. This metadata contains all the information about the said file.
+        size, permission, owner/group, location of the hard drive, date/time.
+
+Q- rm -rf /tmp/test gives error operation not permitted. Reason?
+   chttar is applied on the file, so that it can't be deleted
+   chattr -i /tmp/test  -> to remove the chattr
+   chattr +i /tmp/test  -> to apply the chattr
+
+Q- What is a sticky bit?
+only owner of the file or root can delete the file. Sticky bit is implemented on directories not on files
+
+Q- How will you check open ports on Linux Server?
+Netstat -tulpn
+
+Q- How will you check open ports on remote servers (without login)
+Install the package first yum install nmap -y
+nmap -A <ipaddr of the server>
+
+Q- your site is throwing 500 error, how will you start troubleshooting?
+
+Q- how to check ip address of the host?
+ifconfig, hostname -I
+
+Q- what is ulimit?
+ulimit is nothing but how many files users can open
+$lsof  -> to check open files in the OS
+
+Q- take backup of logs files on backup servers
+
+Q- How will you find out which service is running on which port? if multiple JAVA process are running how will you indentify specific process?
+$ netstat -tunlp
+- pick the process id which is required
+$ ps -ef | grep 957
+
+Q- how to find files based on numeric permission
+$ find -perm 400
+Q- how to check kernel version?
+uname -a
+
+How to check gateway?
+route -vn
+
+What is the name to manage DNS entries on linux?
+/etc/resolv.conf
+
+All the performed events will be logged into --> /var/log/messages
+more /var/log/messages --> to see the logs one by one
+
+  top:- 
+How long it is running, users, load average, how many processors are running, sleeping, stopped, CPU utilization, memory consumption.
+PR represents priority number, NI represents nice value, VIRT virtual memory, RES reserved memory, SHR shared memory, S state of the process. 
+Shift p --> top CPU consuming processors
+Shift m --> to memory consuming processors 
+
+What is swap space?
+Swap space is like a 2nd memory and it will not be in memory chip card, it will be in disk.
+Use case of swap space?
+All the inactive processors will be dump into the swap space. 
+
+ifcfg-eth0 --> to configure the network details
+
+
+What is zombie process?
+If we are killing the parent process, child processors, which are coming from the parent will be thinking that parent is alive. Childs will be continuously working and simply consuming the memory. The more zombie process we have the more performance issues we will get.
+
+What is the difference between standard partition & logical volume?
+In standard partition we cannot create the file size dynamically, first we have to take backup of the file and delete the original file, and take required volume size and attach back up file.
+
+Logical volume we can increase the size dynamically. We can take the disks and all together we can create the volume group.
+
+telnet ipadd portnumber  --> in the server whether particular port is enabled or not
+
+vmstat --> to see the memory of swap space, free, cache, io, CPU ideal time, wait time.
+iostat --> to see the disk level performance issues
+
+  
+
+ps -ef --> list out all the processor which are running as part of my os
+
+mkfs.ext4 /dev/mapper/myvg-mylv
+mount -t ext4 /dev/mapper/myvg-mylv /app
+
+Ifup eth0 --> to bring up one particular interface
+Ifdown eth0 --> to bring down one particular interface
+rounte -n --> to check the network connectivity via which flow and gateway.
+ethtool eth0 --> more information about interface
+/etc/sysconfig/network --> network configuration file 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
