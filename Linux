@@ -1,0 +1,300 @@
+top -->  to see the memory resources
+cat /proc/cpuinfo --> to see the processor cpuinfo
+tcpdump -i any -s0 --> to check the network related errors
+
+Q- How will you change the default user id value in Linux?g
+     vi /etc/login.defs in this file we can configure range of id value
+Usermod -u 1006 username
+
+Q- /etc/hosts (Which RPM is responsible for creating this file).
+    rpm -qf  /etc/hosts
+
+Q- What is the difference between RPM and YUM?
+    RPM is redhat packet manager and YUM is yellowdog updater modified both command are used for manage software
+RPM --> RPM will not resolve the dependencies 
+YUM --> yum will resolve the dependencies
+
+Q- What is the difference between Hard and Soft Link?
+ln /tmp/test   /etc/anil -> to create the hard link  (since the i node value is same data will not be lost)
+ln -s  /tmp/test   /etc/kumar  --> once the main file is removed there is no value for soft link 
+
+Q- What is a sticky bit?
+only owner of the file or root can delete the file. Sticky bit is implemented on directories not on files
+
+Q- How will you check open ports on Linux Server?
+Netstat -tulpn
+
+Q- How will you check open ports on remote servers (without login)
+Install the package first yum install nmap -y
+
+Q- how to check kernel version?
+uname -a
+
+How to check gateway?
+route -vn
+
+What is the name to manage DNS entries on linux?
+/etc/resolv.conf
+
+All the performed events will be logged into --> /var/log/messages
+more /var/log/messages --> to see the logs one by one
+
+  top:- 
+How long it is running, users, load average, how many processors are running, sleeping, stopped, CPU utilization, memory consumption.
+PR represents priority number, NI represents nice value, VIRT virtual memory, RES reserved memory, SHR shared memory, S state of the process. 
+Shift p --> top CPU consuming processors
+Shift m --> to memory consuming processors 
+
+What is swap space?
+Swap space is like a 2nd memory and it will not be in memory chip card, it will be in disk.
+Use case of swap space?
+All the inactive processors will be dump into the swap space. 
+
+ifcfg-eth0 --> to configure the network details
+
+
+What is zombie process?
+If we are killing the parent process, child processors, which are coming from the parent will be thinking that parent is alive. Childs will be continuously working and simply consuming the memory. The more zombie process we have the more performance issues we will get.
+
+What is the difference between standard partition & logical volume?
+In standard partition we cannot create the file size dynamically, first we have to take backup of the file and delete the original file, and take required volume size and attach back up file.
+
+Logical volume we can increase the size dynamically. We can take the disks and all together we can create the volume group.
+
+telnet ipadd portnumber  --> in the server whether particular port is enabled or not
+
+vmstat --> to see the memory of swap space, free, cache, io, CPU ideal time, wait time.
+iostat --> to see the disk level performance issues
+
+  
+
+ps -ef --> list out all the processor which are running as part of my os
+
+mkfs.ext4 /dev/mapper/myvg-mylv
+mount -t ext4 /dev/mapper/myvg-mylv /app
+
+Ifup eth0 --> to bring up one particular interface
+Ifdown eth0 --> to bring down one particular interface
+rounte -n --> to check the network connectivity via which flow and gateway.
+ethtool eth0 --> more information about interface
+/etc/sysconfig/network --> network configuration file 
+Linux
+1. Linux is reliable, security and open source.
+2. Linux is hardware independent and there are several types of linux os.
+they are:-
+centos, ubuntu, mint, kali, fedora, suse.
+3. kernel is key component of OS.
+4. we have to pass the instructions to the kernel via shell.
+5. Based on the requirement of the user, kernel does start communicating with the hardware.
+6. kernel acts heart of the OS. without kernel can not run the server.
+
+* Filesystem hierarchy:-
+1. (/) we call it like parent root, if parent gets deleted, entire OS will be deleted.
+2. /root is defferent than /.
+
+* Folders:- 
+1. Bin & user:- binaries will be stored.
+2. Home:- users home directories will be stored.
+3. Var:- system logs will be stored.
+4. etc:- system configurations will be stored.
+5. opt:- optional things will be stored.
+6. temp:- temporary data can keep it under temp folder.
+
+* Commands:-
+(mkdir):- to create the directorie
+ex:- mkdir /tmp/myserver.  under tmp folder myserver directory has been created.
+(pwd):- to verify present working directory.
+(ls -ld):- to verify whether created directory is existed or not.
+ex:- ls -ld /tmp/myserver/
+(cd):- to change the directory
+ex:- cd /tmp/myserver
+(cd /):- to go to root directory
+(ls -l):- to list out the all folders and files in current directory
+(rmdir):- to remove the directory
+ex:- rmdir /tmp/myserver
+(-p):- create the directory even if the parent is not available.
+ex:- mkdir /tmp/test/test2/test3 -p
+(chmod):- to change the permission
+ex:- chmod 464 /tmp/myserver/
+(touch):- to create an empty file
+ex:- touch file{1..4} (four files will be created)
+(cd ..):- to go to one directory back
+(cd ../..):- to jump two directories back
+(ls -lR):- to list out the all files and directories recursively
+ex:- ls -lR /tmp/myserver/
+(groupadd):- to create the group
+ex:- groupadd myserver
+(chown ec2-user:myserver):- to change the group
+ex:- chown ec2-user:myserver /tmp/myserver/
+(cat):- to display the content of the file.
+(-n):- to get the line numbers
+ex:- cat /etc/passwd -n 
+(tail):- output of the command to give the input (last five lines of the content).
+ex:- cat /etc/passwd |tail -5
+ex:- cat /etc/passwd |head -5 (will print first five lines)
+(cp):- to copy the files
+ex:- cp /tmp/src/file1 /tmp/dest/file1 (file1 copied to the /tmp/dest)
+(mv):- to move the files
+ex:- mv /tmp/src/file2 /tmp/dest/file2
+find --> to find anything as part of OS
+ex:- find / -iname file3 (-i gives output both upper and lower letter created files)
+ex2:- find / -name (gives only lower letter)
+grep --> to search the word
+ex:- cat tex.file |grep -i class 
+wc --> to count the word
+ex:- cat tex.file |grep -i class|wc -l
+
+permissions:- 
+r- read(4)
+w- write(2)
+x- execute(1)
+(rwx):- user 
+(r-x):- group 
+(r-x):- others
+
+VI editor:-
+i --> to be in insert mode (to write and edit the data)
+esc --> to do any operation on top of the data
+gg --> to go to first line 
+shift+g --> to go to last line
+shift+$ --> to go to end of the line
+0 --> to go to first of the line  
+yy --> to copy the data
+p --> to paste the data
+u --> to revert back the changes (undo)
+Ctrl+r --> redo
+dd --> to delete the content
+/ --> to search the word
+:%s/existed word/replacing word/g --> to replace the word
+:wq! --> to save and quit from the file.
+:set nu --> to give numbers for the lines.
+:%s/^/add the word /g --> to add something starting of the line.
+:%s/$/add the word /g --> to add something end of the line.
+
+Monitoring:-
+cat /proc/cpuinfo --> to see the cpu information
+free -m --> to see memory utilization in megabytes
+free -g --> to see memory utilization in gigabytes
+top --> to see the entire history of server
+ps -ef --> to see how many processors running as part of OS
+ps -eo pid,ppid,cmd,%mem,%cpu --sort=-%mem | head -10 --> to see top memory consumption processor
+kill -9 (process id) --> to kill the process
+vmstat 2 3 --> to see average utilization of resources (every interval of 2 sec it gives 3 times ouput)
+iostat --> to see input and output operations on a disk
+netstat -nap|grep :80 --> to check who is consuming the port number 80.
+curl httpd://localhost --> which software is running on a local server
+
+User administration:- 
+groupadd --> to create the group
+ex:- groupadd dvs
+useradd -s /bin/bash -u 1004 -g dvs -c "Test user" Anil --> to create the user (-s is script, -u user id, -g group, -c comment section) 
+id -a --> to verify user existence
+usermod -c "devops engineer" Anil --> to change comment section for the user
+usermod -s /usr/sbin/nologin Anil --> to no login permission for the user
+usermod -s /usr/bin/bash Anil --> to login permission for the user
+/etc/ssh/sshd_config --> this is the file to change the passwordauthentication to log in through the user
+steps to log in through the user (password authentication):-
+1 passwd Anil
+2 sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
+3 grep PasswordAuthentication /etc/ssh/sshd_config
+4 systemctl reload sshd
+userdel -r:- to delete the user
+ex:- userdel -r Anil
+chmod --> to give the permission
+ex:- chmod 700 /home/devops/.ssh
+su - --> to switch user
+ex:- su - Anil
+ssh-keygen --> gives to keys
+one is id_rsa.pub & id_rsa
+Authorized_keys:- (It is a highly important configuration file, as it configures permanent access using SSH keys and needs proper management.)
+
+steps to log in through user:- (via keys)
+1 generate pub & pri keys
+2 useradd devops:- add the user
+3 mkdir -p /home/devops/.ssh:- create the directory with the folder .ssh
+4 chmod 700 /home/devops/.ssh:- give the permission
+5 chown devops:devops /home/devops/.ssh:- create the ownership
+6 echo "add pub key" > /home/devops/.ssh/authorized_keys
+7 chmod 600 /home/devops/.ssh/authorized_keys
+8 chown devops:devops /home/devops/.ssh
+9 chown devops:devops /home/devops/.ssh/authorized_keys
+
+gpasswd -a --> to add user to the group
+ex:- gpasswd -a devops dvs  (devops is a user & dvs is a group)
+gpasswd -d devops dvs --> to delete user from group
+chage -l --> to check user verification about password expires.
+ex:- chage -l devops
+chage --h --> help command
+
+File system management:- 
+lsblk --> to see the disks
+fdisk -l --> to see the disks avialability 
+
+Disk partition:-
+steps
+1 attach the volume to the server
+2 fdisk /dev/xvdf :- (/dev/xvdf disk name, from where create the partition)
+3 n -->to create the new partition
+4 p --> primary partition 
+5 1 --> 1st partition number
+6 select the size of partition volume (+2G)
+7 p --> to see the partition information
+8 w --> save and quit
+9 mkfs.ext4 /dev/xvdf1
+note:- mkfs.ext4 /dev/xvdf (entire disk data will be wiped out)
+10 mount -t ext4 /dev/xvdf1 /data --> mount the data to an entry point
+init 6 --> to restart the server
+cat /etc/fstab --> (default file to keep entries for permanent mounting)
+steps to follow:-
+1 vi /etc/fstab
+2 give the entries:- /dev/xvdf1      /data   ext4    defaults        0       0
+3 mount -a --> helps, what entries are available under /etc/fstab file.
+
+How to delete the partition:-
+1 first delete an entry in /etc/fstab
+2 umount /data --> to unmount the data
+3 fdisk /dev/xvdf
+4 d --> to delete the partition
+
+logical volume management:-
+1 vgcreate myvg /dev/xvdf --> to create the vg
+2 vgs --> to check whether vg is create or not
+3 lvcreate -L +2G -n mylv myvg --> to create the logical volume
+4 lvs --> to check lv info
+5 mkfs.ext4 /dev/myvg/mylv --> to format the disk
+
+To extend voulme group:-
+1 add on more volume and attach to a server
+2 vgextend myvg /dev/xvdg
+3 lvextend -L +10G /dev/myvg/mylv -r
+
+How to remove filesystem:- 
+1 umount /myapp1
+2  lvremove /dev/myvg/mylv --> to remove logical volume
+3 vgremove myvg --> to remove volume group
+3 pvremove /dev/sdf /dev/sdg --> physical volume
+
+Package Management:- 
+rpm -qa --> to check which packages are available
+rpm -qi python2-cryptography-1.7.2-2.amzn2.x86_64 --> to  know about the package info ("python2-cryptography-1.7.2-2.amzn2.x86_64" package)
+/etc/yum/repos.d :- before install the package first should add the new repository in the system 
+note:- folder is standard (/etc/yum/repos.d)
+1 first add the repository with the extension .repo
+ex:- vi jenkins.repo
+2 add the repository respective package
+note:- https://pkg.jenkins.io/redhat/jenkins.repo
+repository:- [jenkins]
+name=Jenkins
+baseurl=http://pkg.jenkins.io/redhat
+gpgcheck=1
+3 yum clean all --> to refresh the system, clean the repository
+4 yum repolist --> to see the repo list
+
+Passwordless authentication:- 
+1 add the IP address with the server name in the file vi /etc/hosts
+2 ssh-keygen -t rsa --> to generate the pub & pri keys
+3 ignore the password
+4 cat /root/.ssh/id_rsa --> private key
+5 cat /root/.ssh/id_rsa.pub --> pub key
+6 copy the pub key and add in the file vi ~/.ssh/authorized_keys in the server that wanted to log in
+7 ssh server1
