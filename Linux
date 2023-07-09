@@ -329,6 +329,31 @@ rounte -n --> to check the network connectivity via which flow and gateway.
 ethtool eth0 --> more information about interface
 /etc/sysconfig/network --> network configuration file 
 
+Q- user is not able to ssh into remote server, what could be the reasons?
+   1. 400 reason might not be assigned to pem key
+   2. there is a file /etc/ssh/sshd_config, in this file you have to check whether SSH port is assigned correctly or not and it listening on IPV6 or not
+   3. particular user has root permit or not, sometimes there could be entry like (DenyUser Anil) shold have (AllowUser Anil)
+   4. Have to check the entry (PubkeyAuthentication yes) is there or not.
+   5. sshd folder should have appropriate permission like 700
+
+Q- user root has created a file (/tmp/abc) with 700 permission, Anil should have full access to file, how will you do this?
+   $ setfacl -m u:lokendra:rwx /tmp/abc
+
+Q- How will you change the default login shell for all upcoming users on Linux?
+   - got to the file called /etc/default/useradd there you will find entry called SHELL=/bin/bash
+
+Q- how to disable root account
+   - $ usermod -s /sbin/nologin root
+   - $ usermod -s /bin/bash root  -> to enable root account
+
+Q- I want to restart the service only if the service is running, if service is in a stopped state the command should do nothing
+   - $ systemctl try-restart httpd.service
+
+Q- what is max filename length allowed in linux?
+   255
+
+Q- what is drop cache in linux and how do you clear it?
+   
 
 
 
