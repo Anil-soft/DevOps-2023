@@ -353,7 +353,12 @@ Q- what is max filename length allowed in linux?
    255
 
 Q- what is drop cache in linux and how do you clear it?
-   
+   Files that were recently accessed are stored here so they will not need to be queried from the hard disk again, 
+   unless that file changes or the cache is cleared to make room for other data. 
+   This puts less read and write impact on a hard drive and increases speed since files can be read from RAM much faster.
+   $ echo 1 > /proc/sys/vm/drop_caches # clear PageCache
+   $ echo 2 > /proc/sys/vm/drop_caches # clear dentries and inodes
+   $ echo 3 > /proc/sys/vm/drop_caches # clear dentries and inodes
 
 
 
