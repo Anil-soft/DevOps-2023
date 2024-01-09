@@ -90,6 +90,8 @@ what is the difference between docker and virtual machine ?
       Create one public server and private server attach S3 roles to both of the server, after that go to the VPC endpoints there you select
       the S3 gateway an create it, after you creating that entrypoint will be attached to routing table, then you will be able to access to the
       S3 bucket through private server.
+      Can be approached through NAT gateway but NAT gateway do cost every hour and traffic is leaving from VPC and also leaving 
+      the AWS cloud and then it's coming back all the way back, not a good idea from security perspective.
   
   3. we have multiple users only one person can access to S3 bucket, how can you do that?
   
