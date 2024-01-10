@@ -342,7 +342,23 @@ The provider meta-argument specifies which provider configuration to use for a r
       
   36. how can you do autoscaling in kubernetes?
       HorizontalPodAutoscaler controls the scale of a Deployment and its ReplicaSet
+      in manifest file have to add the averageUtilization: 70 parametes
+      on every node Cadvisor or container adviser runs by google when the pods are running on worker node this C advisor can scrape the pod
+      CPU and Memory usage of every 10 sec and every minute metric server will aggregate those metrics and expose them to the kubernetes
+      API server and horizontal pod autoscale controller queries the API server for every 15 sec for these metrics once this controller gets
+      the desired metrics then it decided scale up or scale down. this HPA controller just updates the replica count in the target deployment
+      spinning up the new pod or deleting the existing pod will be taken care by replication controller.
       $ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
+      Verticalpodautoscaler performs three steps first it reads the resource metrics of our deployment from metric server based on these metrics
+      it recommends the resource metrics and updates to the deployment
+      ClusterAutoscaler:- The Cluster Autoscaler automatically adds or removes nodes in a cluster based on resource requests from pods.
+      The Cluster Autoscaler doesn’t directly measure CPU and memory usage values to make a scaling decision. 
+      Instead, it checks every 10 seconds to detect any pods in a pending state, suggesting that the scheduler 
+      could not assign them to a node due to insufficient cluster capacity.
+      If there are any pending pods and the cluster needs more resources, CA will extend the cluster by launching a new node
+      Kubernetes registers the newly provisioned node with the control plane to make it available to the Kubernetes scheduler for assigning pods.
+     Finally, the Kubernetes scheduler allocates the pending pods to the new node.
+
       
   37. what are the kubernetes services?
       ClusterIP. Exposes a service which is only accessible from within the cluster.
