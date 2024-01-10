@@ -109,6 +109,9 @@ what is the difference between docker and virtual machine ?
      Establish the connection between two VPCs through VPC peering.
     
   7. Whenever any instance state gets changed we need get notified how can you configure that?
+     create SNS topic and subscription
+     go to the cloudwatch -> click on events, select the service as EC2 and choose the state.
+
   8. How can you access RDS instance through EC2 instance and fetch the information which is stored in RDS?
      first you need to install mysql client on linux machine
      $ sudo yum install mysql 
