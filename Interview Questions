@@ -584,7 +584,7 @@ volumes:
    $ docker run -it --name container1 -v /data01 nginx /bin/bash -> 
      volume will not be having any name, you will get one alpha numeric docker volume name
      /var/lib/docker/volumes/<apha-numeric>/_data/filename
-     when you do docker inspect <apha-numeric>, it will not show on which continer i has been mapped
+     when you do docker inspect <apha-numeric>, it will not show on which continer it has been mapped
      
   Named volumes
   $ docker volume create volume1
