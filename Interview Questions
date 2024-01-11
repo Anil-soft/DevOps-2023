@@ -465,7 +465,7 @@ The provider meta-argument specifies which provider configuration to use for a r
       $ docker run demobox yum -y install httpd
       - CMD command can override git with httpd while executing container
       CMD [ "yum", "-y", "install", "httpd" ]
-      CMD [ "echo", "Anil" ]
+      CMD [ "echo", "Anil" ] 
       - only last command will get executed, it will print only Anil i wil not install httpd 
     
     ENTRYPOINT
@@ -534,7 +534,7 @@ volumes:
     - It can automatically discover new branches in the source control (Github) and automatically create a pipeline for that branch. 
     - When the pipeline build starts, Jenkins uses the Jenkinsfile in that branch for build stages. 
     - scan multibranch pipeline trigger 
-    
+    - install the multibranch pipeline plugin and while creating the job  in the branch source select the git and provide repo details
 17. what is the lifecycle of multibranch jenkins job?
 18. how can you store the credentials in Jenkins?
     Manage jenkins -> configure credentials -> jenkins -> global tool credentials
@@ -778,6 +778,10 @@ Now you can verify the terraform import by running the command terraform plan an
     $ kubectl get endpoints  => to check which pods are associated with the service
     
 25. what is ingress why do we need to use that?
+    - suppose we have two services one is for UI and another one is for API so we need to have two load balancer
+      have to pay for the two load balancers but we can have one load balancer and we can route to traffic to different
+      service through ingress depends upon the path.
+    - in ingress we can declare which request should go to which service.
     - Kubernetes ingress resource is responsible for storing DNS routing rules in the cluster.
     - Ingress exposes HTTP and HTTPS routes from outside the cluster to services within the cluster. 
     - Traffic routing is controlled by rules defined on the Ingress resource.
