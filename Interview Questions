@@ -589,7 +589,7 @@ volumes:
   Named volumes
   $ docker volume create volume1
   $ docker run -it --name container1 -v volume1:/data01 nginx /bin/bash
-  volume will be mounte to the dir called /data01 
+  volume will be mount to the dir called /data01 
   the data will be available Docker host under /var/lib/docker/volumes/volume1/_data/filename
   
   Bind volumes
@@ -603,6 +603,7 @@ volumes:
 2. Explain about the docker networks
 3. What is Docker compose, why do we use this ?
 4. what is multistage build and why do we use this?
+   - multistage builds are used to optimize docket image size
 5. what are the security parameters have to take while creating docker image ?
    - always use the docker official images, official images are already built with best practices
    - instead of using all the base images like centos, ubuntu we can use lightweight images
@@ -623,7 +624,7 @@ volumes:
 10. what is the default jenkins directory ?
     /var/lib/jenkins
 11. how can you do the continuoes integration with jenkins to github?
-12. Write the terraform script to create the instance
+12. Write the terraform script to create the instance ?
 13. what is difference between terraform and ansible ?
 14. if the state file has been deleted, if am going to do terraform apply it is going to create resources ?
     it's not going to work, we can do the terraform import, terraform plan and terraform apply, then one more state file will be created.
