@@ -534,6 +534,7 @@ volumes:
     - It can automatically discover new branches in the source control (Github) and automatically create a pipeline for that branch. 
     - When the pipeline build starts, Jenkins uses the Jenkinsfile in that branch for build stages. 
     - scan multibranch pipeline trigger 
+    -  multibranch scan webhook trigger plugin to scan the 
     - install the multibranch pipeline plugin and while creating the job  in the branch source select the git and provide repo details
 17. what is the lifecycle of multibranch jenkins job?
 18. how can you store the credentials in Jenkins?
