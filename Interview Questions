@@ -807,21 +807,26 @@ Now you can verify the terraform import by running the command terraform plan an
 26. what are the security paramameters for creating pod ?
     
 27. what is service account in kubernetes ?
-    if any application like springboot or python application wants to access the same resourcess.
-    service acccounts are nothing but application users, when namespace gets created a default service account will gets created
-    in the pod definition file have to user the attribute called serviceaccount:test-sa 
-    in rolebinding manifest file have to choose the mention the service account. 
+    if any application like springboot or python application wants to access the some resourcess.
+    service acccounts are nothing but application users, when namespace gets created a default service account will get created
+    in the pod definition file have to use the attribute called serviceaccount:test-sa 
+    in rolebinding manifest file have to mention the service account.
 
 28. how do you implement RBAC ?
+    if we don't have any restrictions there are chances that users my delete the kubernetes resources.
     Role-based access control (RBAC) is a method of regulating access to computer or network resources 
     based on the roles of individual users within your organization.
     Context:- 
     context contains kubernetes cluster, namespace, user
-    - first we have to create the private key for the user
+    - first we have to create the private key for the user ( openssl genrsa -out anil.key 2048 )
     - create the certificate sign in request for the user and private key
-    - this certificate sign in request must be signed with certificate authority.
+      ( openssl req -new -key anil.key -out anil.csr -subj "/CN=pavan/O=dev/O=example.org" )
+    - this certificate sign in request must be signed by certificate authority.
+      openssl x509 -req -CA ~/.minikube/ca.crt -CAkey ~/.minikube/ca.key -CAcreateserial -days 730 -in anil.csr -out anil.crt
     - we can get the certificate authority from kube config file.
     - we should add the user with cluster by providing certificate and user.
+      kubectl config set-credentials pavan --client-certificate=pavan.crt --client-key=pavan.key
+    -> kubectl config use-context anil-minikube ( to switch the user )
     - after we have to create the manifest file to create the role
     - after that we have to create th rolebinding, rolebinding is nothing but connecting a user with role.
     - role and rolebinding are namespaced, it means user will be having the permission for where rolebinding is defined.
@@ -847,6 +852,7 @@ Now you can verify the terraform import by running the command terraform plan an
      running a node monitoring daemon on every node
      
 33. what is the difference betweeen SG and NACL
+    - SG serves at the instance level and NACL serves at the subnet level
 
 
 34. what are the different types of instances ?
