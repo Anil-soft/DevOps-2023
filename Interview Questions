@@ -945,8 +945,41 @@ resource "null_resource" "null_resource_with_remote_exec" {
 
 1. what is the difference between NACL and SG and how they work?
 2. what is the difference between roles and policies ?
+   Policy:-
+   - A policy is a document that defines permissions. It specifies what actions are allowed or denied on what resources.
+   - Policies are written in JSON format and are attached to entities (users, groups, or roles) in IAM.
+   - Policies provide fine-grained control over permissions. You can define policies that grant specific actions on specific resources.
+   - Policies are reusable. You can attach the same policy to multiple IAM entities (users, groups, or roles) to grant them the same set of permissions.
+   Roles:-
+   - A role is an AWS IAM entity that defines a set of permissions for making AWS service requests. 
+   -  It is assumed by AWS resources, such as EC2 instances or Lambda functions.
+   - Roles enable cross-account access. An IAM user from one AWS account can assume a role in another account 
+     if the necessary trust relationships and permissions are configured.
+
 3. what are the storage classes in S3?
+
 4. How can restrict the permissions for S3 bucket and objects ?
+   - Attach the custom IAM policy to the IAM user, group, or role that will interact with the S3 bucket.
+   - using the bucket policy we can define the who can the bucket and objects
+     {
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::your-bucket-name/*"
+    },
+    {
+      "Effect": "Deny",
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::your-bucket-name/*"
+    }
+  ]
+}
+
+ How can you provide the cross account access for the bucket?
+  - click on the bucket, ACL click edit and provide the account ID.
+   
 5. How to copy file from one linux server to another linux server ?
    scp SourceFile user@server:directory/TargetFile
 6. How to check ports in linux server ?
@@ -954,6 +987,12 @@ resource "null_resource" "null_resource_with_remote_exec" {
 7. how can you check the background running processors in linux server ?
    ps aux
 8. how to check the system performance in linux server ?
+   top (  It provides a real-time view of system performance, including CPU usage. )
+   free -h ( Displays information about total, used, and free memory. )
+   du -f ( Shows disk space usage of a directory. )
+   df -h ( Displays information about disk space usage. )
+   nload ( Monitors incoming and outgoing traffic separately. )
+   
 9. How can you make use of the virtual memory in linux ?
 10. Can you explain the CI CD workflow in your project ?
 11. how to integrate docker with jenkins and build an image ?
@@ -962,20 +1001,40 @@ resource "null_resource" "null_resource_with_remote_exec" {
 14. can you explain about the ansible roles ?
 15. can you explain basic syntax for the ansible playbook ?
 16. what is ansible inventory file ?
+    - In Ansible, an inventory file is a simple text file that defines the hosts and groups 
+      of hosts upon which Ansible commands and plays operate.
+    ansible -i inventory.ini all -m ping
+
 17. how can you copy the file from dockerhost to docker container ?
+    docker cp example.txt my_container:/app/
+
 18. how can you build the docker image ?
 19. how can you check the docker logs ?
+    docker logs my_container
+
 20. suppose my container is keep on restarting how can i debug that what would be the reasons ?
 21. explain about the docker network ?
 22. how the two containers will be communicating each other ?
 23. how can you check the memory and cpu utilization of docker container ?
+   docker top <container_id_or_name>
+
 24. can you explain about kubernetes architecture ?
 25. i want to take one server from the kubernetes cluster for the maintenance, how can i do that?
+    kubectl cordon <node_name> ( Mark the node as unschedulable to prevent new pods from being scheduled on it during maintenance )
+    Perform the necessary maintenance tasks on the node, such as updates, reboots, or hardware changes.
+    After maintenance is complete, mark the node as schedulable again to allow new pods to be scheduled on it:
+    kubectl uncordon <node_name>
+
 25. after i done with the maitenance how can i make it available ?
+    kubectl uncordon <node_name>
+
 26. can you write the manifest file to deploy the nginx pod ?
 27. How you are doing logging for kubernetes logs?
+    Prometheus is a monitoring and alerting toolkit. While it primarily focuses on metrics, it can also be used for logging. 
+    Grafana can be used for log visualization.
 28. what are the different types of services in kubernetes?
 29. How can you deploy the pods to the particular nodes ?
+    Node Affinity, Node Selector and Tolerations we can use these mechanisms as per the labels can schedule the pods to specific nodes
 30. what are the kubernetes taints and tolerations ?
 31. how can you define the resource limits for the pods ?
 32. 
@@ -988,26 +1047,3 @@ Redhat - 7
 Kernel version - 5.7
 tomcat version - 9
 nginx version - 7.4
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
