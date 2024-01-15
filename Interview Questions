@@ -14,6 +14,7 @@ what are the uses of parameters and how to do build parameterized ?
  what are the environment variables in jenkins?
   - Environment variables are predetermined values, Environment variables are global key-value pairs Jenkins can access and inject into a project. 
   - Use Jenkins environment variables to avoid having to code the same values for each project
+    BUILD_ID, BUILD_NUMBER, BUILD_URL, JOB_NAME, JENKINS_HOME, WORKSPACE.
   
 what is git cherry pick command ?
   - Cherry-picking in Git stands for applying some commit from one branch into another branch.
