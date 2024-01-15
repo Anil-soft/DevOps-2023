@@ -624,6 +624,7 @@ volumes:
 9. How to take the backup of the jenkins?
 10. what is the default jenkins directory ?
     /var/lib/jenkins
+   - it is having information like jobs, plugin, secrets, logs and nodes etc..
 11. how can you do the continuoes integration with jenkins to github?
 12. Write the terraform script to create the instance ?
 13. what is difference between terraform and ansible ?
@@ -654,6 +655,22 @@ volumes:
 Now you can verify the terraform import by running the command terraform plan and it should not create any more resources
 
 16. write an ansible playbook to install httpd server
+    - name: installing Apache HTTP Server
+      hosts: loclahost
+      become: true
+
+      tasks:
+        - name: install package
+          package:
+            name: httpd
+            state: present
+
+        - name: start package
+          service:
+            name: httpd
+            state: started
+            enabled: yes
+
 17. what are the ansible handlers
    - Sometimes you want a task to run only when a change is made on a machine.
    - For example, you may want to restart a service if a task updates the configuration of that service, but not if the configuration is unchanged.
@@ -671,6 +688,7 @@ Now you can verify the terraform import by running the command terraform plan an
         name: httpd
         state: restarted
 18. if one task is not working how can you skip that and go to next task ?
+    nsible-playbook apache.yaml --skip-tags=install
     
 19. what are the ansible tags ?
  ansible-playbook apache.yaml --tags=install,start
@@ -826,7 +844,7 @@ Now you can verify the terraform import by running the command terraform plan an
       openssl x509 -req -CA ~/.minikube/ca.crt -CAkey ~/.minikube/ca.key -CAcreateserial -days 730 -in anil.csr -out anil.crt
     - we can get the certificate authority from kube config file.
     - we should add the user with cluster by providing certificate and user.
-      kubectl config set-credentials pavan --client-certificate=pavan.crt --client-key=pavan.key
+      kubectl config set-credentials anil --client-certificate=anil.crt --client-key=anil.key
     -> kubectl config use-context anil-minikube ( to switch the user )
     - after we have to create the manifest file to create the role
     - after that we have to create th rolebinding, rolebinding is nothing but connecting a user with role.
@@ -940,6 +958,8 @@ resource "null_resource" "null_resource_with_remote_exec" {
 3. Explain about the jenkins parameterized build and why do we use that?
 4. Without giving access to the developers to pod, developer can see all the logs collectively, how to give access and how the developers can view the logs?
 5. How can you install the RPM on linx OS?
+   sudo yum install package_name.rpm
+
 6. Total i have 5 servers running, but i have realized i need to 7 servers so how can you spin up 2 more services through terraform?
 
 ( analyttica )
@@ -1010,6 +1030,8 @@ resource "null_resource" "null_resource_with_remote_exec" {
     docker cp example.txt my_container:/app/
 
 18. how can you build the docker image ?
+    docker build -t myapp:v1.0 -f Dockerfile .
+
 19. how can you check the docker logs ?
     docker logs my_container
 
@@ -1041,7 +1063,7 @@ resource "null_resource" "null_resource_with_remote_exec" {
 32. 
 
 
-Ansible version - 2.14
+2Ansible version - 2.14
 Jenkins version - 2.346
 java - 11
 Redhat - 7
