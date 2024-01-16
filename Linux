@@ -360,7 +360,14 @@ Q- what is drop cache in linux and how do you clear it?
    $ echo 2 > /proc/sys/vm/drop_caches # clear dentries and inodes
    $ echo 3 > /proc/sys/vm/drop_caches # clear dentries and inodes
 
+Scenario Based interview questions and answers
 
+1. How to set a username and password to never expires?
+   chage -M -1 anil
+
+2. to list all the files opened by particular pID?
+   lsof -p PID
+   lsof -u anil ( all the files opened by user )
 
 
 
