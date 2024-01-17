@@ -659,7 +659,8 @@ How to send cloudwatch logs to S3 bucket?
   go to cloudwatch, click on log group, select the log group, under action dropdown choose create export task and select
   S3 bucket.
 
-
+if the latency value is more than 30, need to terminate an instance how can you do that?
+   go to the alarams, define the thresold value, select an ec2 action.
 
 
 
