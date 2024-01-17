@@ -632,3 +632,58 @@ Customer responsibility Security in the Cloud:-
   
 cloud computing models?
 IaaS:-
+
+you have been assigned to design VPC architecture for 2 tier application. the application needs to be highly available
+and scalable. How would you design the VPC architecture?
+  I would create 2 subnets: public and private. the public subnet would contain the load balancer and be accessible
+  from the internet. the private subnet would host the application servers.
+
+  I would disctribute the subnets across multiple availability zones for high avaialbility. Aditionally, I would configure
+  auto scaling groups for the application servers.
+
+You have multiple subnets for few subnets you should restrict the outbound internet access and for few should allow?
+  remove default route IG in RT for the subnets which should be restricted outbound internet access, keep the default
+  route for the other subnets.
+
+You have launched EC2 instances in your VPC, you want them to communicate each other with private ip address,
+what steps you have to follow to make communication?
+  to ensure this communicate make sure that instances should be launched in the same VPC and and same subnets,
+  if they are in different VPC then have to establish the VPC peering.
+
+You want to control strict network access to control for your VPC resources, how would you achieve this?
+  NACLS,
+by using the NACLs we can define the outbound and inbound to allow or deny traffic based on source and destination
+network IP address, ports and protocols.
+
+How to send cloudwatch logs to S3 bucket?
+  go to cloudwatch, click on log group, select the log group, under action dropdown choose create export task and select
+  S3 bucket.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
