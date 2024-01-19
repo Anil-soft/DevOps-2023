@@ -368,26 +368,3 @@ Scenario Based interview questions and answers
 2. to list all the files opened by particular pID?
    lsof -p PID
    lsof -u anil ( all the files opened by user )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
