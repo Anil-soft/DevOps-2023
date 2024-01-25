@@ -255,12 +255,12 @@ Note:- ny variables you set with set_fact will not be overwritten with include_v
     state: "present"
   
 do you think ansible is better than other configuration management tool ? if yes, why?
- - Ansible is agent lesst, if we configure hundreds of virtual machines, to configure all of the these servers no need to install
+ - Ansible is agent less, if we configure hundreds of virtual machines, to configure all of the these servers no need to install
    any agent on the servers. you can make communication between the servers through SSH.
  - Ansible uses yaml scripting which very easy to use.
 
 What is dyamic inventory?
- - 
+ - Ansible keeps looking at AWS account for newly added VMs ansible would auto configure those virtual machines using dynamic inventory.
  
 what is ansible galaxy and how to use it?
  - ansible galaxy is used to create the roles 
@@ -370,9 +370,109 @@ Explain scenario when to use either ansible playbooks or AD HOC commands?
    --syntax-check check the syntax
    --check  how the execution will happen show the preview
   
-    
+ How to continue ansible playbook tasks even if some of the task fails?
+   ignore_errors keyword to continue despite the failure.
+
+explain ways to run the same ansible playbooks on distinctive nodes with different ports and usernames.
+  Define the nodes in a static inventory file (inventory.ini) and use group variables to set the connection parameters.
+  [web_servers]
+node1 ansible_host=example1.com ansible_port=22 ansible_user=user1
+node2 ansible_host=example2.com ansible_port=2222 ansible_user=user2
+
+$ ansible-playbook -i example.com, -e "ansible_port=2222 ansible_user=user2" your_playbook.yml
+
+Explain the importance of ansible roles and create a role to install the "apache" webserver on target hosts?
+  Ansible roles are a way to organize and structure your Ansible code in a modular and reusable manner. 
+  Roles provide a mechanism for breaking down complex playbooks into smaller
+
+Example:
+# install_apache/defaults/main.yml
+apache_package: apache2
+
+# install_apache/tasks/main.yml
+---
+- name: Install Apache
+  package:
+    name: "{{ apache_package }}"
+    state: present
+
+- name: Start Apache service
+  service:
+    name: "{{ apache_package }}"
+    state: started
+    enabled: yes
+# install_apache_playbook.yml
+---
+- name: Install Apache on Web Servers
+  hosts: web_servers
+  become: true
+
+  roles:
+    - install_apache
 
 
+How do we trigger the "webserver" service restart task, whenever there is a configuration change in the "webserver" or else skip the 
+restart task?
+ you can use the notify and handlers mechanism in Ansible. Handlers are tasks that only run when notified, and they are typically used 
+ for actions like service restarts
+
+
+  # install_apache/tasks/main.yml
+---
+- name: Install Apache
+  package:
+    name: "{{ apache_package }}"
+    state: present
+  notify: Restart Apache
+
+- name: Start Apache service
+  service:
+    name: "{{ apache_package }}"
+    state: started
+    enabled: yes
+
+handlers:
+  - name: Restart Apache
+    service:
+      name: "{{ apache_package }}"
+      state: restarted
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
     
     
     
