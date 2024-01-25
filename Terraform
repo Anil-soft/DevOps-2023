@@ -473,5 +473,121 @@ resource "null_resource" "null_resource_with_remote_exec" {
 
 }
 
+What is the difference between terraform show and terraform plan
+terraform plan:- The output of terraform plan includes information about additions, modifications, and deletions of resources, 
+as well as any associated dependencies. 
+
+terraform show:- The output of terraform show includes a representation of your current infrastructure based on the state file (terraform.tfstate). 
+It's useful for inspecting the actual state of your resources and verifying the current configuration.
+
+Assume terraform configuration files are deleted only left with an updated .tfstate file. How to recover the configuration files
+through terraform.tfstate file if possible?
+follow the terraform import workflow and get the resources under terraform management
+analysis the .state file and re-create configuration from scratch.
+
+if someone makes changes to this VPC directly in AWS console, then what happens and how terraform will behave?
+  When you run terraform plan, Terraform will compare the state defined in your Terraform configuration with the 
+   actual state of the resources in your AWS account.
+ This might involve updating the existing resources to match the desired state in your Terraform configuration.
+
+How to create a resource conditionally like i want the resource in dev not in prod?
+  resource "aws_subnet" "example_subnet" {
+  count = var.env = dev ? 1 : 0
+  vpc_id                  = "vpc-12345678"  
+  cidr_block              = "10.0.1.0/24"   
+  availability_zone       = "us-west-2a"    
+  map_public_ip_on_launch = true          
+
+  tags = {
+    Name = "ExampleSubnet"
+  }
+}
+
+what is local variable in terraform?
+ local variable is a variable which is initialized within the code we can't pass values form outside.
+ Local variables are helpful for improving code readability, reusability, and maintainability
+locals {
+  subnet_cidr_block = "10.0.1.0/24"
+  subnet_name       = "ExampleSubnet"
+}
+
+resource "aws_subnet" "example_subnet" {
+  vpc_id                  = "vpc-12345678"
+  cidr_block              = local.subnet_cidr_block
+  availability_zone       = "us-west-2a"
+  map_public_ip_on_launch = true
+
+  tags = {
+    Name = local.subnet_name
+  }
+}
+
+what is the diff b/w variable and local variable?
+ Variable
+  They have a global scope and can be accessed from any part of your configuration.
+  local variables
+  Local variables are declared within a locals block, which is usually placed within the main Terraform configuration file.
+  They have a limited scope and can only be accessed within the module or resource block where they are defined.
+  Local variables are used for intermediate values or expressions that are reused within a specific module or resource block. 
+  ex:- locals {
+       az_names = data.aws_availability_zones.azs.names
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
