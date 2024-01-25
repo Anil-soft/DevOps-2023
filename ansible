@@ -353,7 +353,24 @@ Interview questions and answers?
    facts are nothing but they have the details about hosts or VMs which we have mentioned in the inventory
    it can be installed operating system, IP address, OS family.
 
+Explain scenario when to use either ansible playbooks or AD HOC commands?
+  playbooks:
+    Playbooks are reusable. If you find yourself repeating tasks across different scenarios, playbooks allow you 
+    to encapsulate and reuse configurations, making your infrastructure code more modular and maintainable.
+    Playbooks can utilize roles, which are a way of organizing tasks, handlers, and variables into reusable structures. 
+    Playbooks use a declarative syntax, allowing you to express the desired state of your system. This makes it easier to understand 
 
+  AD HOC:
+    Use ad hoc commands for one-time commands or simple tasks that don't require a full playbook. 
+    $ ansible web_servers -i inventory.ini -m apt -a "name=nginx state=present"
+    Ad hoc commands are useful for running quick checks, gathering information, or troubleshooting issues on remote systems.
+    $ ansible all -i inventory.ini -m shell -a "free -m"
+
+ what are the various ways to verify playbooks, prior to execution?
+   --syntax-check check the syntax
+   --check  how the execution will happen show the preview
+  
+    
 
 
     
