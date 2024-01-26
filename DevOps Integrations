@@ -1,3 +1,10 @@
+build triggers:
+ - build after other projects are build
+ - build periodically
+ - poll scm
+
+
+
 Jenkins stages:-
 
 build, deploy, test and release.
