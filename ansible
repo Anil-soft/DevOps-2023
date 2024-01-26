@@ -18,8 +18,17 @@
  :- ansible-playbook dev.yaml -e my_name=anil => to pass the variable from command line
  
  Note:- ansible.cfg file the important file in ansible which is having all the information like inventory, interpreter, private key file, privilege escalation
- 
+
+inventory = /path/to/your/inventory
+remote_user = your_remote_user
+private_key_file = /path/to/your/private_key
+forks = 5
+gather_facts = True
+
  Idempotency:- if the configuration is already existed then it will skip or else it will execute the configation
+ Idempotency means that if you run an Ansible playbook multiple times, it won't make unnecessary changes to your system. 
+ If the system is already in the desired state, running the playbook again won't alter anything.
+
   ---
 - hosts: webservers
   become: True
@@ -126,7 +135,7 @@
 
     - debug: msg="Hello, {{ name }}!"
 
-Note:- ny variables you set with set_fact will not be overwritten with include_vars
+Note:- my variables you set with set_fact will not be overwritten with include_vars
 
 - name: print greeting
   hosts: server1
@@ -437,8 +446,47 @@ handlers:
       name: "{{ apache_package }}"
       state: restarted
 
+What is jinja template and how to use that?
+  a Jinja2 template is a text file that contains placeholders or variables 
+  that can be replaced with actual values when processed by a template engine. 
+
+# This is a Jinja2 template for a configuration file
+
+[Server]
+hostname = {{ server_hostname }}
+port = {{ server_port }}
+
+[Database]
+name = {{ db_name }}
+user = {{ db_user }}
+password = {{ db_password }}
 
 
+# This is a YAML file containing variables for the template
+
+server_hostname: example-server
+server_port: 8080
+
+db_name: my_database
+db_user: db_user
+db_password: secret_password
+
+
+---
+- name: Generate Configuration File
+  hosts: localhost
+  gather_facts: false
+  become: false
+
+  tasks:
+    - name: Load Variables
+      include_vars:
+        file: vars.yml
+
+    - name: Generate Configuration File
+      template:
+        src: template.conf.j2
+        dest: /etc/my_app/config.conf
 
 
 
