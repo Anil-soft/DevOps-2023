@@ -488,7 +488,11 @@ db_password: secret_password
         src: template.conf.j2
         dest: /etc/my_app/config.conf
 
+User
+I have 4 servers in ansible inventory 2 servers under blue category one is under green category 
+how can i limit to run java package on blue category?
 
+ansible-playbook -i hosts java.yml --limit blue
 
 
 
