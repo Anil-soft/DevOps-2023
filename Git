@@ -97,8 +97,8 @@ what is git tag ?
   $ git push origin --tags
   $ git tag -d v1.4-lw
   
-
-  
+Git branching strategy?
+ 
    
 
 
