@@ -270,8 +270,10 @@ Jenkins interview questions and answers
  7. what is the jenkins version you are using ?
     2.346.40.0.16
     
-    
+8. how to pass parameters between two jobs?
 
+install parameterized trigger plugin
+in job1 at add post build actions trigger parameterized build on other projects.
 
 
 
