@@ -3,7 +3,19 @@ build triggers:
  - build periodically
  - poll scm
 
+Jenkins pipeline stage:-
+Checkout: Retrieve the source code from the version control system.
+Build: Compile and build the project using Maven.
+Unit Test: Run unit tests to verify code correctness.
+Code Analysis: Perform static code analysis with SonarQube.
+Integration Test: Execute integration tests.
+Archive Artifacts: Store build artifacts for later use or deployment.
+Post-conditions: Send email notifications based on the build result.
 
+for the unit testing have to install the JUnit plugin
+you can use the "Publish JUnit test result report" post-build action.
+
+SonarQube:- SonarQube Scanner for Jenkins
 
 Jenkins stages:-
 
