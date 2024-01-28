@@ -387,9 +387,10 @@ awk
 $ awk '{print}' filename -> it will print the file content
 $ awk '{print $1}' filename -> first field of the file
 $ awk '{print $1,$3}' filename -> prints first and third field
-
-
-
+$ ls -l | awk '{print $1}' -> you will get the permission string
+$ echo "Hello from DevOps" | awk '{print $1}'
+$ awk '{print $NF}' filename  -> it prints the last field of the line
+$ awk -F':' '{print $1,$7}' /etc/passwd  -> field separator : print 1 and 7 field
 
 
 
