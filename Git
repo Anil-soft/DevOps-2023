@@ -57,7 +57,7 @@ explain about git stash ?
   - git stash will save the untracked files on the temporary env
   $ git stash
   $ git stash list
-  $ git pop { The stash pop command in git will take the content from the stash file and then apply those changes to our current working file }
+  $ git pop {The stash pop command in git will take the content from the stash file and then apply those changes to our current working file}
   $ git stash apply
   
 what is the difference between git pull and git fetch ?
@@ -96,24 +96,32 @@ what is git tag ?
   $ git push origin v1.5
   $ git push origin --tags
   $ git tag -d v1.4-lw
+
+$git diff HEAD^ HEAD  ->This command compares the last two commits
+$ git diff commit1 commit2
   
 Git branching strategy?
  
-   
+
+How to know merged branches on git?
+  git branch --merged master -> lists branches merged into master
+How to delete the remote branch from command line?
+ git push origin --delete <branch-name>
+
+what are the states of a file in Git?
+ modified, staged, committed.
+
+what does the git merge --abort do?
+   used to stop the merge process and return back to the state before the merging begin
+
+How to fix the broken commit?
+git commit --amend
+
+How you revert a commit command that has already been pushed and made public?
+git revert <commit-id>
 
 
-  
-  
-  
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
 
 
 
