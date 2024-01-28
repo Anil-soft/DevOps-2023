@@ -723,9 +723,9 @@ Now you can verify the terraform import by running the command terraform plan an
     then we will use the taints and tolerations.
   - Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
   - Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. 
-  - kubectl taint nodes node1 key1=value1:NoSchedule
-  - kubectl taint nodes node1 key1=value1:NoExecute
-  - kubectl taint nodes node1 key2=value2:PreferNoSchedule
+  - kubectl taint nodes node1 key1=value1:NoSchedule (pods if they can't tolerate)
+  - kubectl taint nodes node1 key1=value1:NoExecute (can be scheduled if no other nodes available)
+  - kubectl taint nodes node1 key2=value2:PreferNoSchedule (delete running pods also if they can't tolerate newly added limit)
 
 23. what are the pod affinity and node affinity and what is the difference between selectors?
     NodeSelector:- nodeSelector is the simplest recommended form of node selection constraint
