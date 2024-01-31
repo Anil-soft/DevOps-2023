@@ -1070,3 +1070,31 @@ Redhat - 7
 Kernel version - 5.7
 tomcat version - 9
 nginx version - 7.4
+
+I have S3 bucket and 500 objects are in standard class and 500 are in infrequent class but I want to move back 500 objects 
+which are in infrequent class to the standard class how can i do that?
+   S3's transition policies are designed to move objects from Standard to Infrequent Access, Glacier, or Deep Archive,
+   but not the other way around.
+   Once an object is transitioned to the Infrequent Access class, it stays there until you perform an overwrite operation 
+   (like a copy) and specify the storage class as Standard.
+   If you need to move objects from Infrequent Access back to Standard, the typical approach involves copying the objects back 
+   to the same bucket with the desired storage class and then deleting the original objects in the Infrequent Access class.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
