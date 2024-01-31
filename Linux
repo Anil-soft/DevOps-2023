@@ -431,6 +431,20 @@ iftop  ->  provides a live, dynamic view of the current network traffic,
            You can use iftop to identify applications or processes that are consuming a significant amount of bandwidth.
 
 
+grep
+$ grep "bash" filename  -> to search the word in particular file
+$ grep "bash" *  -> all files
+$ echo "this is anil"  -> grep "anil"
+$ grep -w "line" filename  -> exact word nog goint to print like if there are any words like "lines"
+$ grep -v "above" filename  -> print the lines which are not having "above" word
+$ grep -o "above" filename  -> will not print entire the lines which are having above word it will print only above word
+$ grep -n "bash" filename  -> it will print the line number and line if clud -o like -no it will print line number with only word
+$ grep -cw "bash" filename -> to print exact word and how many lines will be having the word "bash"
+$ grep -C 5 "bash" filename  -> print the 5 lines before and after for the bash word
+$ grep -A 5 -B 5 "bash" filename  -> same use case like -C
+$ grep -r "bash" filename  -> recursively i want to search like current and sub directories
+$ grep -l "bash" filename  -> if there is a match for the bash word dont display the file name display only matched files
+$ 
 
 
 
