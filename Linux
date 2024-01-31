@@ -438,13 +438,38 @@ $ echo "this is anil"  -> grep "anil"
 $ grep -w "line" filename  -> exact word nog goint to print like if there are any words like "lines"
 $ grep -v "above" filename  -> print the lines which are not having "above" word
 $ grep -o "above" filename  -> will not print entire the lines which are having above word it will print only above word
-$ grep -n "bash" filename  -> it will print the line number and line if clud -o like -no it will print line number with only word
+$ grep -n "bash" filename  -> it will print the line number and line -o like -no it will print line number with only word
 $ grep -cw "bash" filename -> to print exact word and how many lines will be having the word "bash"
 $ grep -C 5 "bash" filename  -> print the 5 lines before and after for the bash word
 $ grep -A 5 -B 5 "bash" filename  -> same use case like -C
 $ grep -r "bash" filename  -> recursively i want to search like current and sub directories
 $ grep -l "bash" filename  -> if there is a match for the bash word dont display the file name display only matched files
+$ grep -f inputfile.txt filename  -> give the input file which are having the words to be displayed
+$ grep -E "line|above|bash|shell" filename -> to search multiple strings at a time
+$ grep -E "^root" /etc/passwd  -> print the line which line starts with the word root
+$ grep -E "nologin$" /etc/passwd  -> to print the line which line ends with word nologin
+$ grep -E "s.....d" /etc/passwd  -> print the lines which are having words starting with s and ending with d.
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+systemd-timesync:x:103:106:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin
+$ grep -E "bash\b" filename  -> print the line which are having the space after bash word
+$ grep -E "\bbash" filename  -> before bash word
+$ grep -E "\bbash\b" filename  -> space before and after the word
+$ grep -E "^anil|news" /etc/passwd -> print the lines either starting with anil or news
+$ grep -Ev "^anil|news" /etc/passwd  -> print the lines without the lines which are starting with anil and news
+$ grep -E "xf{3,4}" filename  -> to print the f either 3 or 4 times
+$ grep -E "[[:digit:]] filename  -> print the lines which are having digits
+  [[:upper:]], [[:lower:]]
+$ ls -lrt | grep -E "^d"  -> to print only directories
 $ 
+
+
+
+
+
+
+
+
 
 
 
