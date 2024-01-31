@@ -1080,9 +1080,22 @@ which are in infrequent class to the standard class how can i do that?
    If you need to move objects from Infrequent Access back to Standard, the typical approach involves copying the objects back 
    to the same bucket with the desired storage class and then deleting the original objects in the Infrequent Access class.
 
-
-
-
+what are the difference between RDS multi-az and read replicas?
+multi-az:
+ - Multi-AZ is primarily focused on enhancing high availability and fault tolerance for a single database instance.
+ - With Multi-AZ, you deploy a primary database instance in one Availability Zone, and Amazon RDS automatically provisions
+   a synchronous standby replica in another Availability Zone.
+ - Multi-AZ operates using synchronous replication, meaning that changes made to the primary instance are immediately replicated 
+   to the standby instance. 
+Read replica:
+ - Read replicas are designed to enhance read scalability by allowing you to create one or more read-only replicas of your 
+   primary database instance.
+ - Read replicas are separate database instances that are asynchronously replicated from the primary instance. You can have 
+   multiple read replicas.
+ - Unlike Multi-AZ, read replicas use asynchronous replication, which means there might be a slight lag between the primary
+   and replica databases
+ - Read replicas are used to offload read traffic from the primary instance, improving overall performance and scalability for 
+   read-heavy workloads.
 
 
 
