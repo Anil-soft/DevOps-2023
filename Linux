@@ -461,7 +461,23 @@ $ grep -E "xf{3,4}" filename  -> to print the f either 3 or 4 times
 $ grep -E "[[:digit:]] filename  -> print the lines which are having digits
   [[:upper:]], [[:lower:]]
 $ ls -lrt | grep -E "^d"  -> to print only directories
-$ 
+
+CUT
+$ cut -c 1 /etc/passwd  -> to print the first character
+$ cut -c 4,9 /etc/passwd  -> to print the 4th and 9th character
+$ cut -c 4-9,12 /etc/passed  -> to print character from 4-9 and 12th character
+$ cut -c -10 /etc/passwd  -> to print first character to 10th (10- from 10th to last character)
+$ cut -f 2 /etc/passwd  -> to print second field
+$ cut -d ':' -f 1,8 /etc/passwd  -> field separator as ':' and print 1,8 fields
+$ cut -d ':' -f 1,4 /etc/passwd --output-delimiter=" "  -> to get the filed separator as space
+$ anil@PF448X4G:~$ ls -ld
+drwxr-x--- 1 anil anil 4096 Jan 31 17:05 .
+anil@PF448X4G:~$ ls -ld | cut -d ' ' -f 8
+17:05
+anil@PF448X4G:~$ ls -ld | cut -d ' ' -f 8 | cut -d ':' -f 1
+17
+
+
 
 
 
