@@ -394,6 +394,8 @@ $ ls -l | awk '{print $1}' -> you will get the permission string
 $ echo "Hello from DevOps" | awk '{print $1}'
 $ awk '{print $NF}' filename  -> it prints the last field of the line
 $ awk -F':' '{print $1,$7}' /etc/passwd  -> field separator : print 1 and 7 field
+$ awk '{ print NR }'  -> print number of records
+$ awk '{print NR,$0}'  -> print entire records with line numbers
 
 grep
 $ grep "bash" filename  -> to search the word in particular file
