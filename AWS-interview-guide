@@ -388,6 +388,23 @@ Invoke Lambda function by S3 event
   open the Lambda function -> add trigger -> select S3 and select the bucket -> choose the Event type
 How to schedule Lambda function using cloudwatch
   go to cloudwatch -> rules -> click on schedule and schedule the time -> click on target and select lambda function
+
+Cost Optimization:-
+  - list all the EC2 instances, EBS Volumes, Snapshots, find the volume ID if the snapshot has attached to it and it's delete it
+    or else if the volume is present and not attached to any instance delete that volume.
+    
+ 
+
+
+
+
+
+
+
+
+
+
+
   
 
 • AWS DynamoDB
