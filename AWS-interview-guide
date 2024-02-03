@@ -393,20 +393,6 @@ Cost Optimization:-
   - list all the EC2 instances, EBS Volumes, Snapshots, find the volume ID if the snapshot has attached to it and it's delete it
     or else if the volume is present and not attached to any instance delete that volume.
     
- 
-
-
-
-
-
-
-
-
-
-
-
-  
-
 • AWS DynamoDB
 ` • Fully managed, highly available with replication across multiple AZs
   • NoSQL database - not a relational database
@@ -426,7 +412,7 @@ Cost Optimization:-
   
 • AWS CloudWatch
   • CloudWatch provides metrics for every services in AWS
-  • Metric is a variable to monitor (CPUUtilization, NetworkIn…)
+  • Metric is a variable to monitor (CPUUtilization, Network in nd out, Disk ready bytes, disk write bytes)
   • Note: EC2 Memory usage is by default not pushed (must be pushed from inside the instance as a custom metric)
   • Possibility to define and send your own custom metrics to CloudWatch
   • Example: memory (RAM) usage, disk space, number of logged in users …
