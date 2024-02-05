@@ -285,7 +285,9 @@ what are the different ways to trigger jenkins pipeline?
 - Webhooks: A webhook can be created in GitHub to notify Jenkins when changes are pushed to the repository. 
  Jenkins can then automatically build the updated code. This can be set up in the "Build Triggers" section of a job and in the GitHub repository settings.
 
-
+what is jenkins shared libraries and how to use that?
+  standardization of pipeline, reduce duplication of code, Easy onboarding of new application, projects or teams
+  one place to fix issues with the shared or common code.
 
 
 
