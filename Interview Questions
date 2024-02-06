@@ -1135,7 +1135,26 @@ How the pods will communicate to the external database servers?
   - In your application code, use the environment variables (MySQL host, port, username, password) to establish 
     a connection to the MySQL server
 
-
+How the application pod will communicate with database pod?
+  - Create a Kubernetes Service for the database pod. The service acts as 
+    a stable endpoint that abstracts away the underlying pods
+  - In your application pod, you can now use the DNS name of the database service to connect to the database pod. 
+    Kubernetes automatically provides DNS resolution for services within the cluste
+  - The service discovery works based on the service name and namespace. If your database service is in a different namespace, 
+    you might need to use the fully qualified service name (database-service.namespace).
+  
+Can you explain about the kubernetes network?
+  - Every pod has unique IP address that ip address is reachable from all other pods in k8s cluster.
+  - you have multiple postgress containers running inside the docker host, then it is difficult to do portmapping on
+    each container and which port is still available.
+  - docker run -p host_port:container_port image_name
+  - docker run -p 8080:80 nginx
+  - Then pod comes into picture, pod is a abstraction layer to the container it has ip address and range of ports to allocate
+  - suppose you have 10 microservice applications that will run on port 8080 inside 10 different pods and you won't get any
+    conflicts because they all are running self contained isolated machines called pods
+  - Containers within the same pod share the same network namespace. This implies that they have the same network interfaces 
+    and can communicate using localhost
+  
 
 
 
