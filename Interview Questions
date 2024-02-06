@@ -1128,7 +1128,12 @@ Weighted Routing Policy
   A weighted routing policy allows you to send traffic to specific servers, with no consideration for latency or geographic location. 
   You can choose exactly how much traffic is sent to a particular resource, and you have total control over the traffic flow.
 
-
+How the pods will communicate to the external database servers?
+  - Create a Kubernetes Secret to securely store the MySQL connection credentials. 
+  - Create a ConfigMap to store the MySQL server host and port information.
+  - Modify your application's Kubernetes Deployment configuration to use the created Secret and ConfigMap:
+  - In your application code, use the environment variables (MySQL host, port, username, password) to establish 
+    a connection to the MySQL server
 
 
 
