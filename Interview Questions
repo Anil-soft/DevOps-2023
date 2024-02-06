@@ -1155,8 +1155,15 @@ Can you explain about the kubernetes network?
   - Containers within the same pod share the same network namespace. This implies that they have the same network interfaces 
     and can communicate using localhost
   
-
-
+what are the kubernetes configmap and secrets and how you have used in your project?
+  ConfigMaps:- are used to Storing environment variables and Providing configuration files to applications.
+  Enables configuration changes without modifying container images, ConfigMaps are exposed to pods as environment variables 
+  or as mounted volumes.
+  Note:- Support you have changed the DB port in configmap, that DB port will not be reflected in container, you have to
+         create new pod in such cases you need to map configmap to volumes and that volume should be mounted on pod.
+  Secrets:- Secrets are intended to store sensitive data like passwords, API keys, and TLS certificates securely.
+            Encrypts sensitive data at rest in etcd and Secrets can be mounted into pods as volumes or exposed as environment variables.
+            
 
   
 
