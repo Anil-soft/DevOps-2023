@@ -1063,7 +1063,7 @@ resource "null_resource" "null_resource_with_remote_exec" {
 32. 
 
 
-2Ansible version - 2.14
+Ansible version - 2.14
 Jenkins version - 2.346
 java - 11
 Redhat - 7
@@ -1163,23 +1163,38 @@ what are the kubernetes configmap and secrets and how you have used in your proj
          create new pod in such cases you need to map configmap to volumes and that volume should be mounted on pod.
   Secrets:- Secrets are intended to store sensitive data like passwords, API keys, and TLS certificates securely.
             Encrypts sensitive data at rest in etcd and Secrets can be mounted into pods as volumes or exposed as environment variables.
-            
+
+what is difference between deployment and statefulsets?
+
+Deployment:-
+ - when you create the deployment i will deploy the desired number of pods but when the pod gets restarted again it won't create
+   the pod with same name.
+ - deployment process will not happen sequentially, if we give the replicas as 3 it starts the process simultaneously to create the
+   pods.
+ - 2 pods may come into run state after that 1 pod may come up in sometimes one pod may not be deployed.
+ - if we want persistant storage we are attaching the PVC to the pod to store the data.
+
+Statefulsets:-
+ - it follows the naming convention and sequential order.
+ - when we create the pods it creates in particular order like pod-0, pod-1, pod-3.
+ - first pod-1 pod should be up and run completely after that pod-1 will start creating.
+ - suppose if we update the manifest for 2 replicas statefulset wont delete the pod randomly, it deletes which pod has created last 
+   in this case pod-3.
+ - statefulsets are commonly used for deploying and managing stateful applications such as mysql, postgress and messaging systems.
+ - since it follows consistent network identity it communicates with other pods seamlessly 
+ - when you create statefulsets it creates the Headless service which allows each pod to have it's own DNS entry. 
+
+What are the access modes of persistent volumes in k8s?
+ ReadWriteOnce:- read write access to one pod and other pods should be having ready only access
+ ReadOnlyMany:- all pods are having read only access
+ ReadWriteMany:- all pods are having read write access
+
+What are the reclaim policies in PVCs?
+ Retain:- with the retain policy the PV associated with he PVC is not automatically deleted or released when the PVC is deleted. instead, the PV is retained
+	  and its content are preserved
+ Delete:- The delete policy indicates that the associated PV should be automatically deleted when the PVC is deleted.
 
   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
