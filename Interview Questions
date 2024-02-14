@@ -1194,8 +1194,18 @@ What are the reclaim policies in PVCs?
 	  and its content are preserved
  Delete:- The delete policy indicates that the associated PV should be automatically deleted when the PVC is deleted.
 
-  
 
+explain about how ingress and ingress controller will work?
+ ingress:-
+ An Ingress is a Kubernetes resource that defines rules for external access to services within a cluster. 
+ It specifies how incoming HTTP and HTTPS  traffic should be routed to different services based on factors 
+ such as the request's host, path, or other attributes.
+
+ingress controller:-
+ An Ingress controller, on the other hand, is a component that implements the Ingress resource specification
+ by actually managing and fulfilling the routing  rules defined in the Ingress objects.  Ingress controllers 
+ dynamically configure routing rules based on changes to Ingress resources. They monitor changes  to Ingress 
+ objects and update their routing configurations accordingly.
 
 
 
