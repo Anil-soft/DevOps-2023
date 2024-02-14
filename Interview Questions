@@ -1207,5 +1207,39 @@ ingress controller:-
  dynamically configure routing rules based on changes to Ingress resources. They monitor changes  to Ingress 
  objects and update their routing configurations accordingly.
 
+How to copy the file from remote to local in ansible
+
+---
+- name: Copy file from remote to local
+  hosts: your_remote_host
+  tasks:
+    - name: Fetch file from remote machine
+      fetch:
+        src: /path/to/remote/file.txt
+        dest: /path/to/local/directory
+        flat: yes
 
 
+what are the difference between args and env variables in docker
+Args:-
+ args are used during the image build process to parameterize Dockerfile instructions. They allow you to pass dynamic values to the build process.
+ args are only available during the image build process and are not accessible within the running container 
+ Example:-
+ ARG VERSION=latest
+ FROM nginx:${VERSION}
+
+Env:-
+ Environment variables are used to configure the behavior of the application running inside the container. They can be used to pass information such as  database connection strings, API keys, or other runtime configuration options.
+ Environment variables are available to the running container and can be accessed by the application running inside the container.
+ Example:-
+ ENV DB_HOST=localhost
+ ENV DB_PORT=5432
+
+How to delete the files which are having more disk space
+du -ah | sort -rh | head -n 10
+
+what is exception handling in ansible
+You can use the ignore_errors directive to ignore specific task failures and continue playbook execution.
+- name: This task will not fail the playbook
+  command: /path/to/command
+  ignore_errors: yes
