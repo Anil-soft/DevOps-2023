@@ -1,0 +1,2 @@
+* sometimes you will want to put output of a command into a file, or you may want to issue another command on the output of one command
+* In another case you many want a file to be input for a command.
