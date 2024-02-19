@@ -1,2 +1,8 @@
 * sometimes you will want to put output of a command into a file, or you may want to issue another command on the output of one command
 * In another case you many want a file to be input for a command.
+
+$ ls -lrt > demo.txt  (output will be stored in demo.txt)
+$ ls -lrt >> demo.txt  (old content will be there as it is and new content will appended)
+$ ls -lrt 1>succ.txt 2>fail.txt  (store the succ output in one file and error output into another file)
+$ ls -lrt  1>output.txt 2>&1  (store error outpur also where succ is storing)
+$ java -version &> java_ver.txt  (failure and success gets stored into one file)
