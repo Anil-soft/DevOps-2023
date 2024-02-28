@@ -1243,3 +1243,135 @@ You can use the ignore_errors directive to ignore specific task failures and con
 - name: This task will not fail the playbook
   command: /path/to/command
   ignore_errors: yes
+
+EPAM
+what is the difference between authenticationa and authorization?
+
+Authentication: This is the process of verifying the identity of a user or application that is attempting to connect to an RDS database. Amazon RDS supports multiple authentication methods, including password authentication and IAM database authentication.
+
+Authorization: Once a user or application is authenticated, authorization determines what actions they are allowed to perform on the database. This is typically managed through database-level roles and permissions.
+
+can you use same subnet in another zone which is already used in one zone?
+No, you cannot use the same subnet in another Availability Zone (AZ) if it is already used in one zone. Subnets are specific to an AZ and cannot span across multiple AZs within the same region. Each subnet you create must be associated with a single AZ.
+
+what is principle in aws policy?
+The Principal can be an AWS account, an IAM user, an IAM role, an AWS service, or an anonymous user (represented by the wildcard "*").
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "s3:ListBucket",
+            "Resource": "arn:aws:s3:::example-bucket",
+            "Principal": {
+                "AWS": "arn:aws:iam::123456789012:user/example-user"
+            }
+        }
+    ]
+}
+
+
+what does asterisk symbol defines in AWS NACL?
+In an AWS Network Access Control List (NACL), the asterisk (*) symbol is used as a wildcard to represent all IP addresses (0.0.0.0/0) or all ports (0-65535).
+For example, if you configure a rule in a NACL with the source or destination IP address as "", it means that the rule applies to all IP addresses. Similarly, if you configure a rule with the port range as "", it means that the rule applies to all ports.
+
+How to access and read S3 bucket from AWS account to another account?
+
+How to access the container logs that mounted to specific path in container?
+- docker logs command with the container ID or name to access the logs
+$ docker logs -f <container_id_or_name>
+- Alternatively, if you want to access the logs directly from the mounted path on the Docker host, you can navigate to the path where the logs are mounted. 
+- By default, Docker mounts volumes under /var/lib/docker/volumes on the host, but the exact path depends on how the volume was mounted.
+- You can use the docker inspect command to get more information about the volume and its mount point
+
+can we mount S3 bucket to EC2 instance like we mount EBS volume?
+No, you cannot mount an Amazon S3 bucket to an EC2 instance in the same way you mount an Amazon EBS volume. Amazon S3 is an object storage service, while Amazon EBS provides block-level storage volumes for use with EC2 instances.
+
+what is the difference between S3 and EBS volumes?
+
+S3: 
+S3 is an object storage service designed for storing and retrieving large amounts of data. It is suitable for storing files, backups, and data sets. Objects in S3 are stored in buckets and accessed over the internet. Object-level storage is a type of storage in which data is stored as objects, each containing the data itself along with metadata and a unique identifier. 
+
+EBS: 
+EBS provides block-level storage volumes that can be attached to EC2 instances. It is used for storing data that requires frequent access and low latency, such as operating system files and database storage. EBS volumes are accessed as block devices and can only be attached to one EC2 instance at a time. Block-level storage is a type of storage in which data is stored in fixed-sized blocks, typically ranging from a few bytes to several kilobytes.
+
+what are the different types of EBS volumes are there?
+General Purpose SSD (gp2):-
+- General Purpose SSD volumes provide a balance of price and performance for a wide variety of workloads. They are suitable for small to medium-sized   databases
+Provisioned IOPS SSD (io1):-
+- Provisioned IOPS SSD volumes are designed for I/O-intensive workloads, such as large relational databases (e.g., MySQL, PostgreSQL, Oracle) and NoSQL   databases (e.g., MongoDB, Cassandra).
+Throughput Optimized HDD (st1):-
+- Throughput Optimized HDD volumes are designed for frequently accessed, throughput-intensive workloads, such as big data, data warehouses, and log   processing.
+Cold HDD (sc1):-
+- Cold HDD volumes are designed for less frequently accessed workloads, where the lowest storage cost is important. Examples include infrequently accessed   file storage and data backups.
+
+what are the lambda layers?
+- AWS Lambda layers are a way to centrally manage code and data that is shared across multiple Lambda functions. 
+- A Lambda layer is a ZIP archive that contains libraries, custom runtimes, or other dependencies that you want to include in your Lambda functions.
+- Share common libraries or dependencies across multiple Lambda functions without including them in the deployment package of each function, reducing   package size and duplication
+
+tell me one example of of each load balancer for application and network load balancer
+
+- Use NLB when you need high-performance, low-latency, and reliable load balancing at the transport layer (Layer 4) of the OSI model.
+- NLB is also suitable for TCP and UDP traffic that needs to be distributed across targets, such as in a database or messaging service.
+
+why do we need to use TCP and UDP protocol?
+
+TCP
+- TCP is a reliable protocol that ensures that data is delivered in order and without errors. 
+- TCP is connection-oriented, meaning it establishes a connection between two hosts before data exchange.
+- This ensures that data is delivered accurately and completely 
+- TCP is commonly used for applications that require reliable and ordered delivery of data, such as web browsing, email, file transfer (FTP), and database   transactions.
+
+UDP
+- UDP, on the other hand, is faster but unreliable. It does not guarantee delivery or order of packets, making it suitable for applications where speed is   more important than reliability.
+- UDP is used for applications where real-time communication and speed are more important than reliability, such as VoIP (Voice over IP), online gaming, DNS   (Domain Name System), and streaming media.
+
+terraform script to create AWS instance by using latest ubuntu ami id.
+
+provider "aws" {
+  region = "us-west-2" # Set your desired region
+}
+
+data "aws_ami" "ubuntu" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+  }
+  filter {
+    name   = "virtualization-type"
+    values = ["hvm"]
+  }
+  owners = ["099720109477"] # Canonical's account ID
+}
+
+resource "aws_instance" "example" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro" # Set your desired instance type
+  key_name      = "your-key-pair" # Set your SSH key pair name
+}
+
+what is the difference between customer managed policies and inline policy in AWS IAM.
+
+customer managed policies:-
+- Customer managed policies are standalone policies that you create and manage independently from any user, group, or role.
+- These policies can be attached to multiple IAM identities (users, groups, or roles) across your AWS account.
+- When you update a customer managed policy, the changes apply to all the IAM identities to which the policy is attached.
+- Customer managed policies are reusable and can help you centralize and manage permissions more efficiently.
+
+Inline Policies:
+- Inline policies are policies that are embedded directly into a single IAM identity (user, group, or role) as a JSON document.
+- Inline policies are specific to the IAM identity to which they are attached and cannot be reused or attached to other IAM identities.
+- When you update an inline policy, the changes apply only to the IAM identity to which the policy is attached.
+
+what is the difference between encryption in transist and encryption at rest?
+
+Encryption in Transit: This refers to the process of encrypting data while it is being transmitted over a network. The purpose of encryption in transit is to protect data from being intercepted by unauthorized parties while it is being sent from one location to another. This is typically achieved using protocols like TLS (Transport Layer Security) for web traffic
+
+Encryption at Rest: This refers to the process of encrypting data that is stored on a disk or other storage media. The purpose of encryption at rest is to protect data from unauthorized access if the storage media is stolen or compromised.
+
+what is SSL/TLS?
+- SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are cryptographic protocols that provide secure communication over a computer network.
+- TLS is the successor to SSL and is based on the same principles. It was standardized by the Internet Engineering Task Force (IETF) to provide a more   secure and robust protocol for securing communications over the internet.
