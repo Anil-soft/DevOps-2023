@@ -1495,3 +1495,21 @@ Switch between environments by selecting the appropriate provider alias
 provider "aws" {
   alias  = "dev"
 }
+
+what is static pod?
+- Static pods are managed by the kubelet running on the node where they are created.
+- They are not scheduled by the Kubernetes scheduler and do not have the flexibility of being rescheduled to other nodes in the cluster if the original node   fails
+- kubelet checks the /etc/kubernetes/manifests dir periodically reads the manifest files and create the pods, ensures that pod stay alive and if any changes   happens to the manifests file kubelet recreate the pod
+- Since static pods are not managed by the Kubernetes API server, they do not appear in the Kubernetes API and cannot be controlled using kubectl.
+- Static pods are often used for critical system components that should run on every node, such as networking plugins (e.g., CNI), monitoring agents, or     logging agents. 
+
+
+
+
+
+
+
+
+
+
+
