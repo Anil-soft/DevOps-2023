@@ -852,13 +852,17 @@ Now you can verify the terraform import by running the command terraform plan an
     - cluster rolebinding is at the cluster level, we can access the resources in any namespace   
  
 29. What is liveness and readiness probes and why do we use them ?
-    Readiness Probe
-    - Readiness probes determine whether or not a container is ready to serve requests. 
-    - If the readiness probe returns a failed state, then Kubernetes removes the IP address for the container from the endpoints of all Services.
   
    Livenessprobe
-   - Liveness probes determine whether or not an application running in a container is in a healthy state. 
-   - If the liveness probe detects an unhealthy state, then Kubernetes kills the container and tries to redeploy it.
+   - Checks if the container is alive and healthy. If the liveness probe fails, Kubernetes will restart the container.
+   - If the application stops responding, the liveness probe will restart the container to attempt recovery.
+   - You might use a liveness probe to check if a web server is responding to requests.
+
+   Readiness Probe
+    - Checks if the container is ready to handle traffic. If the readiness probe fails, Kubernetes will stop sending traffic to the 
+      container but will not restart it.
+    - You might use a readiness probe to check if a database connection is established before allowing traffic to a web server that 
+      depends on that database.
    
 30. what is default kubernetes network ?
     calico
