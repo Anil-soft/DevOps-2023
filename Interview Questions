@@ -852,6 +852,8 @@ Now you can verify the terraform import by running the command terraform plan an
     - cluster rolebinding is at the cluster level, we can access the resources in any namespace   
  
 29. What is liveness and readiness probes and why do we use them ?
+
+   The livenessProbe and readinessProbe both use the httpGet probe type, which sends an HTTP GET request to the specified path and port. 
   
    Livenessprobe
    - Checks if the container is alive and healthy. If the liveness probe fails, Kubernetes will restart the container.
@@ -1171,7 +1173,7 @@ what are the kubernetes configmap and secrets and how you have used in your proj
 what is difference between deployment and statefulsets?
 
 Deployment:-
- - when you create the deployment i will deploy the desired number of pods but when the pod gets restarted again it won't create
+ - when you create the deployment it will deploy the desired number of pods but when the pod gets restarted again it won't create
    the pod with same name.
  - deployment process will not happen sequentially, if we give the replicas as 3 it starts the process simultaneously to create the
    pods.
@@ -1186,6 +1188,8 @@ Statefulsets:-
    in this case pod-3.
  - statefulsets are commonly used for deploying and managing stateful applications such as mysql, postgress and messaging systems.
  - since it follows consistent network identity it communicates with other pods seamlessly 
+ - Each pod in statefulset is assigned a unique and stable hostname, this allows stateful applications to have consistent network
+   identity even when they are scaled up or down.
  - when you create statefulsets it creates the Headless service which allows each pod to have it's own DNS entry. 
 
 What are the access modes of persistent volumes in k8s?
@@ -1194,7 +1198,7 @@ What are the access modes of persistent volumes in k8s?
  ReadWriteMany:- all pods are having read write access
 
 What are the reclaim policies in PVCs?
- Retain:- with the retain policy the PV associated with he PVC is not automatically deleted or released when the PVC is deleted. instead, the PV is retained
+ Retain:- with the retain policy the PV associated with the PVC is not automatically deleted or released when the PVC is deleted. instead, the PV is retained
 	  and its content are preserved
  Delete:- The delete policy indicates that the associated PV should be automatically deleted when the PVC is deleted.
 
