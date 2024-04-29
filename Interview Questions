@@ -1181,7 +1181,7 @@ Deployment:-
  - if we want persistant storage we are attaching the PVC to the pod to store the data.
 
 Statefulsets:-
- - it follows the naming convention and sequential order.
+ - it follows the naming convention and sequential order. it allows to communicate with rest of the pods seamlessly.
  - when we create the pods it creates in particular order like pod-0, pod-1, pod-3.
  - first pod-1 pod should be up and run completely after that pod-1 will start creating.
  - suppose if we update the manifest for 2 replicas statefulset wont delete the pod randomly, it deletes which pod has created last 
