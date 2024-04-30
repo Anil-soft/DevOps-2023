@@ -1511,6 +1511,19 @@ what is static pod?
 - Since static pods are not managed by the Kubernetes API server, they do not appear in the Kubernetes API and cannot be controlled using kubectl.
 - Static pods are often used for critical system components that should run on every node, such as networking plugins (e.g., CNI), monitoring agents, or     logging agents. 
 
+what are the 7 layers of OSI model?
+ 1. physical
+ 2. data link
+ 3. network
+ 4. transport
+ 5. session
+ 6. presentation
+ 7. application
+
+How can you define the firewall?
+ - A firewall is a network security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules. It acts as a barrier 
+   between a trusted internal network and untrusted external networks
+
 
 
 
