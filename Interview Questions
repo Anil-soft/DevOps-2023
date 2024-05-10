@@ -1524,13 +1524,198 @@ How can you define the firewall?
  - A firewall is a network security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules. It acts as a barrier 
    between a trusted internal network and untrusted external networks
 
+DynamoDB core components?
+tables, items and attributes are the core components.
+a table is a collection of items and each item is a collection of attributes.dynamodb uses primary keys to uniquely identify each item in a table.x
+
+AWS Security:-
+types of KMS Keys:-
+Customer Master Keys (CMKs):
+ Symmetric CMKs: These keys are used for encryption and decryption and are the most common type of CMK. They use the same key for both operations and are  suitable for encrypting data keys used in envelope encryption.
+ Asymmetric CMKs: These keys are used for digital signing and verification, and for encrypting data that will be decrypted by a different key. Asymmetric   CMKs are not typically used for data encryption but are useful for tasks like verifying the integrity of messages or documents.
+AWS Managed Keys:
+ AWS Managed CMKs: These are keys managed by AWS KMS on your behalf. They are used for encrypting data within AWS services such as S3, EBS, and RDS. AWS  automatically rotates these keys every few years for added security.
+ Default CMKs: AWS KMS creates a default CMK for each AWS account when it is first used. This key is used for encrypting data in services that do not  support customer-managed keys.
+
+Explain about AWS SSM paramter store and why do you use that?
+ - AWS Systems Manager Parameter Store (SSM Parameter Store) is a secure, hierarchical storage service that allows you to store configuration data and    secrets such as database connection strings, API keys, and passwords.
+ - Parameter Store encrypts sensitive information at rest and in transit, providing a secure way to store secrets and other sensitive data.
+ - Parameter Store integrates seamlessly with other AWS services, such as EC2, ECS, Lambda, and SSM Run Command, allowing you to securely retrieve    parameters from within your applications or automation workflows.
+ - Parameter Store supports different types of parameters, including String, StringList, and SecureString. SecureString parameters are encrypted with AWS    KMS.
+ - Parameter Store supports versioning, allowing you to track changes to configuration data over time and easily roll back to previous versions if needed.
+
+AWS secrets manager?
+ - Secrets Manager can automatically rotate secrets, such as database credentials, based on a user-defined schedule. Parameter Store does not have built-in    support for automatic rotation.
+ - Both Secrets Manager and Parameter Store integrate with other AWS services. However, Secrets Manager provides built-in integration with services like    Amazon RDS, Amazon Redshift, and Amazon DocumentDB, making it easier to securely retrieve secrets for use in your applications.
+ - Rotating secrets automatically refers to the process of automatically changing sensitive credentials, such as database passwords or API keys, on a    regular basis to enhance security. 
+ - You configure the secret (e.g., database password) and define a rotation schedule or trigger. For example, you might specify that the password should be    rotated every 30 days.
+
+what is cloudfront and why do we need to use cloudfront?
+ - AWS CloudFront is a content delivery network (CDN) service provided by Amazon Web Services. It accelerates the delivery of your websites, APIs, video    content, and other web assets by caching them at edge locations around the world.
+ - When a user requests content that you're serving through CloudFront, the request is automatically routed to the nearest edge location.
+ - CloudFront caches your content at edge locations, reducing latency and improving load times for your users.
+ - CloudFront is designed to handle large amounts of traffic and scale automatically to accommodate spikes in demand.
+ - By caching content at edge locations, CloudFront reduces the load on your origin server, potentially lowering your server and data transfer costs.
+ - CloudFront integrates seamlessly with other AWS services, such as Amazon S3, Amazon EC2, and AWS Lambda, making it easy to use within your existing    infrastructure.
+
+what is the different between cloudfront and S3 cross region replication?
+Cloudfront:-
+ - Global edge network
+ - Files are copid for a TTL
+
+S3 Cross region replications?
+ - Must be set up in each region you want replication to happen
+ - files are updated in near real time
+ - Read only
+
+How to restrict the users permissions based on the regions?
+ - you can use IAM policies with condition keys. Condition keys allow you to specify conditions under which a policy statement is in effect, such as       restricting access to specific AWS regions. 
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": "*",
+            "Resource": "*",
+            "Condition": {
+                "StringEquals": {
+                    "aws:RequestedRegion": [
+                        "your-region"
+                    ]
+- Attach the IAM policy to the IAM user(s) or group(s) that you want to restrict based on regions.
+
+can we have same cidr range for 2 VPCs in same account?
+ - No, you cannot have the same CIDR block (IP address range) for two VPCs in the same AWS account.
+
+How can you secure your kubernetes cluster?
+Can we have two ingress controllers in same k8s cluster?
+ - Yes, you can have multiple ingress controllers in the same Kubernetes cluster. Each ingress controller will typically be associated with a different    Ingress controller implementation.  (e.g., Nginx Ingress Controller, Traefik, AWS ALB Ingress Controller, etc.) and will be responsible for routing    external traffic to different services within your cluster based on the rules defined in your Ingress resources.
+
+what is the difference between the VPC transit gateway and VPC peering?
+
+How can you block the communication between two pods?
+ - You can block communication between two pods in Kubernetes by using network policies. Network policies allow you to define rules that control the flow of    traffic to and from pods based on various criteria, such as pod labels, namespaces, and IP addresses. 
+   apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: deny-all
+spec:
+  podSelector:
+    matchLabels:
+      app: your-app-label    # Label of the first pod
+  policyTypes:
+  - Ingress
+  - Egress
+
+ - This network policy will block all incoming and outgoing traffic to and from pods that match the specified label (app: your-app-label). 
+
+can we have network load balancer as ingress controller in k8s?
+ - Yes, you can use a Network Load Balancer (NLB) as an Ingress controller in Kubernetes. The NLB can be used to route incoming traffic to different        services in your Kubernetes cluster based on the rules defined in your Ingress resources.
+
+how can you get the jar file which is build through pipeline and create customized docker image?
+can you explain unit and integration testing in your pipeline?
+explain what is the branching strategy that you are using in your project?
+cpu utilization reaches the thresold value even though autoscaling is not scaling the servers, what are the reasons and how can you troubleshoot?
+
+how the communication happen between two pods is it through http or https?
+ - the communication between two pods in Kubernetes can happen over various protocols, including HTTP, HTTPS, TCP, and UDP, depending on how the pods are       configured and what kind of services they are running.
+ - Pods can communicate with each other using HTTP or HTTPS if they are running services that expose endpoints over these protocols
+ - For example, a web service running in one pod might communicate with a backend API service running in another pod over HTTP or HTTPS.
+
+What are the not region specific AWS services?
+ - IAM, Route53, Cloudfront, WAF.
+
+IaaS (Infrastructure as a Service): IaaS provides virtualized computing resources over the internet. It allows users to rent virtual servers, storage, and networking infrastructure on a pay-as-you-go basis. With IaaS, users have full control over the operating systems, applications, and other software running on the infrastructure.Example services:
+Amazon EC2 (Elastic Compute Cloud): Provides resizable compute capacity in the cloud.
+Amazon S3 (Simple Storage Service): Provides scalable object storage for data backup, archival, and analytics.
+PaaS (Platform as a Service): PaaS provides a platform that includes the hardware and software required to develop, run, and manage applications without the complexity of building and maintaining the underlying infrastructure. PaaS offerings typically include development tools, database management systems, and application hosting environments.Example services:
+AWS Elastic Beanstalk: Deploys and scales web applications and services.
+AWS RDS (Relational Database Service): Manages relational databases in the cloud, such as MySQL, PostgreSQL, and others.
+SaaS (Software as a Service): SaaS delivers software applications over the internet on a subscription basis. Users access the software through a web browser, and the software is hosted and maintained by the service provider.Example services:
+Amazon WorkSpaces: Provides virtual desktops in the cloud.
+Amazon S3 Glacier: Provides long-term data archival at a low cost.
+
+can a connection be made between a data center and AWS cloud? how?
+ - AWS direct connect and VPN.
+
+Explain different AWS services to manage cost
+ - AWS Cost Explorer is a valuable tool for managing and optimizing your AWS costs, providing visibility, insights, and recommendations to help you make    informed decisions and control your spending
+ - AWS Budgets is a useful tool for managing your AWS costs and usage, helping you stay within your budgeted limits and optimize your spending
+
+what are the different instance launch types and when to use them?
+
+Use On-Demand Instances for applications with unpredictable workloads or short-term needs.
+Use Reserved Instances for applications with steady-state usage or predictable workloads to achieve cost savings.
+Use Spot Instances for applications that can handle interruptions and have flexible start and end times to reduce costs.
+Use Dedicated Instances or Dedicated Hosts for applications that require dedicated hardware due to compliance or regulatory requirements.
 
 
+what are the reasons of memory leaks in microservices?
+Improper Resource Management: Microservices may not release resources (such as memory) properly after they are no longer needed. This can happen if developers forget to deallocate memory, close connections, or release other resources.
 
+Incorrect Caching: Microservices often use caching to improve performance. However, if caching is not implemented correctly, it can lead to memory leaks. For example, if cached data is never expired or cleared, it can accumulate in memory indefinitely.
 
+Long-Running Processes: Microservices that handle long-running processes may accumulate memory over time if they do not release resources properly during execution.
+ 
+what are the recent challenges you faced?
 
+ - when I joined the project there was a cluster which was shared between multiple development teams because of one of the pod which is leaking memory
+   the entire cluster was impacted we did not know which pod is going down in which namespace and then I set up resource limits on that particular pods of     the namespaces and because of this I can identify which pod is creating the issue and I can identify blast radius coming down to one particular pod.
 
+How will you resolve OOM on particular pod?
+I have set up the resource limit and quota and namespaces though one of the pod is getting OOM killed, so I have shared the thread dumps and heap dumps
+to development then they have done some analysis on each thread and which thread is causing issues and shared new version of the application.
+ - Connect to the pod running your Java application using kubectl exec.
+ - kubectl exec -it <pod_name> -n <namespace> -- /bin/bash
+ - jstack <pid> > thread_dump.txt
+ - kubectl cp <namespace>/<pod_name>:thread_dump.txt thread_dump.txt
+ - jmap -dump:format=b,file=heap_dump.hprof <pid>
+ - kubectl cp <namespace>/<pod_name>:heap_dump.hprof heap_dump.hprof
 
+one more challenge I faced was k8s cluster upgrade
+ - I have created one manual and detailed steps
+ - How to take backup of the cluster before performing upgrades
+ - go through the release notes 
+ - I have devided steps for control plane components and worker node components 
 
+How to upgrade kubernetes cluster?
+ - sudo apt-get update && sudo apt-get install -y kubeadm='1.30.x-*'
+ - kubeadm version
+ - sudo kubeadm upgrade plan (This command checks that your cluster can be upgraded, and fetches the versions you can upgrade to.)
+ - sudo kubeadm upgrade apply v1.30.x
+ - kubectl drain <node-to-drain> --ignore-daemonsets
+ - sudo apt-get update && sudo apt-get install -y kubelet='1.30.x-*' kubectl='1.30.x-*'
+ - sudo systemctl daemon-reload
+ - sudo systemctl restart kubelet
+ - kubectl uncordon <node-to-uncordon>
 
+How to take backup of the etcd?
+ - You can also use the etcdctl tool to create a snapshot of the etcd database. This snapshot can be used to restore etcd to a specific point in time
+ - sudo ETCDCTL_API=3 etcdctl --endpoints=https://[127.0.0.1]:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --   key=/etc/kubernetes/pki/etcd/server.key snapshot save /path/to/snapshot.db
 
+what is the difference between node selector and node affinity?
+
+Node Selector:
+Node Selector is a simple way to constrain which nodes your pod is eligible to be scheduled based on labels on nodes.
+It uses a simple key-value match to determine node selection.
+It is a "hard" requirement, meaning if the label specified in the node selector is not present on any node that meets the pod's resource requirements, the pod will remain in a "Pending" state.
+
+Node Affinity:
+Node Affinity is more expressive and allows you to specify rules for pod scheduling based on node labels.
+It supports more complex expressions using operators such as In, NotIn, Exists, and DoesNotExist, allowing for more fine-grained control over scheduling decisions.
+Node Affinity can be either "required" or "preferred," allowing you to specify how strict the scheduling requirements are.
+It provides more flexibility than Node Selector in terms of how pods are scheduled based on node labels.
+
+what are the different types of HTTP methods?
+
+GET: The GET method is used to retrieve data from a server. It should only retrieve data and should not have any other effect on the server.
+POST: The POST method is used to submit data to a server to create or update a resource. It is often used when submitting a form or uploading a file.
+PUT: The PUT method is used to update or replace a resource on the server. It is similar to POST but is idempotent, meaning that multiple identical requests should have the same effect as a single request.
+DELETE: The DELETE method is used to delete a resource from the server.
+PATCH: The PATCH method is used to apply partial modifications to a resource. It is often used when you want to update just a part of a resource.
+HEAD: The HEAD method is similar to GET but only returns the headers of the response without the body. It is often used to check the headers of a resource without actually downloading the entire resource.
+
+what is the differece between cold start and warm start?
+In AWS Lambda, a "warm start" refers to the situation where a function invocation reuses an existing execution context, which is already initialized and ready to process requests.
+
+When a Lambda function is invoked for the first time or after a period of inactivity, it undergoes a "cold start." During a cold start, Lambda initializes the execution environment, which includes loading the function code, setting up the runtime, and establishing connections to external resources.
+
+Subsequent invocations of the same function (within a certain period of time) can benefit from a warm start. In a warm start, Lambda reuses the existing execution context, skipping the initialization steps. This can significantly reduce the latency of the function because the runtime environment is already prepared.
