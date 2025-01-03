@@ -23,6 +23,13 @@ what is git cherry pick command ?
   - Git cherry-pick is helpful to apply the changes that are accidentally made in the wrong branch. 
   - To make all the changes of the new branch into the master branch, we will use the git pull, but for this particular commit, we will use git cherry-pick command. 
   - $  git cherry-pick <commit id>  
+
+git checkout correct-branch
+git cherry-pick <commit-hash>
+git checkout wrong-branch
+git revert <commit-hash>
+
+git cherry-pick <commit1-hash> <commit2-hash>
   
 How to check the git commit id's ?
   $ git log
