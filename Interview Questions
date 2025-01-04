@@ -48,12 +48,18 @@ what is the difference between docker and virtual machine ?
      - infrastructure -> Host OS -> Hypervisor -> Guest OS on top of this application will be istalled.
      - Allows multiple virtual machines and applications to run on the same physical machine.
      - Host OS can be different from guest OS.
+     VMs virtualize at the hardware level using a hypervisor (e.g., VMware, Hyper-V).
+    Each VM runs a full guest operating system (e.g., Linux, Windows) on top of the virtualized hardware.
+    VMs include a full OS, libraries, and dependencies, making them heavier.
      
  - Docker:- 
      - infrastructure -> Host OS -> Docker daemon -> application
      - The OS is abstracted via containers rather than the hardware. 
      - With the use of containers, a developer can package up a program with all of its constituent elements, 
        including libraries and other dependencies, and deliver it as a single package. 
+         Docker virtualizes at the OS level, sharing the host operating system's kernel.
+	Containers are lightweight and package only the application and its dependencies.
+	Containers do not include a full OS; they use the host OS kernel.
        
        
  what is git runner ?
