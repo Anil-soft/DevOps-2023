@@ -110,6 +110,36 @@ what is the difference between docker and virtual machine ?
       the AWS cloud and then it's coming back all the way back, not a good idea from security perspective.
   
   3. we have multiple users only one person can access to S3 bucket, how can you do that?
+     update the bucket policy to update only to the specific user.{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Deny",
+            "Principal": "*",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::your-bucket-name",
+                "arn:aws:s3:::your-bucket-name/*"
+            ],
+            "Condition": {
+                "StringNotEquals": {
+                    "aws:username": "specific-username"
+                }
+            }
+        },
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "arn:aws:iam::account-id:user/specific-username"
+            },
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::your-bucket-name",
+                "arn:aws:s3:::your-bucket-name/*"
+            ]
+        }
+    ]
+}
   
   4. explin about what is the difference between NAT GW and Internet GW and how can you configure them?
      If any private server wants to communicate with the internet, then we have to create NAT gateway have to communicate
