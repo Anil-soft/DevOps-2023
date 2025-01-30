@@ -1762,3 +1762,11 @@ In AWS Lambda, a "warm start" refers to the situation where a function invocatio
 When a Lambda function is invoked for the first time or after a period of inactivity, it undergoes a "cold start." During a cold start, Lambda initializes the execution environment, which includes loading the function code, setting up the runtime, and establishing connections to external resources.
 
 Subsequent invocations of the same function (within a certain period of time) can benefit from a warm start. In a warm start, Lambda reuses the existing execution context, skipping the initialization steps. This can significantly reduce the latency of the function because the runtime environment is already prepared.
+
+(Why Subnets Matter in Real-Time AWS Use Cases)
+✔ Security → Keep private and public resources separate.
+✔ Scalability → Add more subnets as your system grows.
+✔ High Availability → Use multiple subnets across AZs for failover.
+✔ Better IP Management → Efficient use of address space.
+✔ Traffic Control → Route internet and internal traffic separately.
+✔ Hybrid Cloud → Connect AWS to on-prem securely.
