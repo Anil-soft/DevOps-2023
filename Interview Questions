@@ -204,7 +204,7 @@ what is the difference between docker and virtual machine ?
   
   14. I have one server on production env, i have lost the pem.key so how can i login to that instance?
       take the snapshot of the EBS volume, and create volume through snapshot and take snapshot of the AMI,
-      whille creating new instance, creat through AMI that we took snapshot from existing VM and attach volume the new instance.
+      while creating new instance, create through AMI that we took snapshot from existing VM and attach volume the new instance.
       
   15. what are the difference ways to login to instance apart from SSH?
       SSH into the server and SSH key based authentication.
@@ -212,7 +212,7 @@ what is the difference between docker and virtual machine ?
   16. which file will be having all the user information ?
        /etc/passwd ( usernames, encrypted passwords, user id, users group id, the /home directory of the user, users login shell )
        
-  17. which file you need to check that how may users have access to the servers?
+  17. which file you need to check that how many users have access to the servers?
       
   18. what proc dir will be containing?
       - It contains useful information about the processes that are currently running, it is regarded as control and information center for kernel.
@@ -232,6 +232,17 @@ what is the difference between docker and virtual machine ?
       sudo -s -> Start a shell as root
       sudo -u root -s -> Same as above.
       sudo -u user -s -> Start a shell as user.
+
+  what is the difference between root and superuser?
+    root:- 
+    Root is the main boss of a Linux system.
+    It has full control and can do anything (install, delete, modify files, change settings).
+    Example: If you log in as root, you can run any command without asking for permission.
+
+    superuser:-
+    Superuser is not a specific person but a role given to normal users.
+    A normal user can become a superuser by using sudo (a command to gain temporary admin powers).
+    Needs to use sudo for admin tasks
       
   20. explain about the terraform modules ?
       
