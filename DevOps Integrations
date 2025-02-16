@@ -356,3 +356,12 @@ Jenkins uses a Jenkinsfile (Declarative or Scripted pipeline) to define the pipe
 5️⃣Save & Build
  Click Save, then Scan Multibranch Pipeline Now.
  Jenkins will auto-detect branches and create jobs for them.
+
+Jenkins Stages:-
+
+Checkout (Fetch latest source code from GitHub/GitLab)
+Build (Compile Java code using Maven/Gradle.)
+Test (Run unit/integration tests.)
+Code Analysis (Analyze code quality using SonarQube.)
+Build & Push Image (Create Docker image & push to registry)
+Deployment (Deploy app to Tomcat, Kubernetes, or cloud)
