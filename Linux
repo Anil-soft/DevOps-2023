@@ -266,6 +266,8 @@ find /some/path -user username -ls
 Q- what is ulimit?
 ulimit is nothing but how many files users can open
 $lsof  -> to check open files in the OS
+lsof -u username -> List Open Files by a Specific User: To see what files are open by a particular user
+lsof -p <PID> -> Find Files Opened by a Specific Process
 
 Q- take backup of logs files on backup servers
 
