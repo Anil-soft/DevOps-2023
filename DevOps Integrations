@@ -365,3 +365,92 @@ Test (Run unit/integration tests.)
 Code Analysis (Analyze code quality using SonarQube.)
 Build & Push Image (Create Docker image & push to registry)
 Deployment (Deploy app to Tomcat, Kubernetes, or cloud)
+
+Potential Issues When Building a Java Package Using Maven in a CI/CD Pipeline
+1️⃣ Dependency Resolution Issues
+❌ Problem:
+Maven may fail to resolve dependencies due to missing JARs, incorrect repository configurations, or network issues.
+
+You might see errors like:
+Could not resolve dependencies for project com.example:app:jar:1.0-SNAPSHOT
+
+🔍 Why It Happens:
+The required dependencies are not available in the central repository or corporate Nexus/Artifactory.
+The internet connection is unstable, causing failures in downloading dependencies.
+Dependencies have transitive conflicts, leading to version mismatches.
+✅ Solution:
+Check pom.xml for missing or incorrect dependencies.
+Use mvn dependency:tree to identify conflicts.
+Use mvn dependency:purge-local-repository to force a fresh dependency download.
+If using a private repository, ensure .m2/settings.xml has the correct Maven repository URL.
+
+2️⃣ Build Fails Due to Java Version Mismatch
+❌ Problem:
+The pipeline fails with an error like:
+Unsupported class file major version 61
+
+🔍 Why It Happens:
+The Maven compiler plugin (maven-compiler-plugin) is using a different Java version than what is installed in the 
+CI/CD agent. The local system runs Java 11, but the CI/CD server runs Java 8, causing compatibility issues.
+✅ Solution:
+Check and set the Java version in pom.xml
+<properties>
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+</properties>
+
+3️⃣Out of Memory (OOM) Errors
+❌ Problem:
+
+The pipeline crashes due to out-of-memory (OOM) errors
+Java heap space
+🔍 Why It Happens:
+JVM memory limits are too low for the build process.
+The build machine has insufficient RAM.
+Maven plugins consume too much memory (e.g., maven-surefire-plugin in tests).
+✅ Solution:
+Increase memory limits
+export MAVEN_OPTS="-Xmx1024m -XX:MaxPermSize=512m"
+
+If using Docker, allocate more resources:
+docker run -m 2G my-maven-build
+
+5️⃣ Missing or Incorrect settings.xml Configuration
+❌ Problem:
+The pipeline fails because Maven cannot authenticate with a private repository:
+401 Unauthorized - Access to the repository denied
+
+🔍 Why It Happens:
+~/.m2/settings.xml is missing or incorrectly configured.
+Authentication credentials for private repositories (Nexus, Artifactory, AWS CodeArtifact) are not provided.
+✅ Solution:
+Verify settings.xml includes correct credentials
+<servers>
+  <server>
+    <id>private-repo</id>
+    <username>your-username</username>
+    <password>your-password</password>
+  </server>
+</servers>
+
+Use environment variables instead of hardcoding passwords:
+<password>${env.REPO_PASSWORD}</password>
+
+6️⃣ Artifacts Not Uploaded to the Repository
+❌ Problem:
+The build succeeds, but the final JAR/WAR file is not uploaded to Nexus/Artifactory.
+🔍 Why It Happens:
+The mvn deploy step is missing.
+The repository settings in pom.xml are incorrect.
+✅ Solution:
+Ensure distributionManagement is correctly configured in pom.xml
+<distributionManagement>
+    <repository>
+        <id>nexus</id>
+        <url>https://nexus.example.com/repository/maven-releases/</url>
+    </repository>
+</distributionManagement>
+
+Run the deploy command:
+mvn clean deploy
+
