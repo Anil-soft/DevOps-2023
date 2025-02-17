@@ -454,3 +454,42 @@ Ensure distributionManagement is correctly configured in pom.xml
 Run the deploy command:
 mvn clean deploy
 
+what is the difference between mvn clean package and mvn clean install??
+
+1️⃣ mvn clean package 
+Removes the old build files (clean).
+Compiles the Java code.
+Runs unit tests.
+Packages the application into a JAR/WAR file.
+The JAR/WAR is stored in the target/ folder inside the project.
+📌 Who Can Use It?
+Only you can use it because it’s inside your project folder.
+Other projects cannot use it.
+
+2️⃣ mvn clean install
+Does everything that mvn clean package does plus:
+Copies the JAR/WAR to your local Maven repository (~/.m2/repository).
+📌 Who Can Use It?
+Now, other Maven projects on your computer can use this JAR/WAR as a dependency.
+
+Example Scenario
+🎯 Scenario 1: You only need the package
+You are deploying a standalone app, and you only need the JAR/WAR file.
+👉 Run:
+mvn clean package
+✅ The JAR/WAR is available only in target/.
+
+🎯 Scenario 2: You want other projects to use this package
+You are working on Project A, and another Project B needs this JAR/WAR.
+👉 Run:
+mvn clean install
+✅ The JAR/WAR is now in ~/.m2/repository, so Project B can use it.
+
+3️⃣ mvn clean deploy (Remote Sharing)
+Does everything install does
+Uploads the built JAR/WAR to a remote repository (like Nexus, Artifactory, Maven Central)
+📍 Where is the JAR stored? → Remote Maven repo (e.g., Nexus, Artifactory)
+📍 Who can use it? → Other developers, CI/CD pipelines, production systems
+✅ Use Case:
+When you want other teams/projects to use your JAR/WAR.
+In CI/CD pipelines, when your artifact needs to be stored centrally.
