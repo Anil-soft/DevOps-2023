@@ -289,7 +289,11 @@ JWT token?
   20. explain about the terraform modules ?
       
   21. you have written terraform script to provision s3 bucket and ec2 instance and subnets, i need to create only ec2 instance how can i do that?
-      call the terraform ec2 modue in main.tf file.
+     terraform apply -target=aws_instance.my_instance
+      call the terraform ec2 modue in main.tf file
+      module "ec2_instance" {
+  source = "./modules/ec2"  # Path to your EC2 module
+}
       
   22. explain about META arguements in terraform?
       for_each
@@ -386,7 +390,21 @@ The provider meta-argument specifies which provider configuration to use for a r
 }
   
   26. How can you store the secrets in terraform?
-      
+      Use AWS Secrets Manager (or Other Secret Management Tools)
+      AWS Secrets Manager can store and manage sensitive information securely. 
+      Terraform can integrate with AWS Secrets Manager to retrieve secrets at runtime.
+      Example of Retrieving Secrets from AWS Secrets Manager:
+      data "aws_secretsmanager_secret_version" "db_password" {
+  secret_id = "my-secret"
+}
+
+resource "aws_rds_instance" "example" {
+  db_name     = "mydb"
+  username    = "admin"
+  password    = data.aws_secretsmanager_secret_version.db_password.secret_string
+  instance_class = "db.t2.micro"
+}
+
   
   27. There is a file only you can modify that file linux, how can you do that?
       change the ownership of the file
@@ -400,15 +418,16 @@ The provider meta-argument specifies which provider configuration to use for a r
       if you have already commited then hit the command to reset 
       undo and commit to new branch
       $ git reset HEAD~1
-      Move Commits to the Other Branch
-      $ git log
-      $ git reset --hard HEAD~1
-      $ git checkout -b newbranch
-      $ git reset --hard < commit_id >
+      Checkout the correct branch and commit the changes there:
+      git checkout correct-branch
+	git add .
+	git commit -m "Moved changes to correct branch"
       if you have not commited to and move the changes to other baranch
       $ git stash
       $ git checkout new_branch
       $ git stash pop   
+      git add .
+      git commit -m "Moved changes to correct branch"
       $ git rebase -i HEAD~5 -> sqush commits into one
       $ git reset --hard HEAD~1 -> to delete the commit
       
@@ -440,24 +459,33 @@ The provider meta-argument specifies which provider configuration to use for a r
       docker is the containarized platform, kubernetes is the container orchestration
       
   36. how can you do autoscaling in kubernetes?
-      HorizontalPodAutoscaler controls the scale of a Deployment and its ReplicaSet
-      in manifest file have to add the averageUtilization: 70 parametes
-      on every node Cadvisor or container adviser runs by google when the pods are running on worker node this C advisor can scrape the pod
-      CPU and Memory usage of every 10 sec and every minute metric server will aggregate those metrics and expose them to the kubernetes
-      API server and horizontal pod autoscale controller queries the API server for every 15 sec for these metrics once this controller gets
-      the desired metrics then it decided scale up or scale down. this HPA controller just updates the replica count in the target deployment
-      spinning up the new pod or deleting the existing pod will be taken care by replication controller.
+      Horizontal pod autoscaler
+	How HPA Works:
+	Metrics Server collects CPU/memory usage from pods.
+	HPA watches these metrics and compares them with the target utilization.
+	If utilization is too high, HPA increases the number of pods.
+	If utilization is too low, HPA decreases the number of pods.
       $ kubectl autoscale deployment php-apache --cpu-percent=50 --min=1 --max=10
       Verticalpodautoscaler performs three steps first it reads the resource metrics of our deployment from metric server based on these metrics
       it recommends the resource metrics and updates to the deployment
-      ClusterAutoscaler:- The Cluster Autoscaler automatically adds or removes nodes in a cluster based on resource requests from pods.
+      ClusterAutoscaler 
+	How Cluster Autoscaler Works:
+	A new pod is scheduled, but no available node has enough resources to run it.
+	Cluster Autoscaler requests the cloud provider to add a new node.
+	The new node joins the cluster, and the pod gets scheduled.
+	If nodes become idle (running no pods), CA removes them to save costs.
+      The Cluster Autoscaler automatically adds or removes nodes in a cluster based on resource requests from pods.
       The Cluster Autoscaler doesn’t directly measure CPU and memory usage values to make a scaling decision. 
       Instead, it checks every 10 seconds to detect any pods in a pending state, suggesting that the scheduler 
       could not assign them to a node due to insufficient cluster capacity.
       If there are any pending pods and the cluster needs more resources, CA will extend the cluster by launching a new node
       Kubernetes registers the newly provisioned node with the control plane to make it available to the Kubernetes scheduler for assigning pods.
      Finally, the Kubernetes scheduler allocates the pending pods to the new node.
-
+	How VPA Works:
+	Monitors pod resource usage over time.
+	Suggests better resource requests/limits based on historical data.
+	Applies new resource values (if configured) by restarting the pod.
+	🚨 VPA Restarts Pods: Unlike HPA, which adds or removes pods, VPA requires a pod restart to apply new resource requests/limits.
       
   37. what are the kubernetes services?
       ClusterIP. Exposes a service which is only accessible from within the cluster.
@@ -467,9 +495,16 @@ The provider meta-argument specifies which provider configuration to use for a r
   38. how the communication happen from one pod to another pod in kubernetes
       every pod will be having clusterIP, through clusterIP pods communication will happend
   39. How can you differentiate the containers in pod and how the containers communicate through one container to another container
-      pod is a isolated network namespace, container can talk via localhost and port
+      1️⃣ Communication via localhost
+	Containers in a pod can talk to each other using localhost and the exposed port of the other container.
+   If a Pod needs to communicate with an external database outside Kubernetes, how can it do that?
+	✅ Expected Answer:
+	The Pod can:
+	Use a ConfigMap or Secret to store the external database hostname/IP and credentials.
+	Use DNS resolution if the external service has a DNS name.
+	Ensure the Kubernetes network allows egress traffic.
   40. How can you secure your kubernetes application ?
-      RBAC and 
+     
   41. what is kube proxy and kubelet?
       kubelet - An agent that runs on each node in the cluster. It makes sure that containers are running in a Pod.
   
