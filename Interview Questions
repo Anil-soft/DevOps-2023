@@ -736,6 +736,10 @@ volumes:
 3. What is Docker compose, why do we use this ?
 4. what is multistage build and why do we use this?
    - multistage builds are used to optimize docket image size
+   - A multistage Dockerfile makes it easier to manage dependencies for different stages of your application. 
+     For example, you can have one stage for building the application (with all the build tools like compilers) and 
+     another stage for running the app with only the runtime dependencies.
+     This keeps your Dockerfile clean and organized, making it easier to understand.
 5. what are the security parameters have to take while creating docker image ?
    - always use the docker official images, official images are already built with best practices
    - instead of using all the base images like centos, ubuntu we can use lightweight images
