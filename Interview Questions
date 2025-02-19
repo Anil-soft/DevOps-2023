@@ -1244,19 +1244,20 @@ what is the difference between CNAME and alias record in route53?
   alias:- points hostname to AWS resource (like points hostname to load balancer endpoint)
 
 Can you explain different types of AWS route53 routing policies?
-Geolocation routing:-
-  A geolocation routing policy is what you use when you want to route traffic based on the location of your users. 
-  A geolocation routing policy allows you to allocate the resources that serve your traffic based on the location 
-  that users' DNS queries originate from.
-  For example, say you have servers in Oregon and New York, and many of your users are in California. A geolocation routing policy 
-  might send those California users to your Oregon server so you can serve them content specific to the West Coast of the US.
-
-Geoproximity Routing Policy:-
-  A geoproximity routing policy is what you use when you want to route traffic based on the location of your resources, 
-  or shift traffic flow between resources This policy allows you to direct users to different servers, even though those 
-  servers might be further away, using something called a bias. Take the previous example. Let's say you have servers in Oregon 
-  and New York, and users in California, but your New York servers are larger and can handle more traffic than the Oregon servers.
-  You might use a geoproximity routing policy to direct a portion of the California users to the New York server.
+Geolocation vs. Geoproximity Routing in AWS Route 53
+🗺 Geolocation Routing → User-based 🌍
+Requests are routed based on the user's location (Country/State/Continent).
+Example:
+If a user is from India, route traffic to an India server.
+If a user is from USA, route traffic to a USA server.
+Best for: Showing region-specific content or legal compliance.
+📍 Geoproximity Routing → Resource-based 📏
+Routes traffic based on the closest AWS resource (not just user location).
+You can increase or decrease traffic bias for certain resources.
+Example:
+If a user is in Dubai, Route 53 may route them to India or Europe, depending on proximity.
+You can manually shift traffic more towards one region if needed.
+Best for: Performance optimization by directing users to the nearest, best-performing server.
 
 Failover routing policy:-
   A failover routing policy allows you to direct users to a particular resource only when that resource is healthy
