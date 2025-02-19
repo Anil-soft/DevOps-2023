@@ -1391,9 +1391,11 @@ You can use the ignore_errors directive to ignore specific task failures and con
 EPAM
 what is the difference between authenticationa and authorization?
 
-Authentication: This is the process of verifying the identity of a user or application that is attempting to connect to an RDS database. Amazon RDS supports multiple authentication methods, including password authentication and IAM database authentication.
+Authentication: This is the process of verifying the identity of a user or application that is attempting to connect to an RDS database. 
+Amazon RDS supports multiple authentication methods, including password authentication and IAM database authentication.
 
-Authorization: Once a user or application is authenticated, authorization determines what actions they are allowed to perform on the database. This is typically managed through database-level roles and permissions.
+Authorization: Once a user or application is authenticated, authorization determines what actions they are allowed to perform 
+on the database. This is typically managed through database-level roles and permissions.
 
 can you use same subnet in another zone which is already used in one zone?
 No, you cannot use the same subnet in another Availability Zone (AZ) if it is already used in one zone. Subnets are specific to an AZ and cannot span across multiple AZs within the same region. Each subnet you create must be associated with a single AZ.
@@ -1430,15 +1432,22 @@ $ docker logs -f <container_id_or_name>
 - You can use the docker inspect command to get more information about the volume and its mount point
 
 can we mount S3 bucket to EC2 instance like we mount EBS volume?
-No, you cannot mount an Amazon S3 bucket to an EC2 instance in the same way you mount an Amazon EBS volume. Amazon S3 is an object storage service, while Amazon EBS provides block-level storage volumes for use with EC2 instances.
+No, you cannot mount an Amazon S3 bucket to an EC2 instance in the same way you mount an Amazon EBS volume. 
+Amazon S3 is an object storage service, while Amazon EBS provides block-level storage volumes for use with EC2 instances.
 
 what is the difference between S3 and EBS volumes?
 
 S3: 
-S3 is an object storage service designed for storing and retrieving large amounts of data. It is suitable for storing files, backups, and data sets. Objects in S3 are stored in buckets and accessed over the internet. Object-level storage is a type of storage in which data is stored as objects, each containing the data itself along with metadata and a unique identifier. 
+S3 is an object storage service designed for storing and retrieving large amounts of data. 
+It is suitable for storing files, backups, and data sets. Objects in S3 are stored in buckets and accessed over the internet. 
+Object-level storage is a type of storage in which data is stored as objects, each containing the data itself along with metadata 
+and a unique identifier. 
 
 EBS: 
-EBS provides block-level storage volumes that can be attached to EC2 instances. It is used for storing data that requires frequent access and low latency, such as operating system files and database storage. EBS volumes are accessed as block devices and can only be attached to one EC2 instance at a time. Block-level storage is a type of storage in which data is stored in fixed-sized blocks, typically ranging from a few bytes to several kilobytes.
+EBS provides block-level storage volumes that can be attached to EC2 instances. It is used for storing data that requires 
+frequent access and low latency, such as operating system files and database storage. EBS volumes are accessed as block devices 
+and can only be attached to one EC2 instance at a time. Block-level storage is a type of storage in which data is stored 
+in fixed-sized blocks, typically ranging from a few bytes to several kilobytes.
 
 what are the different types of EBS volumes are there?
 General Purpose SSD (gp2):-
@@ -1461,16 +1470,16 @@ tell me one example of of each load balancer for application and network load ba
 - NLB is also suitable for TCP and UDP traffic that needs to be distributed across targets, such as in a database or messaging service.
 
 why do we need to use TCP and UDP protocol?
-
+ 
 TCP
 - TCP is a reliable protocol that ensures that data is delivered in order and without errors. 
 - TCP is connection-oriented, meaning it establishes a connection between two hosts before data exchange.
 - This ensures that data is delivered accurately and completely 
-- TCP is commonly used for applications that require reliable and ordered delivery of data, such as web browsing, email, file transfer (FTP), and database   transactions.
+- TCP is commonly used for applications that require reliable and ordered delivery of data, such as web browsing, email, file transfer (FTP), and database transactions.
 
 UDP
-- UDP, on the other hand, is faster but unreliable. It does not guarantee delivery or order of packets, making it suitable for applications where speed is   more important than reliability.
-- UDP is used for applications where real-time communication and speed are more important than reliability, such as VoIP (Voice over IP), online gaming, DNS   (Domain Name System), and streaming media.
+- UDP, on the other hand, is faster but unreliable. It does not guarantee delivery or order of packets, making it suitable for applications where speed is more important than reliability.
+- UDP is used for applications where real-time communication and speed are more important than reliability, such as VoIP (Voice over IP), online gaming, DNS (Domain Name System), and streaming media.
 
 terraform script to create AWS instance by using latest ubuntu ami id.
 
@@ -1499,16 +1508,33 @@ resource "aws_instance" "example" {
 
 what is the difference between customer managed policies and inline policy in AWS IAM.
 
-customer managed policies:-
-- Customer managed policies are standalone policies that you create and manage independently from any user, group, or role.
-- These policies can be attached to multiple IAM identities (users, groups, or roles) across your AWS account.
-- When you update a customer managed policy, the changes apply to all the IAM identities to which the policy is attached.
-- Customer managed policies are reusable and can help you centralize and manage permissions more efficiently.
+💡 Customer Managed vs. Inline Policies in AWS IAM
+1️⃣ Customer Managed Policies → Reusable & Attach Anywhere
+✅ You create & manage this policy separately.
+✅ Can be attached to multiple users, groups, or roles.
+✅ Reusable, easy to update in one place, and applies everywhere.
 
-Inline Policies:
-- Inline policies are policies that are embedded directly into a single IAM identity (user, group, or role) as a JSON document.
-- Inline policies are specific to the IAM identity to which they are attached and cannot be reused or attached to other IAM identities.
-- When you update an inline policy, the changes apply only to the IAM identity to which the policy is attached.
+👉 Example:
+You create a policy "S3-Read-Only" and attach it to 5 different users.
+
+If you modify the policy, all 5 users get the update instantly.
+2️⃣ Inline Policies → Attached Inside IAM Identity
+❌ Directly attached inside a user, group, or role (not reusable).
+❌ Can’t share or reuse—it exists only inside that one identity.
+✅ Useful when the policy is specific to only one IAM identity.
+
+👉 Example:
+You write a custom policy inside UserA that allows access only to a specific S3 bucket.
+
+This policy cannot be reused by another user.
+🔥 Simple Difference:
+✅ Customer Managed Policy → Like a prepaid SIM card 📱 (you can use it in any phone).
+✅ Inline Policy → Like a SIM card built into a phone 📞 (you can’t use it elsewhere).
+
+💡 Which one to use?
+
+Use Customer Managed Policies for better reusability & management.
+Use Inline Policies only when the permission is specific to one IAM user, group, or role.
 
 what is the difference between encryption in transist and encryption at rest?
 
@@ -1520,86 +1546,66 @@ Encryption at Rest: This refers to the process of encrypting data that is stored
 The purpose of encryption at rest is to protect data from unauthorized access if the storage media is stolen or compromised.
 
 what is SSL/TLS?
-- SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are cryptographic protocols that provide secure communication over a computer network.
-- TLS is the successor to SSL and is based on the same principles. It was standardized by the Internet Engineering Task Force (IETF) to provide a more   secure and robust protocol for securing communications over the internet.
+- SSL (Secure Sockets Layer) and TLS (Transport Layer Security) are cryptographic protocols that provide secure communication 
+  over a computer network.
+- TLS is the successor to SSL and is based on the same principles. It was standardized by the Internet Engineering Task Force 
+   (IETF) to provide a more secure and robust protocol for securing communications over the internet.
 
 what is terraform dynamic block?
-
-dynamic blocks allow you to construct nested configuration blocks dynamically based on the elements of a list, map, or set. 
-This can be useful when you have a variable number of nested blocks to define, such as when configuring multiple instances in a resource.
-
-Example:-
-variable "security_group_rules" {
-  type = list(object({
-    from_port   = number
-    to_port     = number
-    protocol    = string
-    cidr_blocks = list(string)
-  }))
-  default = [
-    {
-      from_port   = 80
-      to_port     = 80
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    },
-    {
-      from_port   = 443
-      to_port     = 443
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-    }
-  ]
-}
-
+🔥 Terraform Dynamic Block - Simple Explanation
+Problem:
+Suppose you want to allow multiple ports (like 22, 80, 443) in a security group.
+Normally, you need to write the same ingress block multiple times.
+🛑 Without Dynamic Block (Manual Way, Writing Again & Again)
 resource "aws_security_group" "example" {
-  name        = "example"
-  description = "Example security group"
-  vpc_id      = var.vpc_id
+  name = "my-security-group"
 
-  dynamic "ingress" {
-    for_each = var.security_group_rules
-    content {
-      from_port   = ingress.value.from_port
-      to_port     = ingress.value.to_port
-      protocol    = ingress.value.protocol
-      cidr_blocks = ingress.value.cidr_blocks
-    }
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 }
 
-Example:-2
-locals {
-  rules = [{
-    description = "HTTP",
-    port = 80,
-    cidr_blocks = ["0.0.0.0/0"],
-  },{
-    description = "SSH",
-    port = 22,
-    cidr_blocks = ["10.0.0.0/16"],
-  },{
-    description = "HTTPS",
-    port = 443,
-    cidr_blocks = ["0.0.0.0/0"],
-  }]
-}
-resource "aws_security_group" "mysg" {
-  name        = "webserver"
-  description = "Inbound Rules for WebServer"
+Issue? 😓
+
+If you want more ports, you need to keep adding more ingress blocks manually.
+Time waste & not scalable!
+
+✅ With Dynamic Block (Smart & Automatic)
+resource "aws_security_group" "example" {
+  name = "my-security-group"
 
   dynamic "ingress" {
-    for_each = local.rules
+    for_each = [22, 80, 443]  # List of ports
     content {
-      description = ingress.value.description
-      from_port   = ingress.value.port
-      to_port     = ingress.value.port
+      from_port   = ingress.value
+      to_port     = ingress.value
       protocol    = "tcp"
-      cidr_blocks = ingress.value.cidr_blocks
+      cidr_blocks = ["0.0.0.0/0"]
     }
   }
 }
 
+🚀 What’s Happening Here?
+✅ for_each = [22, 80, 443] → It loops through this list of ports.
+✅ ingress.value → Picks one port from the list and fills inside the block.
+✅ Terraform automatically creates multiple ingress rules for all the ports.
 
 How to maintain the multiple accounts in terraform, how can you centralize all these accounts
 create AWS profile for each AWS account
@@ -1641,11 +1647,38 @@ provider "aws" {
 }
 
 what is static pod?
-- Static pods are managed by the kubelet running on the node where they are created.
-- They are not scheduled by the Kubernetes scheduler and do not have the flexibility of being rescheduled to other nodes in the cluster if the original node   fails
-- kubelet checks the /etc/kubernetes/manifests dir periodically reads the manifest files and create the pods, ensures that pod stay alive and if any changes   happens to the manifests file kubelet recreate the pod
-- Since static pods are not managed by the Kubernetes API server, they do not appear in the Kubernetes API and cannot be controlled using kubectl.
-- Static pods are often used for critical system components that should run on every node, such as networking plugins (e.g., CNI), monitoring agents, or     logging agents. 
+ 🔥 Real-Time Example for Static Pods
+🔴 Situation:
+Imagine you are setting up a Kubernetes cluster manually (without kubeadm or managed services like EKS).
+
+The first thing Kubernetes needs is important system components like kube-apiserver, etcd, and kube-controller-manager.
+But, if Kubernetes is not running yet, how can we run these critical services? 🤔
+Answer: We use Static Pods! 😎
+💡 Real-World Scenario: How Static Pods Work in Kubernetes Master Node
+💡 Example: When you create a Kubernetes cluster manually, the kube-apiserver, etcd, and other critical components must run first, even before Kubernetes itself is fully functional.
+
+✅ In Kubernetes Master Node, these important services are created as Static Pods.
+✅ These Static Pod YAML files are placed inside /etc/kubernetes/manifests/.
+✅ Kubelet (running on the node) automatically reads these files and creates the pods!
+
+🔧 Example: Static Pod for kube-apiserver (On the Master Node)
+📌 This file will be saved as /etc/kubernetes/manifests/kube-apiserver.yaml
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: kube-apiserver
+  namespace: kube-system
+spec:
+  containers:
+  - name: kube-apiserver
+    image: k8s.gcr.io/kube-apiserver:v1.28.0
+    command:
+    - kube-apiserver
+    - --advertise-address=192.168.1.100
+    ports:
+    - containerPort: 6443
+👉 Kubelet detects this file & starts the kube-apiserver pod automatically! 🔥
 
 what are the 7 layers of OSI model?
  1. physical
@@ -1657,24 +1690,31 @@ what are the 7 layers of OSI model?
  7. application
 
 How can you define the firewall?
- - A firewall is a network security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules. It acts as a barrier 
-   between a trusted internal network and untrusted external networks
+ - A firewall is a network security system that monitors and controls incoming and outgoing network traffic based on predetermined 
+   security rules. It acts as a barrier 
+   between a trusted internal network and untrusted external networks.
 
 DynamoDB core components?
 tables, items and attributes are the core components.
-a table is a collection of items and each item is a collection of attributes.dynamodb uses primary keys to uniquely identify each item in a table.x
+a table is a collection of items and each item is a collection of attributes.dynamodb uses primary keys to uniquely identify 
+each item in a table.
 
 AWS Security:-
 types of KMS Keys:-
 Customer Master Keys (CMKs):
- Symmetric CMKs: These keys are used for encryption and decryption and are the most common type of CMK. They use the same key for both operations and are  suitable for encrypting data keys used in envelope encryption.
- Asymmetric CMKs: These keys are used for digital signing and verification, and for encrypting data that will be decrypted by a different key. Asymmetric   CMKs are not typically used for data encryption but are useful for tasks like verifying the integrity of messages or documents.
+ Symmetric CMKs: These keys are used for encryption and decryption and are the most common type of CMK. 
+ They use the same key for both operations and are suitable for encrypting data keys used in envelope encryption.
+ Asymmetric CMKs: These keys are used for digital signing and verification, and for encrypting data that will be decrypted 
+ by a different key. Asymmetric CMKs are not typically used for data encryption but are useful for tasks like verifying 
+ the integrity of messages or documents.
 AWS Managed Keys:
- AWS Managed CMKs: These are keys managed by AWS KMS on your behalf. They are used for encrypting data within AWS services such as S3, EBS, and RDS. AWS  automatically rotates these keys every few years for added security.
- Default CMKs: AWS KMS creates a default CMK for each AWS account when it is first used. This key is used for encrypting data in services that do not  support customer-managed keys.
+ AWS Managed CMKs: These are keys managed by AWS KMS on your behalf. They are used for encrypting data within AWS services 
+ such as S3, EBS, and RDS. AWS  automatically rotates these keys every few years for added security.
+ Default CMKs: AWS KMS creates a default CMK for each AWS account when it is first used. 
+ This key is used for encrypting data in services that do not support customer-managed keys.
 
 Explain about AWS SSM paramter store and why do you use that?
- - AWS Systems Manager Parameter Store (SSM Parameter Store) is a secure, hierarchical storage service that allows you to store configuration data and    secrets such as database connection strings, API keys, and passwords.
+ - AWS Systems Manager Parameter Store (SSM Parameter Store) is a secure, hierarchical storage service that allows you to store configuration data and secrets such as database connection strings, API keys, and passwords.
  - Parameter Store encrypts sensitive information at rest and in transit, providing a secure way to store secrets and other sensitive data.
  - Parameter Store integrates seamlessly with other AWS services, such as EC2, ECS, Lambda, and SSM Run Command, allowing you to securely retrieve    parameters from within your applications or automation workflows.
  - Parameter Store supports different types of parameters, including String, StringList, and SecureString. SecureString parameters are encrypted with AWS    KMS.
@@ -1687,12 +1727,12 @@ AWS secrets manager?
  - You configure the secret (e.g., database password) and define a rotation schedule or trigger. For example, you might specify that the password should be    rotated every 30 days.
 
 what is cloudfront and why do we need to use cloudfront?
- - AWS CloudFront is a content delivery network (CDN) service provided by Amazon Web Services. It accelerates the delivery of your websites, APIs, video    content, and other web assets by caching them at edge locations around the world.
+ - AWS CloudFront is a content delivery network (CDN) service provided by Amazon Web Services. It accelerates the delivery of your websites, APIs, video content, and other web assets by caching them at edge locations around the world.
  - When a user requests content that you're serving through CloudFront, the request is automatically routed to the nearest edge location.
  - CloudFront caches your content at edge locations, reducing latency and improving load times for your users.
  - CloudFront is designed to handle large amounts of traffic and scale automatically to accommodate spikes in demand.
  - By caching content at edge locations, CloudFront reduces the load on your origin server, potentially lowering your server and data transfer costs.
- - CloudFront integrates seamlessly with other AWS services, such as Amazon S3, Amazon EC2, and AWS Lambda, making it easy to use within your existing    infrastructure.
+ - CloudFront integrates seamlessly with other AWS services, such as Amazon S3, Amazon EC2, and AWS Lambda, making it easy to use within your existing infrastructure.
 
 what is the different between cloudfront and S3 cross region replication?
 Cloudfront:-
@@ -1705,7 +1745,7 @@ S3 Cross region replications?
  - Read only
 
 How to restrict the users permissions based on the regions?
- - you can use IAM policies with condition keys. Condition keys allow you to specify conditions under which a policy statement is in effect, such as       restricting access to specific AWS regions. 
+ - you can use IAM policies with condition keys. Condition keys allow you to specify conditions under which a policy statement is in effect, such as restricting access to specific AWS regions. 
     "Statement": [
         {
             "Effect": "Allow",
@@ -1723,12 +1763,17 @@ can we have same cidr range for 2 VPCs in same account?
 
 How can you secure your kubernetes cluster?
 Can we have two ingress controllers in same k8s cluster?
- - Yes, you can have multiple ingress controllers in the same Kubernetes cluster. Each ingress controller will typically be associated with a different    Ingress controller implementation.  (e.g., Nginx Ingress Controller, Traefik, AWS ALB Ingress Controller, etc.) and will be responsible for routing    external traffic to different services within your cluster based on the rules defined in your Ingress resources.
+ - Yes, you can have multiple ingress controllers in the same Kubernetes cluster. Each ingress controller will typically be associated 
+   with a different Ingress controller implementation.  (e.g., Nginx Ingress Controller, Traefik, AWS ALB Ingress Controller, etc.) 
+   and will be responsible for routing external traffic to different services within your cluster based on the rules defined 
+   in your Ingress resources.
 
 what is the difference between the VPC transit gateway and VPC peering?
 
 How can you block the communication between two pods?
- - You can block communication between two pods in Kubernetes by using network policies. Network policies allow you to define rules that control the flow of    traffic to and from pods based on various criteria, such as pod labels, namespaces, and IP addresses. 
+ - You can block communication between two pods in Kubernetes by using network policies. 
+   Network policies allow you to define rules that control the flow of traffic to and from pods based on various criteria, 
+   such as pod labels, namespaces, and IP addresses. 
    apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -1744,7 +1789,9 @@ spec:
  - This network policy will block all incoming and outgoing traffic to and from pods that match the specified label (app: your-app-label). 
 
 can we have network load balancer as ingress controller in k8s?
- - Yes, you can use a Network Load Balancer (NLB) as an Ingress controller in Kubernetes. The NLB can be used to route incoming traffic to different        services in your Kubernetes cluster based on the rules defined in your Ingress resources.
+ - Yes, you can use a Network Load Balancer (NLB) as an Ingress controller in Kubernetes. 
+   The NLB can be used to route incoming traffic to different services in your Kubernetes cluster based on the rules defined 
+    in your Ingress resources.
 
 how can you get the jar file which is build through pipeline and create customized docker image?
 can you explain unit and integration testing in your pipeline?
@@ -1752,7 +1799,8 @@ explain what is the branching strategy that you are using in your project?
 cpu utilization reaches the thresold value even though autoscaling is not scaling the servers, what are the reasons and how can you troubleshoot?
 
 how the communication happen between two pods is it through http or https?
- - the communication between two pods in Kubernetes can happen over various protocols, including HTTP, HTTPS, TCP, and UDP, depending on how the pods are       configured and what kind of services they are running.
+ - the communication between two pods in Kubernetes can happen over various protocols, including HTTP, HTTPS, TCP, and UDP, 
+   depending on how the pods are configured and what kind of services they are running.
  - Pods can communicate with each other using HTTP or HTTPS if they are running services that expose endpoints over these protocols
  - For example, a web service running in one pod might communicate with a backend API service running in another pod over HTTP or HTTPS.
 
@@ -1773,7 +1821,8 @@ can a connection be made between a data center and AWS cloud? how?
  - AWS direct connect and VPN.
 
 Explain different AWS services to manage cost
- - AWS Cost Explorer is a valuable tool for managing and optimizing your AWS costs, providing visibility, insights, and recommendations to help you make    informed decisions and control your spending
+ - AWS Cost Explorer is a valuable tool for managing and optimizing your AWS costs, providing visibility, insights, and recommendations
+  to help you make informed decisions and control your spending
  - AWS Budgets is a useful tool for managing your AWS costs and usage, helping you stay within your budgeted limits and optimize your spending
 
 what are the different instance launch types and when to use them?
@@ -1878,7 +1927,6 @@ nslookup:-
   - Queries DNS records of a domain
   - Checking domain-to-IP resolution
   - nslookup google.com ( nslookup google.com )
-
 ping:- 
   - ping google.com
   - Checks network connectivity between devices
