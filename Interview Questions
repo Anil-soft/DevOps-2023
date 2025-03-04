@@ -1932,3 +1932,94 @@ ping:-
   - Checks network connectivity between devices
   - Verifying if a server is reachable
   - Sends packets to Google’s servers and measures response time.
+
+What is Terraform Drift & How to Resolve It?
+Terraform drift is nothing but when the mismatch occurs between terraform state and actual AWS infrastructure.
+
+📌 1️⃣ When Does Terraform Drift Occur?
+🔹 Terraform drift occurs when:
+✅ Manual Changes in AWS – Someone manually updates/deletes AWS resources outside Terraform.
+
+📌 2️⃣ How to Detect Terraform Drift?
+✅ Method 1: Run terraform plan
+🔹 Compare Terraform state vs. actual AWS state:
+    terraform plan
+🔹 Output Example (Drift Detected):
+    # aws_instance.server has been changed
+ ~ instance_type = "t2.micro" -> "t3.medium"
+ 👉 Here, Terraform expected t2.micro, but AWS has t3.medium.
+
+  ✅ Method 2: Run terraform state list (Check Resources in State)
+ 🔹 List all resources Terraform is tracking:
+  terraform state list
+ 🔹 Manually verify if these match with AWS resources.
+  ✅ Method 3: Use terraform plan -refresh-only (Safe Drift Check)
+ 🔹 This command refreshes Terraform state without making changes:
+  terraform plan -refresh-only
+ 🔹 If it detects drift, Terraform will show differences.
+📌 3️⃣ How to Resolve Terraform Drift?
+✅ Option 1: Fix AWS Resources Manually (If You Don't Want to Apply Terraform)
+🔹 If the AWS resource was changed manually, correct it back to match Terraform.
+🔹 Example:
+ Terraform state says t2.micro, but AWS is t3.medium → Change AWS back to t2.micro.
+ Terraform expects an S3 bucket, but it was deleted → Recreate it manually.
+✅ Option 2: Apply Terraform to Revert Changes
+🔹 If you want Terraform to correct the drift and match the configuration:
+ terraform apply
+🔹 Terraform will bring back the state to match the code.
+ ✅ Option 3: If the AWS Change is Needed, Update Terraform Code
+🔹 If the AWS changes are valid (e.g., instance type changed to t3.medium for performance reasons), update main.tf to match.
+ resource "aws_instance" "server" {
+  instance_type = "t3.medium"  # Update to match AWS
+}
+🔹 Now, run Terraform apply to sync:
+ terraform apply
+ ✅ Terraform won’t try to change the resource again since the config matches AWS.
+✅ Option 4: If Resource Was Deleted Manually, Remove from State
+🔹 If a resource was manually deleted in AWS, Terraform will still think it exists.
+🔹 Remove it from Terraform state using:
+ terraform state rm aws_instance.server
+🔹 Now, run terraform apply to recreate it.
+
+ 📌 4️⃣ Best Practices to Avoid Terraform Drift
+✅ Use Terraform for all infrastructure changes – don’t modify resources manually.
+✅ Run terraform plan regularly to check for drifts.
+✅ Enable IAM permissions to prevent manual changes.
+✅ Use terraform import if manual changes are needed but should be tracked.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
