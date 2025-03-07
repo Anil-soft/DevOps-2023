@@ -179,7 +179,7 @@ what is the difference between docker and virtual machine ?
 
      Enabled CloudWatch logs and X-Ray tracing for monitoring API performance.
 
-   There are few lambda functions which are deveoped by python
+   There are few lambda functions which are developed by python
    Transaction Processing Function
      - This function processes fund transfers and payments between customer accounts.
      - API Gateway receives a transaction request (e.g., POST /transfer).
