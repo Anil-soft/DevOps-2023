@@ -518,6 +518,18 @@ resource "aws_rds_instance" "example" {
       Container monitoring is the activity of continuously collecting metrics and tracking the health of containerized applications and microservices environments, 
       in order to improve their health and performance and ensure they are operating smoothly. 
   44. How can you optimize the kubernetes  
+	1️⃣ Resource Optimization:
+	Right-size CPU & memory requests.
+	Use lightweight images for faster startup.
+	2️⃣ Autoscaling & Load Balancing:
+	Enable Horizontal Pod Autoscaler (HPA) for scaling pods.
+	Use Cluster Autoscaler for scaling nodes dynamically.
+	3️⃣ Storage & Networking Optimization:
+	Implement Persistent Volumes (PV) & Network Policies to improve storage & security.
+	4️⃣ Security & Access Control:
+	Use RBAC & Secrets Management to restrict unauthorized access.
+	5️⃣ Monitoring & Logging:
+	Set up Prometheus, Grafana, and Fluentd for real-time observability.
   
 3rd interview ( KANINI )
 1. explain about docker architecture ?
