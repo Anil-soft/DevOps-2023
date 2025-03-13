@@ -538,3 +538,5 @@ i ran terraform apply command again then what it will happen?
 it will destory the existing instance and recreate new one at the terraform plan stage it asks to to destory the resource or not.
 if you don't want destroy the instance2 you just run the command terraform refresh and it refresh the terraform state file and
 keep the instance2.
+
+
