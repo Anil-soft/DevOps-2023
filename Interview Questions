@@ -2000,38 +2000,35 @@ Terraform drift is nothing but when the mismatch occurs between terraform state 
 ✅ Use terraform import if manual changes are needed but should be tracked.
 
 
+☁️ Difference Between IaaS vs PaaS vs SaaS ☁️
+These are different cloud service models based on what is managed by AWS and what is managed by you.
 
+🏗️ 1️⃣ Infrastructure as a Service (IaaS)
+📌 Definition: AWS provides virtual servers, storage, and networking—you manage everything else.
+📌 Example: Amazon EC2 (You rent virtual machines but install software & manage configurations).
+📌 Real-Life Analogy: Like renting an empty apartment—you bring your own furniture, appliances, and decorations.
 
+AWS Examples of IaaS:
+✔ Amazon EC2 – You launch virtual machines and configure them as needed.
+✔ Amazon S3 – You store raw files but organize them yourself.
+✔ Amazon VPC – You create your own private network.
 
+⚙️ 2️⃣ Platform as a Service (PaaS)
+📌 Definition: AWS manages infrastructure + runtime—you focus only on developing applications.
+📌 Example: AWS Elastic Beanstalk (You just upload your code, and AWS handles deployment).
+📌 Real-Life Analogy: Like renting a fully furnished apartment—you just move in and start living.
 
+AWS Examples of PaaS:
+✔ AWS Elastic Beanstalk – Deploy web apps without managing servers.
+✔ AWS Lambda – Just write your code, and AWS handles execution.
+✔ Amazon RDS – AWS manages databases for you.
 
+🌍 3️⃣ Software as a Service (SaaS)
+📌 Definition: AWS provides a ready-to-use application, and you just use it without worrying about maintenance.
+📌 Example: Amazon WorkMail (A fully managed business email service).
+📌 Real-Life Analogy: Like staying in a hotel—you just use the services without setting up anything.
 
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+AWS Examples of SaaS:
+✔ AWS WorkSpaces – A fully managed virtual desktop.
+✔ AWS Chime – A video conferencing service.
+✔ AWS GuardDuty – A managed security service.
