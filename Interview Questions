@@ -2033,11 +2033,14 @@ AWS Examples of SaaS:
 ✔ AWS Chime – A video conferencing service.
 ✔ AWS GuardDuty – A managed security service.
 
-what are the security parameters we have to consider while we are creating an ec2 instance for the production
+Ericssion
+
+what are the security parameters we have to consider while we are creating an ec2 instance for the production?
 
 who can you protect the data in AWS instance??
 
-what are the provisioners are available in the terraform
+what are the provisioners are available in the terraform?
+local-exec & remote-exec
 
 I have created an ec2 instance named instanceA and when I rename the instance B it should create an instance without deleting instanceA
 
@@ -2259,14 +2262,190 @@ I am getting the following error, how can I debug that and what is the error
 Pods fails to schedule
 0/5 nodes are available: insufficient memory.
 }
+
+This error means Kubernetes cannot schedule the Pod because none of the 5 nodes have enough available memory to accommodate it.
+🔎 How to Debug & Fix It?
+1️⃣ Check Node Resource Availability
+List all nodes and check their available memory:
+kubectl describe nodes
+
+Look for Allocatable memory and Used memory in the output. If memory is exhausted, Kubernetes cannot schedule new Pods.
+✅ Fix:
+If memory usage is high, delete unnecessary Pods
+kubectl delete pod <pod-name>
+Scale up the cluster by adding more worker nodes.
+
+2️⃣ Check Pod Resource Requests & Limits
+Your Pod may be requesting more memory than available.
+Check the Pod's resource configuration:
+kubectl describe pod <pod-name>
+
+3️⃣ Check Node Taints & Pod Tolerations
+Nodes may have taints preventing scheduling.
+Check taints:
+✅ Fix:
+If a node has a taint, add a toleration in the Pod spec
+kubectl describe node <node-name> | grep -i taint
+
+4️⃣ Check Cluster Autoscaler (If Enabled)
+If autoscaling is enabled, it should automatically add more nodes when resources are low.
+Check if Cluster Autoscaler is running:
+kubectl get deployment -n kube-system | grep cluster-autoscaler
+✅ Fix:
+Increase autoscaler limits
+kubectl edit configmap cluster-autoscaler -n kube-system
+
 what is the difference between scaling and autoscaling in kubernetes??
+Both scaling and autoscaling in Kubernetes involve adjusting the number of resources (pods, nodes, etc.), 
+but they differ in how and when they are triggered.
+
+1️⃣ Scaling in Kubernetes (Manual Scaling)
+Scaling refers to manually increasing or decreasing the number of pods or nodes in a Kubernetes cluster.
+
+Example: Manually Scaling Pods
+kubectl scale deployment my-app --replicas=5
+
+✅ Key Points of Scaling:
+Requires manual intervention (via kubectl or updating manifests).
+Can be horizontal (adding/removing pods) or vertical (changing pod resource limits).
+Useful when workload changes are predictable.
+
+2️⃣ AutoScaling in Kubernetes
+AutoScaling automatically adjusts resources based on real-time CPU, memory, or custom metrics.
+
+There are three main types of autoscaling:
+
+Horizontal Pod Autoscaler (HPA)
+Vertical Pod Autoscaler (VPA)
+Cluster Autoscaler
+
 if I don't specify Targetport in service object, what it is going to do??
+In Kubernetes, when you create a Service to expose a Pod, you define:
+port → The port on the Service that external traffic hits.
+targetPort → The port inside the pod where traffic is directed.
+🔹 Default Behavior of targetPort
+If you don't specify targetPort in the Service YAML, Kubernetes automatically sets targetPort to match port.
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80  # Service Port
+
+✅ What happens?
+
+Kubernetes assumes targetPort: 80 (same as port).
+The Service will route traffic to port 80 on the Pods.
+
+🔹 What If the Pod Listens on a Different Port?
+If your Pod is listening on port 8080 instead of 80, but targetPort is not set, the Service will fail to route traffic.
+
+Fix: Explicitly Specify targetPort
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: my-app
+  ports:
+    - protocol: TCP
+      port: 80      # Service Port
+      targetPort: 8080  # Pod Port
+✅ Now, requests to Service on port 80 will be correctly forwarded to Pod on port 8080.
+
+port → The port on the Service that external traffic hits.
+targetPort → The port inside the pod where traffic is directed.
+
 what are the different types of secrets in Kubernetes??
-I have an ingress object which is not routing the traffic to the Kubernetes cluster, what are the reasons and how to troubleshoot that??
+🔹 1. Opaque (Default Secret Type)
+Most common secret type.
+Can store any arbitrary key-value data (e.g., passwords, tokens).
+✅ Example: Creating an Opaque Secret
+kubectl create secret generic my-secret --from-literal=username=admin --from-literal=password=secret123
+
+🔹 2. kubernetes.io/service-account-token (Service Account Secret)
+Automatically created when a ServiceAccount is created.
+Used for authentication between pods and the Kubernetes API server.
+✅ Example: Creating a Service Account Secret
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-service-account-secret
+  annotations:
+    kubernetes.io/service-account.name: my-service-account
+type: kubernetes.io/service-account-token
+
+🔹 3. kubernetes.io/dockerconfigjson (Docker Registry Secret)
+Used for storing Docker credentials to pull images from private registries.
+✅ Example: Creating a Docker Registry Secret
+kubectl create secret docker-registry my-docker-secret \
+  --docker-server=myregistry.com \
+  --docker-username=myuser \
+  --docker-password=mypassword \
+  --docker-email=myemail@example.com
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-docker-secret
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: BASE64_ENCODED_DOCKER_CONFIG
+
+🔹 4. kubernetes.io/tls (TLS Secret)
+Stores TLS certificates for HTTPS communication.
+Contains tls.crt (certificate) and tls.key (private key).
+✅ Example: Creating a TLS Secret
+kubectl create secret tls my-tls-secret --cert=path/to/tls.crt --key=path/to/tls.key
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: my-tls-secret
+type: kubernetes.io/tls
+data:
+  tls.crt: BASE64_ENCODED_CERTIFICATE
+  tls.key: BASE64_ENCODED_PRIVATE_KEY
+
+🔹 Use Case: Used for Ingress TLS termination and SSL-secured applications.
+
+
+I have an ingress object which is not routing the traffic to the Kubernetes cluster, what are the reasons 
+and how to troubleshoot that??
 I have created service object which is not mapped, what could be the reason and how do you debug??
 what are the different ways to specify the probes in Kubernetes??
+
 what is the difference between git push --force-with-lease vs --force
+1️⃣ git push --force (Dangerous)
+Forces the push, overwriting remote changes even if someone else has pushed new commits.
+No safety check → It blindly replaces the remote branch with your local branch.
+Risk: You may erase someone else's work if they pushed after you last pulled.
+✅ When to Use?
+Only when you are 100% sure that nobody else has updated the branch.
+Used when rewriting history (e.g., after a git rebase).
+🚨 Example (Unsafe):
+git push --force
+
+2️⃣ git push --force-with-lease (Safer)
+Only forces the push if the remote branch is unchanged since your last fetch.
+Prevents overwriting someone else's commits by verifying the latest state.
+If the remote branch has changed, the push is rejected to avoid losing commits.
+✅ When to Use?
+
+When working in a team to prevent accidental data loss.
+When you want to rewrite history safely, but only if no one has pushed new changes.
+🚀 Example (Safe)
+git push --force-with-lease
+If the remote branch has not changed → The push succeeds.
+If the remote branch has changed → The push is rejected, preventing accidental overwrites.
+
 if I select the restart policy as Never what it is going to do??
 what is init container & why do we need to use??
 what is difference between EKS vs ECS vs Fargate
 how can you delete last 2 git commits??
+git reset --hard HEAD~2
