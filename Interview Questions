@@ -2033,19 +2033,223 @@ AWS Examples of SaaS:
 ✔ AWS Chime – A video conferencing service.
 ✔ AWS GuardDuty – A managed security service.
 
-
-
-
-
-
 what are the security parameters we have to consider while we are creating an ec2 instance for the production
+
 who can you protect the data in AWS instance??
+
 what are the provisioners are available in the terraform
+
 I have created an ec2 instance named instanceA and when I rename the instance B it should create an instance without deleting instanceA
-I have created an ec2 instance through terraform I don't have backup of the terraform state file, it is not in the remote state and locally not available, now what can I do to bring that ec2 instance into terraform.
-what is the default behaviour of the null resource
+
+Solution: Use create_before_destroy and ignore_changes
+To rename the instance without deleting the old one, you need to:
+1. Keep the same resource name in Terraform (aws_instance.instance)
+2. Use the ignore_changes lifecycle rule to ignore name changes
+Example Solution
+ resource "aws_instance" "instance" {
+  ami           = "ami-12345678"
+  instance_type = "t2.micro"
+
+  tags = {
+    Name = "instanceA"
+  }
+
+  lifecycle {
+    ignore_changes = [tags["Name"]]
+  }
+}
+The ignore_changes = [tags["Name"]] prevents Terraform from destroying and recreating the instance when only the name changes.
+If you change tags.Name from instanceA to instanceB, Terraform will not destroy the instance.
+
+1️⃣ Use create_before_destroy to Avoid Downtime
+By default, Terraform will destroy the existing instance and then create a new one when changing instance_type or ami. 
+To ensure zero downtime, you can use lifecycle { create_before_destroy = true }.
+
+resource "aws_instance" "example" {
+  ami           = "ami-12345678"   # Old AMI
+  instance_type = "t2.micro"       # Old Instance Type
+
+  tags = {
+    Name = "MyInstance"
+  }
+
+  lifecycle {
+    create_before_destroy = true  # Ensures new instance is created first
+  }
+}
+
+✅ What happens?
+
+Terraform will first create the new instance with the updated AMI/instance_type.
+Once the new instance is fully running, the old instance gets destroyed.
+
+I have created an ec2 instance through terraform I don't have backup of the terraform state file, it is not in the remote state 
+and locally not available, now what can I do to bring that ec2 instance into terraform?
+
+Define the Terraform Configuration
+Create a Terraform configuration file (main.tf) that matches your instance as closely as possible.
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "example" {
+  ami           = "ami-12345678"  # Replace with the correct AMI
+  instance_type = "t2.micro"      # Match the existing instance type
+}
+
+import the EC2 Instance into Terraform
+Run the following command to import your existing EC2 instance into Terraform state
+
+terraform import aws_instance.example i-0123456789abcdef0
+
+what is the default behaviour of the null resource in terraform??
+
+1️⃣ Default Behavior
+By default, a null_resource in Terraform:
+Does not create any infrastructure.
+Executes only when the resource is first created.
+Runs provisioners (like local-exec or remote-exec).
+Re-executes only if its triggers change.
+
+resource "null_resource" "example" {
+  provisioner "local-exec" {
+    command = "echo Hello, Terraform!"
+  }
+}
+
+✅ What happens?
+
+The local-exec provisioner runs echo Hello, Terraform! only once when applied.
+No cloud resource is created.
+
+2️⃣ Using triggers to Control Execution
+Since null_resource does not track real infrastructure, it re-runs only if the triggers argument changes.
+
+Example:
+resource "null_resource" "example" {
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    command = "echo Running again!"
+  }
+}
+
+✅ What happens?
+
+The resource re-executes every time you apply Terraform, because timestamp() always changes.
+
+3️⃣ Execute When a File Changes (filemd5())
+
+Use filemd5() to re-run the provisioner when a specific file changes.
+resource "null_resource" "file_change_trigger" {
+  triggers = {
+    file_checksum = filemd5("config.yaml")
+  }
+
+  provisioner "local-exec" {
+    command = "echo Config file changed!"
+  }
+}
+
+✅ What happens?
+
+If config.yaml changes, Terraform detects the checksum difference and re-executes the resource.
+
+
 Suppose I have given one command in null resource, it should run every time I do the apply, what can I do that??
+use the triggers
+
 what is the difference between map and map of objects in terraform??
+
+1️⃣ map in Terraform
+A map is a key-value pair where all values must be of the same type (e.g., all strings or all numbers).
+
+Example: Simple Map (All String Values)
+variable "instance_ami" {
+  type = map(string)
+  default = {
+    "us-east-1" = "ami-12345678"
+    "us-west-2" = "ami-87654321"
+  }
+}
+
+output "ami_id" {
+  value = var.instance_ami["us-east-1"]
+}
+
+✅ Key Characteristics of a Map:
+
+Keys are always strings.
+Values must be of the same type (string, number, bool).
+Simple and easy to use.
+
+2️⃣ map of objects in Terraform
+A map of objects allows values to be different types by defining an object structure.
+
+Example: Map of Objects (Different Value Types)
+variable "instance_configs" {
+  type = map(object({
+    ami           = string
+    instance_type = string
+    tags          = map(string)
+  }))
+
+  default = {
+    "dev" = {
+      ami           = "ami-12345678"
+      instance_type = "t2.micro"
+      tags = {
+        Name  = "DevInstance"
+        Owner = "Anil"
+      }
+    }
+    "prod" = {
+      ami           = "ami-87654321"
+      instance_type = "t3.medium"
+      tags = {
+        Name  = "ProdInstance"
+        Owner = "Team"
+      }
+    }
+  }
+}
+
+output "dev_instance_ami" {
+  value = var.instance_configs["dev"].ami
+}
+variable "instance_configs" {
+  type = map(object({
+    ami           = string
+    instance_type = string
+    tags          = map(string)
+  }))
+
+  default = {
+    "dev" = {
+      ami           = "ami-12345678"
+      instance_type = "t2.micro"
+      tags = {
+        Name  = "DevInstance"
+        Owner = "Anil"
+      }
+    }
+    "prod" = {
+      ami           = "ami-87654321"
+      instance_type = "t3.medium"
+      tags = {
+        Name  = "ProdInstance"
+        Owner = "Team"
+      }
+    }
+  }
+}
+
+output "dev_instance_ami" {
+  value = var.instance_configs["dev"].ami
+}
+
 AWS Identity & SSO.
 what is the difference between EBS backed instance & EBS not backed instance.
 I have 3 nodes small, medium & large and I want only data load should go the large node, how Can I do that??
