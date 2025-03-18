@@ -294,7 +294,7 @@ more /var/log/messages --> to see the logs one by one
 How long it is running, users, load average, how many processors are running, sleeping, stopped, CPU utilization, memory consumption.
 PR represents priority number, NI represents nice value, VIRT virtual memory, RES reserved memory, SHR shared memory, S state of the process. 
 Shift p --> top CPU consuming processors
-Shift m --> to memory consuming processors 
+Shift m --> top memory consuming processors 
 
 What is swap space?
 Swap space is like a 2nd memory and it will not be in memory chip card, it will be in disk.
