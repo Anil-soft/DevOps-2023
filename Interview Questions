@@ -2032,3 +2032,37 @@ AWS Examples of SaaS:
 ✔ AWS WorkSpaces – A fully managed virtual desktop.
 ✔ AWS Chime – A video conferencing service.
 ✔ AWS GuardDuty – A managed security service.
+
+
+
+
+
+
+what are the security parameters we have to consider while we are creating an ec2 instance for the production
+who can you protect the data in AWS instance??
+what are the provisioners are available in the terraform
+I have created an ec2 instance named instanceA and when I rename the instance B it should create an instance without deleting instanceA
+I have created an ec2 instance through terraform I don't have backup of the terraform state file, it is not in the remote state and locally not available, now what can I do to bring that ec2 instance into terraform.
+what is the default behaviour of the null resource
+Suppose I have given one command in null resource, it should run every time I do the apply, what can I do that??
+what is the difference between map and map of objects in terraform??
+AWS Identity & SSO.
+what is the difference between EBS backed instance & EBS not backed instance.
+I have 3 nodes small, medium & large and I want only data load should go the large node, how Can I do that??
+when I deploy the pods It should be deployed on to large and medium except small, how can I configure that.
+I am getting the following error, how can I debug that and what is the error
+{
+Pods fails to schedule
+0/5 nodes are available: insufficient memory.
+}
+what is the difference between scaling and autoscaling in kubernetes??
+if I don't specify Targetport in service object, what it is going to do??
+what are the different types of secrets in Kubernetes??
+I have an ingress object which is not routing the traffic to the Kubernetes cluster, what are the reasons and how to troubleshoot that??
+I have created service object which is not mapped, what could be the reason and how do you debug??
+what are the different ways to specify the probes in Kubernetes??
+what is the difference between git push --force-with-lease vs --force
+if I select the restart policy as Never what it is going to do??
+what is init container & why do we need to use??
+what is difference between EKS vs ECS vs Fargate
+how can you delete last 2 git commits??
