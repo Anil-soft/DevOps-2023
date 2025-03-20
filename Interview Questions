@@ -533,16 +533,28 @@ resource "aws_rds_instance" "example" {
   
 3rd interview ( KANINI )
 1. explain about docker architecture ?
-   - Docker uses a client-server architecture. The Docker client talks to the Docker daemon, 
-   - which does the heavy lifting of building, running, and distributing your Docker containers.
-   - The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon.
-   The Docker daemon
-   - The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. 
-   The Docker client
-   - The Docker client (docker) is the primary way that many Docker users interact with Docker. 
-   - When you use commands such as docker run, the client sends these commands to dockerd, which carries them out.
-   - The docker command uses the Docker API. The Docker client can communicate with more than one daemon.
-   
+   🚀 Docker Architecture 
+   Docker uses a client-server architecture. 
+   🔹 1. Docker Client (CLI)
+   The Docker CLI (docker run, docker ps, etc.) is the user interface.
+   It does NOT directly communicate with the Docker Daemon.
+   Instead, it sends requests via the Docker API (REST API).
+
+  🔹 2. Docker API (The Middle Layer)
+   The Docker API is the communication layer between the Docker Client and Docker Daemon.
+   It receives commands from the CLI and converts them into HTTP requests for the Daemon.
+   👉 The Docker API processes this request and forwards it to the Docker Daemon.
+
+   🔹 3. Docker Daemon (dockerd)
+    The main Docker engine that performs actual operations.
+    It listens for API requests and manages:
+   ✅ Containers (Start, Stop, Remove)
+   ✅ Images (Pull, Build, Remove)
+   ✅ Networks (Create, Connect, Inspect)
+   ✅ Volumes (Manage Persistent Storage)
+
+    
+
 2. explain about docker daemon
    - The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes.
    
@@ -585,11 +597,41 @@ resource "aws_rds_instance" "example" {
    which pod is having volume attached to it that is stateful container, which is not having volume attached to it that is stateless.
    
 8. what is git fetch ?
-   - only downloads latest changes into the local repo. it downloads fresh changes that other developers have pushed to the remote repo.
-     it does not merge latest changes to your working dir.
-     
-9. if my origin origin 2 commits beyond the master how to do that?
+🔹 1. git fetch (Just Download Updates, No Merge)
+Downloads new changes (commits, branches) from the remote repository without merging them into your local branch.
+Think of it as checking for updates without applying them.
+Your working directory remains unchanged.
+📌 Example:
+git fetch origin
+👉 This fetches updates from the remote repository (origin), but does NOT merge them into your branch.
+ 📌 Use Case:
+✅ When you only want to check for new changes before merging them.
+✅ Safe to use—it doesn’t modify your local files.
 
+🔹 2. git pull (Fetch + Merge)
+First, it fetches the latest changes from the remote branch.
+Then, it automatically merges those changes into your current branch.
+Your local branch is updated immediately.
+📌 Example:
+git pull origin main
+👉 This fetches updates from the main branch and merges them into your local main branch.
+📌 Use Case:
+✅ When you want the latest code and are ready to merge it into your branch.
+✅ Shortcut for git fetch + git merge.
+     
+9. If my remote branch (origin/main) has 2 new commits ahead of my local main branch, 
+   how can I update my local branch to match the remote?
+   To sync your local main branch with the remote origin/main, follow these steps:
+   1️⃣ Fetch the latest changes from the remote repository:
+    git fetch origin
+    👉 This downloads the latest commits without merging them into your local branch.
+   2️⃣ Merge the remote changes into your local branch:
+     git merge origin/main
+   👉 This applies the two new commits from origin/main to your local main branch.
+   3️⃣ Alternatively, use git pull (Fetch + Merge in one step):
+    git pull origin main
+   👉 This command fetches and merges the remote updates automatically.
+    
 10. explain about the Dockerfile structure ?
     FROM centos
     RUN yum install telnet -y && useradd anil  => to run the command inside the container
@@ -621,7 +663,7 @@ resource "aws_rds_instance" "example" {
       $ docker build -t demobox .
       $ docker run demobox yum -y install httpd
       - ENTRYPOINT command won't override i will append to the existing command
-        i will install both git and httpd.
+        it will install both git and httpd.
       ENTRYPOINT [ "yum", "-y", "install", "httpd" ]
       ENTRYPOINT [ "echo", "Anil" ]
       - only last instruction gets executed
@@ -688,6 +730,16 @@ volumes:
 19. what is the default jenkins dir ?
     /var/lib/jenkins
 20. what is the difference between variables and env variables?
+1️⃣ Variables in Jenkins
+✅ Defined within the Jenkinsfile or Pipeline
+✅ Scope is limited to the pipeline where they are declared
+✅ Not accessible outside the pipeline
+
+2️⃣ Environment Variables in Jenkins
+✅ Predefined by Jenkins or set manually
+✅ Accessible throughout the pipeline and even by external scripts
+✅ Can be injected from Jenkins UI, global settings, or script
+
 21. how to check the syntax error in terraform?
     $ terraform validate 
     
@@ -747,7 +799,7 @@ volumes:
 2. Explain about the docker networks
 3. What is Docker compose, why do we use this ?
 4. what is multistage build and why do we use this?
-   - multistage builds are used to optimize docket image size
+   - multistage builds are used to optimize docker image size
    - A multistage Dockerfile makes it easier to manage dependencies for different stages of your application. 
      For example, you can have one stage for building the application (with all the build tools like compilers) and 
      another stage for running the app with only the runtime dependencies.
@@ -761,14 +813,33 @@ volumes:
    - once image has been built use $ docker scan myapp:1.0 to scan the image, it finds out the vulnarabilitis.
    - when the container starts on the host, it potentially have root access on the docker host, running a application inside the container
      with root user will make it easier for an attacker to escalate privileges on the host
-6. which instructions will not be creating layers on Dockerfile.
+6. which instructions will not be creating layers on Dockerfile?
    Every instruction will make the layer but some layers will not make the size.
+ENV (Environment Variables)
+Usage: Sets environment variables inside the container.
+Layer Impact: ❌ Does not create a new filesystem layer (only modifies metadata).
+
+EXPOSE (Port Declaration)
+Usage: Informs about ports the container listens on.
+Layer Impact: ❌ Does not create a new layer (only documentation for networking).
+
+CMD & ENTRYPOINT (Runtime Instructions)
+Usage: Defines the default command for the container.
+Layer Impact: ❌ Does not create a new layer (modifies metadata only).
    
 7. how can you login to the docker container?
     $ docker exec -it <container-name> /bin/bash
     
 8. write the declarative pipeline syntax?
+
 9. How to take the backup of the jenkins?
+Backup Using Jenkins CLI
+Jenkins provides a built-in "ThinBackup" plugin for easy backups.
+✅ Steps:
+Install ThinBackup Plugin (Manage Jenkins → Plugin Manager → ThinBackup).
+Configure Backup Location (Manage Jenkins → ThinBackup → Settings).
+Click "Backup Now" to generate a backup file.
+
 10. what is the default jenkins directory ?
     /var/lib/jenkins
    - it is having information like jobs, plugin, secrets, logs and nodes etc..
@@ -864,15 +935,16 @@ Now you can verify the terraform import by running the command terraform plan an
       tags:
         - deploy
 20. why do you use ansible galaxy and ansile tower?
-21. explain about kubernetes architecture and master and slave components ?
+    ansible-galaxy init <role_name>
+21. explain about kubernetes architecture and master and slave components?
 22. what are kubernetes taints and tolerations ?
     in some cases we can't give guarantee that pods cant be scheduled on the nods wich are not having any specific label.
     then we will use the taints and tolerations.
   - Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints.
   - Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. 
   - kubectl taint nodes node1 key1=value1:NoSchedule (pods if they can't tolerate)
-  - kubectl taint nodes node1 key1=value1:NoExecute (can be scheduled if no other nodes available)
-  - kubectl taint nodes node1 key2=value2:PreferNoSchedule (delete running pods also if they can't tolerate newly added limit)
+  - kubectl taint nodes node1 key1=value1:NoExecute (delete running pods also if they can't tolerate newly added limit)
+  - kubectl taint nodes node1 key2=value2:PreferNoSchedule (can be scheduled if no other nodes available)
 
 23. what are the pod affinity and node affinity and what is the difference between selectors?
     NodeSelector:- nodeSelector is the simplest recommended form of node selection constraint
@@ -903,7 +975,7 @@ Now you can verify the terraform import by running the command terraform plan an
    - Pod affinity is used to colocate the pods, imagine a case where we want to deploy two applications which communicates freqently in the
      same region that way latency will be less.
      lets consider we have UI application and API application, UI application is deployed on the node us-east-1 region, now we want to deploy
-     api application alos in the same region.
+     api application also in the same region.
      
   podAntiAffinity:-
   - to keep away pods with pod labels topologykey
@@ -931,7 +1003,7 @@ Now you can verify the terraform import by running the command terraform plan an
          Other pods within the cluster can communicate with this server on the specified port.
          
      TargetPort:- is the port on which the service will send requests to, that your pod will be listening on. 
-             Your application in the container will need to be listening on this port also.
+                  Your application in the container will need to be listening on this port also.
              
      NodePort:- exposes a service externally to the cluster by means of the target nodes IP address and the NodePort. 
                  external traffic has access to fixed port on each worker node (30000 - 32767).
@@ -1001,22 +1073,45 @@ Now you can verify the terraform import by running the command terraform plan an
 29. What is liveness and readiness probes and why do we use them ?
 
    The livenessProbe and readinessProbe both use the httpGet probe type, which sends an HTTP GET request to the specified path and port. 
-  
-   Livenessprobe
-   - Checks if the container is alive and healthy. If the liveness probe fails, Kubernetes will restart the container.
-   - If the application stops responding, the liveness probe will restart the container to attempt recovery.
-   - You might use a liveness probe to check if a web server is responding to requests.
 
-   Readiness Probe
-    - Checks if the container is ready to handle traffic. If the readiness probe fails, Kubernetes will stop sending traffic to the 
-      container but will not restart it.
-    - You might use a readiness probe to check if a database connection is established before allowing traffic to a web server that 
-      depends on that database.
-   
+1️⃣ Liveness Probe – "Is the application still running?"
+📌 Purpose:
+Checks if a container is alive and not stuck or crashed.
+If the probe fails, Kubernetes restarts the container to recover it.
+📌 Example:
+livenessProbe:
+  httpGet:
+    path: /health
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 10
+✅ If the /health endpoint returns 200 OK, the container is alive.
+❌ If it fails, Kubernetes restarts the container.
+
+2️⃣ Readiness Probe – "Is the application ready to serve traffic?"
+📌 Purpose:
+Checks if the application is fully started and ready to accept requests.
+If the probe fails, Kubernetes removes the pod from the service's endpoints (no traffic is sent to it).
+📌 Example:
+readinessProbe:
+  httpGet:
+    path: /ready
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 5
+✅ If /ready returns 200 OK, the pod is added to the service and receives traffic.
+❌ If it fails, Kubernetes removes the pod from the service, but does not restart it.
+
 30. what is default kubernetes network ?
     calico
-31. what is sidecar deployment ?
-    
+
+31. what is sidecar deployment?
+A Sidecar Deployment is a Kubernetes design pattern where an additional container runs alongside 
+the main application container within the same pod to provide supporting functionalities like logging, monitoring, proxying, or security.
+🔹 Common Use Cases
+1️⃣ Logging & Monitoring → A sidecar collects logs and sends them to tools like ELK, Fluentd, or Prometheus.
+2️⃣ Service Mesh (Proxy) → Used in Istio/Envoy to manage traffic, security, and observability.
+
 32. what is the daemonset ?
     A DaemonSet ensures that all (or some) Nodes run a copy of a Pod. As nodes are added to the cluster, Pods are added to them. 
      As nodes are removed from the cluster, those Pods are garbage collected.
@@ -1026,9 +1121,7 @@ Now you can verify the terraform import by running the command terraform plan an
 33. what is the difference betweeen SG and NACL
     - SG serves at the instance level and NACL serves at the subnet level
 
-
-34. what are the different types of instances ?
-    
+34. what are the different types of instances ?    
     
 35. what is null resource in terraform ?
     - As in the name you see a prefix null which means this resource will not exist on your Cloud Infrastructure(AWS, Google Cloud, Azure). 
@@ -1109,11 +1202,28 @@ resource "null_resource" "null_resource_with_remote_exec" {
 1. I have a monolithic application running on on-premises, how can i deploy that into microservices?
 2. How to transfer the transactions from one container to another container without downtime?
 3. Explain about the jenkins parameterized build and why do we use that?
-4. Without giving access to the developers to pod, developer can see all the logs collectively, how to give access and how the developers can view the logs?
+4. Without giving access to the developers to pod, developer can see all the logs collectively, 
+   how to give access and how the developers can view the logs?
+Setup a Centralized Logging System
+If you want developers to view logs without using kubectl, set up a centralized logging system like:
+✅ ELK Stack (Elasticsearch, Logstash, Kibana) – Provides a web UI for log analysis.
+✅ Fluentd + Elasticsearch + Kibana – Lightweight alternative to ELK.
+✅ Prometheus + Grafana + Loki – Best for real-time monitoring and log viewing.
+✅ AWS CloudWatch / GCP Stackdriver / Azure Monitor – For cloud-based Kubernetes logging.
+
 5. How can you install the RPM on linx OS?
    sudo yum install package_name.rpm
 
 6. Total i have 5 servers running, but i have realized i need to 7 servers so how can you spin up 2 more services through terraform?
+If your servers are managed using a count parameter in Terraform, update the count value.
+resource "aws_instance" "example" {
+  count         = 7  # Increase to 7 servers
+  ami          = "ami-12345678"
+  instance_type = "t2.micro"
+  tags = {
+    Name = "Server-${count.index + 1}"
+  }
+}
 
 ( analyttica )
 
@@ -1177,7 +1287,7 @@ resource "null_resource" "null_resource_with_remote_exec" {
 16. what is ansible inventory file ?
     - In Ansible, an inventory file is a simple text file that defines the hosts and groups 
       of hosts upon which Ansible commands and plays operate.
-    ansible -i inventory.ini all -m ping
+      ansible -i inventory.ini all -m ping
 
 17. how can you copy the file from dockerhost to docker container ?
     docker cp example.txt my_container:/app/
@@ -1188,7 +1298,7 @@ resource "null_resource" "null_resource_with_remote_exec" {
 19. how can you check the docker logs ?
     docker logs my_container
 
-20. suppose my container is keep on restarting how can i debug that what would be the reasons ?
+20. suppose my container is keep on restarting how can i debug that what would be the reasons?
 21. explain about the docker network ?
 22. how the two containers will be communicating each other ?
 23. how can you check the memory and cpu utilization of docker container ?
@@ -1213,7 +1323,6 @@ resource "null_resource" "null_resource_with_remote_exec" {
     Node Affinity, Node Selector and Tolerations we can use these mechanisms as per the labels can schedule the pods to specific nodes
 30. what are the kubernetes taints and tolerations ?
 31. how can you define the resource limits for the pods ?
-32. 
 
 
 Ansible version - 2.14
@@ -1350,7 +1459,6 @@ What are the reclaim policies in PVCs?
 	  and its content are preserved
  Delete:- The delete policy indicates that the associated PV should be automatically deleted when the PVC is deleted.
 
-
 explain about how ingress and ingress controller will work?
  ingress:-
  An Ingress is a Kubernetes resource that defines rules for external access to services within a cluster. 
@@ -1410,7 +1518,9 @@ Authorization: Once a user or application is authenticated, authorization determ
 on the database. This is typically managed through database-level roles and permissions.
 
 can you use same subnet in another zone which is already used in one zone?
-No, you cannot use the same subnet in another Availability Zone (AZ) if it is already used in one zone. Subnets are specific to an AZ and cannot span across multiple AZs within the same region. Each subnet you create must be associated with a single AZ.
+No, you cannot use the same subnet in another Availability Zone (AZ) if it is already used in one zone. 
+Subnets are specific to an AZ and cannot span across multiple AZs within the same region. 
+Each subnet you create must be associated with a single AZ.
 
 what is principle in aws policy?
 The Principal can be an AWS account, an IAM user, an IAM role, an AWS service, or an anonymous user (represented by the wildcard "*").
@@ -1432,7 +1542,8 @@ The Principal can be an AWS account, an IAM user, an IAM role, an AWS service, o
 
 what does asterisk symbol defines in AWS NACL?
 In an AWS Network Access Control List (NACL), the asterisk (*) symbol is used as a wildcard to represent all IP addresses (0.0.0.0/0) or all ports (0-65535).
-For example, if you configure a rule in a NACL with the source or destination IP address as "", it means that the rule applies to all IP addresses. Similarly, if you configure a rule with the port range as "", it means that the rule applies to all ports.
+For example, if you configure a rule in a NACL with the source or destination IP address as "", it means that the rule applies to all
+IP addresses. Similarly, if you configure a rule with the port range as "", it means that the rule applies to all ports.
 
 How to access and read S3 bucket from AWS account to another account?
 
@@ -1667,7 +1778,8 @@ The first thing Kubernetes needs is important system components like kube-apiser
 But, if Kubernetes is not running yet, how can we run these critical services? 🤔
 Answer: We use Static Pods! 😎
 💡 Real-World Scenario: How Static Pods Work in Kubernetes Master Node
-💡 Example: When you create a Kubernetes cluster manually, the kube-apiserver, etcd, and other critical components must run first, even before Kubernetes itself is fully functional.
+💡 Example: When you create a Kubernetes cluster manually, the kube-apiserver, etcd, and other critical components must run first, 
+   even before Kubernetes itself is fully functional.
 
 ✅ In Kubernetes Master Node, these important services are created as Static Pods.
 ✅ These Static Pod YAML files are placed inside /etc/kubernetes/manifests/.
@@ -1703,8 +1815,7 @@ what are the 7 layers of OSI model?
 
 How can you define the firewall?
  - A firewall is a network security system that monitors and controls incoming and outgoing network traffic based on predetermined 
-   security rules. It acts as a barrier 
-   between a trusted internal network and untrusted external networks.
+   security rules. It acts as a barrier between a trusted internal network and untrusted external networks.
 
 DynamoDB core components?
 tables, items and attributes are the core components.
@@ -1726,20 +1837,30 @@ AWS Managed Keys:
  This key is used for encrypting data in services that do not support customer-managed keys.
 
 Explain about AWS SSM paramter store and why do you use that?
- - AWS Systems Manager Parameter Store (SSM Parameter Store) is a secure, hierarchical storage service that allows you to store configuration data and secrets such as database connection strings, API keys, and passwords.
- - Parameter Store encrypts sensitive information at rest and in transit, providing a secure way to store secrets and other sensitive data.
- - Parameter Store integrates seamlessly with other AWS services, such as EC2, ECS, Lambda, and SSM Run Command, allowing you to securely retrieve    parameters from within your applications or automation workflows.
- - Parameter Store supports different types of parameters, including String, StringList, and SecureString. SecureString parameters are encrypted with AWS    KMS.
- - Parameter Store supports versioning, allowing you to track changes to configuration data over time and easily roll back to previous versions if needed.
+ - AWS Systems Manager Parameter Store (SSM Parameter Store) is a secure, hierarchical storage service that allows you to 
+   store configuration data and secrets such as database connection strings, API keys, and passwords.
+ - Parameter Store encrypts sensitive information at rest and in transit, providing a secure way to store secrets and other 
+   sensitive data.
+ - Parameter Store integrates seamlessly with other AWS services, such as EC2, ECS, Lambda, and SSM Run Command, 
+   allowing you to securely retrieve    parameters from within your applications or automation workflows.
+ - Parameter Store supports different types of parameters, including String, StringList, and SecureString. 
+   SecureString parameters are encrypted with AWS KMS.
+ - Parameter Store supports versioning, allowing you to track changes to configuration data over time and easily roll back to 
+   previous versions if needed.
 
 AWS secrets manager?
- - Secrets Manager can automatically rotate secrets, such as database credentials, based on a user-defined schedule. Parameter Store does not have built-in    support for automatic rotation.
- - Both Secrets Manager and Parameter Store integrate with other AWS services. However, Secrets Manager provides built-in integration with services like    Amazon RDS, Amazon Redshift, and Amazon DocumentDB, making it easier to securely retrieve secrets for use in your applications.
- - Rotating secrets automatically refers to the process of automatically changing sensitive credentials, such as database passwords or API keys, on a    regular basis to enhance security. 
- - You configure the secret (e.g., database password) and define a rotation schedule or trigger. For example, you might specify that the password should be    rotated every 30 days.
+ - Secrets Manager can automatically rotate secrets, such as database credentials, based on a user-defined schedule. 
+   Parameter Store does not have built-in support for automatic rotation.
+ - Both Secrets Manager and Parameter Store integrate with other AWS services. However, Secrets Manager provides built-in integration
+   with services like Amazon RDS, Amazon Redshift, and Amazon DocumentDB, making it easier to securely retrieve secrets for use in your applications.
+ - Rotating secrets automatically refers to the process of automatically changing sensitive credentials, such as database passwords
+   or API keys, on a regular basis to enhance security. 
+ - You configure the secret (e.g., database password) and define a rotation schedule or trigger. For example, you might specify 
+   that the password should be rotated every 30 days.
 
 what is cloudfront and why do we need to use cloudfront?
- - AWS CloudFront is a content delivery network (CDN) service provided by Amazon Web Services. It accelerates the delivery of your websites, APIs, video content, and other web assets by caching them at edge locations around the world.
+ - AWS CloudFront is a content delivery network (CDN) service provided by Amazon Web Services. It accelerates the delivery of your 
+   websites, APIs, video content, and other web assets by caching them at edge locations around the world.
  - When a user requests content that you're serving through CloudFront, the request is automatically routed to the nearest edge location.
  - CloudFront caches your content at edge locations, reducing latency and improving load times for your users.
  - CloudFront is designed to handle large amounts of traffic and scale automatically to accommodate spikes in demand.
@@ -1757,7 +1878,8 @@ S3 Cross region replications?
  - Read only
 
 How to restrict the users permissions based on the regions?
- - you can use IAM policies with condition keys. Condition keys allow you to specify conditions under which a policy statement is in effect, such as restricting access to specific AWS regions. 
+ - you can use IAM policies with condition keys. Condition keys allow you to specify conditions under which a policy statement
+   is in effect, such as restricting access to specific AWS regions. 
     "Statement": [
         {
             "Effect": "Allow",
@@ -1807,6 +1929,26 @@ can we have network load balancer as ingress controller in k8s?
 
 how can you get the jar file which is build through pipeline and create customized docker image?
 can you explain unit and integration testing in your pipeline?
+1️⃣ Unit Testing
+🔹 Definition: Unit testing is the process of testing individual components (functions, methods, classes) in isolation to ensure they 
+    work as expected.
+🔹 Focus:
+Tests a single unit (smallest part of the code).
+Does not depend on external systems like databases, APIs, or file systems.
+🔹 Example:
+If you have a function that adds two numbers, a unit test would verify that the function returns the correct sum.
+
+2️⃣ Integration Testing
+🔹 Definition: Integration testing checks how different units/modules work together. It ensures that connected components function 
+    as expected when integrated.
+🔹 Focus:
+Tests the interaction between modules, databases, APIs, and external services.
+Ensures that integrated components communicate correctly.
+🔹 Example:
+If you have a login system, an integration test would verify that:
+The frontend sends user credentials correctly.
+The backend processes them and fetches user data from the database.
+
 explain what is the branching strategy that you are using in your project?
 cpu utilization reaches the thresold value even though autoscaling is not scaling the servers, what are the reasons and how can you troubleshoot?
 
@@ -1819,13 +1961,21 @@ how the communication happen between two pods is it through http or https?
 What are the not region specific AWS services?
  - IAM, Route53, Cloudfront, WAF.
 
-IaaS (Infrastructure as a Service): IaaS provides virtualized computing resources over the internet. It allows users to rent virtual servers, storage, and networking infrastructure on a pay-as-you-go basis. With IaaS, users have full control over the operating systems, applications, and other software running on the infrastructure.Example services:
+IaaS (Infrastructure as a Service): IaaS provides virtualized computing resources over the internet. It allows users to rent virtual
+servers, storage, and networking infrastructure on a pay-as-you-go basis. With IaaS, users have full control over the operating systems,
+applications, and other software running on the infrastructure.
+Example services:
 Amazon EC2 (Elastic Compute Cloud): Provides resizable compute capacity in the cloud.
 Amazon S3 (Simple Storage Service): Provides scalable object storage for data backup, archival, and analytics.
-PaaS (Platform as a Service): PaaS provides a platform that includes the hardware and software required to develop, run, and manage applications without the complexity of building and maintaining the underlying infrastructure. PaaS offerings typically include development tools, database management systems, and application hosting environments.Example services:
+PaaS (Platform as a Service): PaaS provides a platform that includes the hardware and software required to develop, run, 
+and manage applications without the complexity of building and maintaining the underlying infrastructure. 
+PaaS offerings typically include development tools, database management systems, and application hosting environments.
+Example services:
 AWS Elastic Beanstalk: Deploys and scales web applications and services.
 AWS RDS (Relational Database Service): Manages relational databases in the cloud, such as MySQL, PostgreSQL, and others.
-SaaS (Software as a Service): SaaS delivers software applications over the internet on a subscription basis. Users access the software through a web browser, and the software is hosted and maintained by the service provider.Example services:
+SaaS (Software as a Service): SaaS delivers software applications over the internet on a subscription basis. Users access 
+the software through a web browser, and the software is hosted and maintained by the service provider.
+Example services:
 Amazon WorkSpaces: Provides virtual desktops in the cloud.
 Amazon S3 Glacier: Provides long-term data archival at a low cost.
 
@@ -1856,7 +2006,6 @@ Long-Running Processes: Microservices that handle long-running processes may acc
 if they do not release resources properly during execution.
  
 what are the recent challenges you faced?
-
  - when I joined the project there was a cluster which was shared between multiple development teams because of one of the pod which is leaking memory
    the entire cluster was impacted we did not know which pod is going down in which namespace and then I set up resource limits on that particular pods of 
    the namespaces and because of this I can identify which pod is creating the issue and I can identify blast radius coming down to one particular pod.
@@ -1915,11 +2064,16 @@ PATCH: The PATCH method is used to apply partial modifications to a resource. It
 HEAD: The HEAD method is similar to GET but only returns the headers of the response without the body. It is often used to check the headers of a resource without actually downloading the entire resource.
 
 what is the differece between cold start and warm start?
-In AWS Lambda, a "warm start" refers to the situation where a function invocation reuses an existing execution context, which is already initialized and ready to process requests.
+In AWS Lambda, a "warm start" refers to the situation where a function invocation reuses an existing execution context, 
+which is already initialized and ready to process requests.
 
-When a Lambda function is invoked for the first time or after a period of inactivity, it undergoes a "cold start." During a cold start, Lambda initializes the execution environment, which includes loading the function code, setting up the runtime, and establishing connections to external resources.
+When a Lambda function is invoked for the first time or after a period of inactivity, it undergoes a "cold start."
+During a cold start, Lambda initializes the execution environment, which includes loading the function code, setting up the runtime,
+and establishing connections to external resources.
 
-Subsequent invocations of the same function (within a certain period of time) can benefit from a warm start. In a warm start, Lambda reuses the existing execution context, skipping the initialization steps. This can significantly reduce the latency of the function because the runtime environment is already prepared.
+Subsequent invocations of the same function (within a certain period of time) can benefit from a warm start. 
+In a warm start, Lambda reuses the existing execution context, skipping the initialization steps. 
+This can significantly reduce the latency of the function because the runtime environment is already prepared.
 
 (Why Subnets Matter in Real-Time AWS Use Cases)
 ✔ Security → Keep private and public resources separate.
@@ -2036,8 +2190,16 @@ AWS Examples of SaaS:
 Ericssion
 
 what are the security parameters we have to consider while we are creating an ec2 instance for the production?
+✔ IAM Role → No hardcoded credentials, follows least privilege
+✔ SSH Security → Key-based authentication, restricted Security Groups
+✔ Security Groups & Network ACLs → Only necessary ports are open
+✔ Encryption → EBS, S3, and data in transit encrypted
+✔ Logging & Monitoring → CloudTrail, CloudWatch, and GuardDuty enabled
+✔ Patch Management → Automatic updates enabled
+✔ DDoS & WAF Protection → AWS Shield & WAF enabled
+✔ Backup & Recovery → Automated snapshots & AWS Backup configured
 
-who can you protect the data in AWS instance??
+How can you protect the data in AWS instance??
 
 what are the provisioners are available in the terraform?
 local-exec & remote-exec
