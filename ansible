@@ -524,3 +524,102 @@ install java package
     - name: Reload /etc/profile file
       shell:
         cmd: source /etc/profile
+
+Parallel execution in Ansible?
+
+🎯 Parallel Execution in Ansible – Quick Notes
+    🔹 What is Parallel Execution in Ansible?
+    Ansible by default executes:
+    ✅ One task at a time
+    ✅ On one host at a time
+    
+    To improve performance:
+    🧵 Use forks → Parallel across hosts (🔵 Blue
+    ⏳ Use async + poll → Parallel tasks on the same host (🟣 Purple)
+
+     🔵 1. Parallel Execution Across Multiple Hosts – forks
+      🔧 What is forks?
+      It defines how many hosts can run tasks in parallel.
+      
+      🛠 Default = 5
+      🧠 You can change it to 10, 20, etc. for large inventories.
+      
+      📌 Configuration Options:
+      Option 1: ansible.cfg
+      [defaults]
+      forks = 10
+
+      ansible-playbook -i inventory.ini playbook.yml -f 10
+
+      ✅ Use Cases:
+      Patch many servers
+      Restart services on multiple machine
+      Parallel software deployments
+
+      🟣 2. Parallel Execution of Tasks on Same Host – async + poll
+      🔧 What is async + poll?
+      async: How long the task is allowed to run (in seconds)
+      poll: 0: Tells Ansible not to wait – continue to the next task
+      💡 Sample Task:
+        - name: Run a long backup
+        shell: ./backup.sh
+        async: 300   # Task can run for 5 minutes
+        poll: 0      # Run in background
+        register: backup_job
+
+      🕵️‍♂️ Check Job Status Later:
+        - name: Check backup status
+        async_status:
+          jid: "{{ backup_job.ansible_job_id }}"
+        register: backup_result
+        until: backup_result.finished
+        retries: 6
+        delay: 20
+
+      🧪 Real-time Use Case – Parallel Tasks in Java Deployment
+
+  - name: Deploy Java App
+  hosts: webservers
+  tasks:
+    - name: Stop service
+      service:
+        name: myapp
+        state: stopped
+
+    - name: Copy new JAR
+      copy:
+        src: /tmp/app.jar
+        dest: /opt/app/app.jar
+
+    - name: Start service
+      service:
+        name: myapp
+        state: started
+
+    - name: Run DB migration
+      shell: ./db_migrate.sh
+      async: 600
+      poll: 0
+      register: db_job
+
+    - name: Restart monitoring
+      shell: ./restart_monitoring.sh
+      async: 300
+      poll: 0
+      register: monitor_job
+
+    - name: Wait for DB migration
+      async_status:
+        jid: "{{ db_job.ansible_job_id }}"
+      register: db_result
+      until: db_result.finished
+      retries: 5
+      delay: 30
+
+    - name: Wait for monitoring
+      async_status:
+        jid: "{{ monitor_job.ansible_job_id }}"
+      register: monitor_result
+      until: monitor_result.finished
+      retries: 5
+      delay: 15
