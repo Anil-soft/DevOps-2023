@@ -247,42 +247,51 @@ Q- rm -rf /tmp/test gives error operation not permitted. Reason?
 
 Q- What is a sticky bit?
 only owner of the file or root can delete the file. Sticky bit is implemented on directories not on files
+chmod +t <directory_name>
+chmod -t <directory_name>
 
 Q- How will you check open ports on Linux Server?
-Netstat -tulpn
+     Netstat -tulpn
 
 Q- How will you check open ports on remote servers (without login)
-Install the package first yum install nmap -y
-nmap -A <ipaddr of the server>
+     Install the package first yum install nmap -y
+     nmap -A <ipaddr of the server>
 
 Q- your site is throwing 500 error, how will you start troubleshooting?
 
 Q- how to check ip address of the host?
-ifconfig, hostname -I
+     ifconfig, hostname -I
 
 Q- how to find files created by a user?
-find /some/path -user username -ls
+     find /some/path -user username -ls
 
 Q- what is ulimit?
-ulimit is nothing but how many files users can open
-$lsof  -> to check open files in the OS
-lsof -u username -> List Open Files by a Specific User: To see what files are open by a particular user
-lsof -p <PID> -> Find Files Opened by a Specific Process
+     ulimit is nothing but how many files users can open
+     $lsof  -> to check open files in the OS
+     lsof -u username -> List Open Files by a Specific User: To see what files are open by a particular user
+     lsof -p <PID> -> Find Files Opened by a Specific Process
 
-Q- take backup of logs files on backup servers
+Q- how to take backup of logs files on backup servers??
+        rsync -avz /var/log/ user@backup-server:/backup/logs/
+        crontab -e
+        0 2 * * * rsync -avz /var/log/ user@backup-server:/backup/logs/
 
 Q- How will you find out which service is running on which port? if multiple JAVA process are running how will you indentify specific process?
-$ netstat -tunlp
-- pick the process id which is required
-$ ps -ef | grep 957
+     $ netstat -tunlp
+     - pick the process id which is required
+     $ ps -ef | grep 957
 
 Q- how to find files based on numeric permission
-$ find -perm 400
+     $ find -perm 400
 Q- how to check kernel version?
-uname -a
+     uname -a
 
 How to check gateway?
-route -vn
+     route -vn
+Destination: Destination IP/subnet of the route.
+Gateway: Next-hop IP address or gateway (0.0.0.0 = no gateway).
+0.0.0.0 is the default route for all outbound internet traffic.
+It’s routed via gateway 192.168.0.1 using interface eth0.
 
 What is the name to manage DNS entries on linux?
 /etc/resolv.conf
@@ -290,7 +299,7 @@ What is the name to manage DNS entries on linux?
 All the performed events will be logged into --> /var/log/messages
 more /var/log/messages --> to see the logs one by one
 
-  top:- 
+top:- 
 How long it is running, users, load average, how many processors are running, sleeping, stopped, CPU utilization, memory consumption.
 PR represents priority number, NI represents nice value, VIRT virtual memory, RES reserved memory, SHR shared memory, S state of the process. 
 Shift p --> top CPU consuming processors
@@ -303,10 +312,9 @@ All the inactive processors will be dump into the swap space.
 
 ifcfg-eth0 --> to configure the network details
 
-
-
 What is zombie process?
-If we are killing the parent process, child processors, which are coming from the parent will be thinking that parent is alive. Childs will be continuously working and simply consuming the memory. The more zombie process we have the more performance issues we will get.
+If we are killing the parent process, child processors, which are coming from the parent will be thinking that parent is alive. 
+Childs will be continuously working and simply consuming the memory. The more zombie process we have the more performance issues we will get.
 
 What is the difference between standard partition & logical volume?
 In standard partition we cannot create the file size dynamically, first we have to take backup of the file and delete the original file, and take required volume size and attach back up file.
@@ -481,60 +489,3 @@ free -m -> to check the memory
 sar (system activity reporter)
 iftop  ->  provides a live, dynamic view of the current network traffic,
            You can use iftop to identify applications or processes that are consuming a significant amount of bandwidth.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
