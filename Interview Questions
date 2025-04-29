@@ -257,7 +257,8 @@ JWT token?
   17. which file you need to check that how many users have access to the servers?
       
   18. what proc dir will be containing?
-      - It contains useful information about the processes that are currently running, it is regarded as control and information center for kernel.
+      - It contains useful information about the processes that are currently running, it is regarded as control 
+        and information center for kernel.
       - ls -ltr /proc/7494
       - Now check the highlighted process with PID=7494, you can check that there is entry for this process in /proc file system.
       - /proc/PID/stat -> Process status
@@ -288,9 +289,10 @@ JWT token?
       
   20. explain about the terraform modules ?
       
-  21. you have written terraform script to provision s3 bucket and ec2 instance and subnets, i need to create only ec2 instance how can i do that?
-     terraform apply -target=aws_instance.my_instance
-      call the terraform ec2 modue in main.tf file
+  21. you have written terraform script to provision s3 bucket and ec2 instance and subnets, 
+    i need to create only ec2 instance how can i do that?
+    terraform apply -target=aws_instance.my_instance
+    call the terraform ec2 modue in main.tf file
       module "ec2_instance" {
   source = "./modules/ec2"  # Path to your EC2 module
 }
@@ -512,10 +514,20 @@ resource "aws_rds_instance" "example" {
     These network rules allow network communication to your Pods
     
   42. How the traffic will go to the pod, tell me the flow and explain?
-      traffic will hit to the ingress, and service called load balancer, goes to the Pod.
-      
+     Client makes a request to your domain (app.example.com)
+     DNS resolves to Load Balancer public IP (AWS ALB/ELB).
+     Load Balancer forwards traffic to a Kubernetes Node.
+     On the Node, traffic is forwarded to a special Ingress Controller Pod.
+     Ingress Controller:
+        Reads the incoming HTTP request.
+        Matches the request hostname (e.g., app.example.com) and path (e.g., /api) to Ingress rules.
+     Based on matching, it forwards traffic to the correct Service inside Kubernetes.
+     Service routes to the right Pod.
+     Pod handles the request.
+
   43. what is container resource monitoring?
-      Container monitoring is the activity of continuously collecting metrics and tracking the health of containerized applications and microservices environments, 
+      Container monitoring is the activity of continuously collecting metrics and tracking the health of containerized applications 
+      and microservices environments, 
       in order to improve their health and performance and ensure they are operating smoothly. 
   44. How can you optimize the kubernetes  
 	1️⃣ Resource Optimization:
@@ -708,8 +720,8 @@ volumes:
     Maven job, freestyle job, pipeline job.
     
 14. what is blue ocean in jenkins ?
-    - Blue Ocean is a new user experience for Jenkins based on a personalizable, modern design that allows users to graphically create, 
-      visualize and diagnose Continuous Delivery (CD) Pipelines 
+    - Blue Ocean is a new user experience for Jenkins based on a personalizable, modern design that allows users to graphically 
+      create, visualize and diagnose Continuous Delivery (CD) Pipelines 
     - Alternative options for Pipeline visualization, such as the Pipeline: Stage View and Pipeline Graph View 
     
 15. what is poll SCM in Jenkins ?
@@ -811,7 +823,8 @@ volumes:
    - alpine images are lightweight and secured images
    - optimize caching image layers
    - once image has been built use $ docker scan myapp:1.0 to scan the image, it finds out the vulnarabilitis.
-   - when the container starts on the host, it potentially have root access on the docker host, running a application inside the container
+   - when the container starts on the host, it potentially have root access on the docker host, 
+     running a application inside the container
      with root user will make it easier for an attacker to escalate privileges on the host
 6. which instructions will not be creating layers on Dockerfile?
    Every instruction will make the layer but some layers will not make the size.
@@ -906,7 +919,7 @@ Now you can verify the terraform import by running the command terraform plan an
         name: httpd
         state: restarted
 18. if one task is not working how can you skip that and go to next task ?
-    nsible-playbook apache.yaml --skip-tags=install
+    ansible-playbook apache.yaml --skip-tags=install
     
 19. what are the ansible tags ?
  ansible-playbook apache.yaml --tags=install,start
@@ -958,7 +971,8 @@ Now you can verify the terraform import by running the command terraform plan an
     
     Node Affinity:-
     - Node Affinity is conceptually similar to nodeselector. it will be having more expressive way and operators.
-      requiredDuringSchedulingIgnoredDuringExecution:- while scheduling the pod, pod should have same label otherwise it will sit on the pending state.
+      requiredDuringSchedulingIgnoredDuringExecution:- while scheduling the pod, pod should have same label otherwise 
+      it will sit on the pending state.
       IgnoredDuringExecution means that if the node labels change after Kubernetes schedules the Pod, the Pod continues to run.
       operators:- 
         in - it contains
@@ -999,6 +1013,7 @@ Now you can verify the terraform import by running the command terraform plan an
      Although each Pod has a unique IP address, those IPs are not exposed outside the cluster without a Service.
      The set of Pods targeted by a Service is usually determined by a label selector
      (see below for why you might want a Service without including a selector in the spec).
+
      Port:- exposes the Kubernetes service on the specified port within the cluster. 
          Other pods within the cluster can communicate with this server on the specified port.
          
@@ -1008,9 +1023,9 @@ Now you can verify the terraform import by running the command terraform plan an
      NodePort:- exposes a service externally to the cluster by means of the target nodes IP address and the NodePort. 
                  external traffic has access to fixed port on each worker node (30000 - 32767).
                  Nodeport services are not secure, you are basically opening the port to directly talk to service on each worker node
-                 exter clients basically have access to the worker nodes directly.
+                 external clients basically have access to the worker nodes directly.
                  
-    LoadBalancer:- whenever we create loadbalancer service nodeport and clusterip services are creatly automatically, which loadbalancer
+    LoadBalancer:- whenever we create loadbalancer service nodeport and clusterip services are created automatically, which loadbalancer
                    route the traffic to.
                    This provides an externally-accessible IP address that sends traffic to the correct port on your cluster nodes,
                    provided your cluster runs in a supported environment and is configured with the correct cloud load balancer provider package.
@@ -1066,7 +1081,7 @@ Now you can verify the terraform import by running the command terraform plan an
       kubectl config set-credentials anil --client-certificate=anil.crt --client-key=anil.key
     -> kubectl config use-context anil-minikube ( to switch the user )
     - after we have to create the manifest file to create the role
-    - after that we have to create th rolebinding, rolebinding is nothing but connecting a user with role.
+    - after that we have to create the rolebinding, rolebinding is nothing but connecting a user with role.
     - role and rolebinding are namespaced, it means user will be having the permission for where rolebinding is defined.
     - cluster rolebinding is at the cluster level, we can access the resources in any namespace   
  
@@ -1402,7 +1417,7 @@ How the application pod will communicate with database pod?
   - Create a Kubernetes Service for the database pod. The service acts as 
     a stable endpoint that abstracts away the underlying pods
   - In your application pod, you can now use the DNS name of the database service to connect to the database pod. 
-    Kubernetes automatically provides DNS resolution for services within the cluste
+    Kubernetes automatically provides DNS resolution for services within the cluster
   - The service discovery works based on the service name and namespace. If your database service is in a different namespace, 
     you might need to use the fully qualified service name (database-service.namespace).
   
@@ -1455,8 +1470,9 @@ What are the access modes of persistent volumes in k8s?
  ReadWriteMany:- all pods are having read write access
 
 What are the reclaim policies in PVCs?
- Retain:- with the retain policy the PV associated with the PVC is not automatically deleted or released when the PVC is deleted. instead, the PV is retained
-	  and its content are preserved
+ Retain:- with the retain policy the PV associated with the PVC is not automatically deleted or released when the PVC is deleted. 
+ instead, the PV is retained and its content are preserved
+
  Delete:- The delete policy indicates that the associated PV should be automatically deleted when the PVC is deleted.
 
 explain about how ingress and ingress controller will work?
@@ -1493,7 +1509,8 @@ Args:-
  FROM nginx:${VERSION}
 
 Env:-
- Environment variables are used to configure the behavior of the application running inside the container. They can be used to pass information such as  database connection strings, API keys, or other runtime configuration options.
+ Environment variables are used to configure the behavior of the application running inside the container. 
+ They can be used to pass information such as  database connection strings, API keys, or other runtime configuration options.
  Environment variables are available to the running container and can be accessed by the application running inside the container.
  Example:-
  ENV DB_HOST=localhost
@@ -1509,7 +1526,7 @@ You can use the ignore_errors directive to ignore specific task failures and con
   ignore_errors: yes
 
 EPAM
-what is the difference between authenticationa and authorization?
+what is the difference between authentication and authorization?
 
 Authentication: This is the process of verifying the identity of a user or application that is attempting to connect to an RDS database. 
 Amazon RDS supports multiple authentication methods, including password authentication and IAM database authentication.
@@ -1542,8 +1559,8 @@ The Principal can be an AWS account, an IAM user, an IAM role, an AWS service, o
 
 what does asterisk symbol defines in AWS NACL?
 In an AWS Network Access Control List (NACL), the asterisk (*) symbol is used as a wildcard to represent all IP addresses (0.0.0.0/0) or all ports (0-65535).
-For example, if you configure a rule in a NACL with the source or destination IP address as "", it means that the rule applies to all
-IP addresses. Similarly, if you configure a rule with the port range as "", it means that the rule applies to all ports.
+For example, if you configure a rule in a NACL with the source or destination IP address as "*", it means that the rule applies to all
+IP addresses. Similarly, if you configure a rule with the port range as "*", it means that the rule applies to all ports.
 
 How to access and read S3 bucket from AWS account to another account?
 
@@ -1584,8 +1601,10 @@ Cold HDD (sc1):-
 
 what are the lambda layers?
 - AWS Lambda layers are a way to centrally manage code and data that is shared across multiple Lambda functions. 
-- A Lambda layer is a ZIP archive that contains libraries, custom runtimes, or other dependencies that you want to include in your Lambda functions.
-- Share common libraries or dependencies across multiple Lambda functions without including them in the deployment package of each function, reducing   package size and duplication
+- A Lambda layer is a ZIP archive that contains libraries, custom runtimes, or other dependencies that you want to 
+  include in your Lambda functions.
+- Share common libraries or dependencies across multiple Lambda functions without including them in the deployment package 
+  of each function, reducing   package size and duplication
 
 tell me one example of of each load balancer for application and network load balancer
 
@@ -1598,11 +1617,14 @@ TCP
 - TCP is a reliable protocol that ensures that data is delivered in order and without errors. 
 - TCP is connection-oriented, meaning it establishes a connection between two hosts before data exchange.
 - This ensures that data is delivered accurately and completely 
-- TCP is commonly used for applications that require reliable and ordered delivery of data, such as web browsing, email, file transfer (FTP), and database transactions.
+- TCP is commonly used for applications that require reliable and ordered delivery of data, such as web browsing, 
+   email, file transfer (FTP), and database transactions.
 
 UDP
-- UDP, on the other hand, is faster but unreliable. It does not guarantee delivery or order of packets, making it suitable for applications where speed is more important than reliability.
-- UDP is used for applications where real-time communication and speed are more important than reliability, such as VoIP (Voice over IP), online gaming, DNS (Domain Name System), and streaming media.
+- UDP, on the other hand, is faster but unreliable. It does not guarantee delivery or order of packets, 
+  making it suitable for applications where speed is more important than reliability.
+- UDP is used for applications where real-time communication and speed are more important than reliability, 
+  such as VoIP (Voice over IP), online gaming, DNS (Domain Name System), and streaming media.
 
 terraform script to create AWS instance by using latest ubuntu ami id.
 
