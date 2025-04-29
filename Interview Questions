@@ -2616,7 +2616,35 @@ data:
 
 I have an ingress object which is not routing the traffic to the Kubernetes cluster, what are the reasons 
 and how to troubleshoot that??
+Ingress Controller Not Installed
+Ingress object is just a rule; it needs a running Ingress Controller (like NGINX, ALB, Traefik).
+DNS or Hostname Mismatch
+The host: in Ingress doesn't match the incoming request's Host header.
+Backend Service Misconfigured
+Target service name or port is incorrect or not exposed.
+Pods Not Ready / Not Running
+The Service's endpoints might be empty.
+Missing or Incorrect Path Rules
+path: might not match actual request URLs.
+Firewall/Security Group Issues (for cloud ingress like ALB)
+Port 80/443 not open on load balancer security group.
+
 I have created service object which is not mapped, what could be the reason and how do you debug??
+
+Label Selector Mismatch
+→ The selector: in the service doesn't match the labels: on the pods.
+
+Pods Not Running or Not Ready
+→ Pods might be Pending, CrashLoopBackOff, or not yet passed readiness probe.
+
+Wrong TargetPort or Port
+→ Mismatch between service targetPort: and container port:.
+
+No Endpoints Associated
+→ No pods match the selector, so service has no backing endpoints.
+
+Namespace Mismatch
+→ Service and pods are in different namespaces and you're not specifying it.
 what are the different ways to specify the probes in Kubernetes??
 
 what is the difference between git push --force-with-lease vs --force
@@ -2644,6 +2672,9 @@ If the remote branch has not changed → The push succeeds.
 If the remote branch has changed → The push is rejected, preventing accidental overwrites.
 
 if I select the restart policy as Never what it is going to do??
+🔸 What it does:
+Pods will not be restarted by Kubernetes if they fail or exit.
+The pod will go to a "Completed" or "Failed" state and stay there.
 what is init container & why do we need to use??
 what is difference between EKS vs ECS vs Fargate
 how can you delete last 2 git commits??
